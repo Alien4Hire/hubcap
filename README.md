@@ -17,6 +17,3 @@
 
 
 
-
-12:53
-npm run tunnel:db will run an ssh command to digital ocean server to make the mysql database connection and will ask for ssh password
