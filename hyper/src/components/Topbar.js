@@ -13,8 +13,8 @@ import AppsDropdown from './AppsDropdown';
 import { showRightSidebar } from '../redux/actions';
 
 import profilePic from '../assets/images/users/avatar-1.jpg';
-import logoSm from '../assets/images/logo_sm.png';
-import logo from '../assets/images/logo-light.png';
+import logoSm from '../assets/images/hubcap.png';
+import logo from '../assets/images/hubcap.png';
 
 const Notifications = [
     {
@@ -109,31 +109,32 @@ const SearchResults = [
         id: 1,
         title: 'Analytics Report',
         icon: 'uil-notes',
-        redirectTo: '/'
+        redirectTo: '/',
     },
     {
         id: 2,
         title: 'How can I help you?',
         icon: 'uil-life-ring',
-        redirectTo: '/'
+        redirectTo: '/',
     },
     {
         id: 3,
         icon: 'uil-cog',
         title: 'User profile settings',
-        redirectTo: '/'
-    }, {
+        redirectTo: '/',
+    },
+    {
         id: 4,
         icon: 'uil-user',
         title: 'Erwin Brown (UI)',
-        redirectTo: '/'
+        redirectTo: '/',
     },
     {
         id: 5,
         icon: 'uil-user',
         title: 'Jacob Deo (Dev)',
-        redirectTo: '/'
-    }
+        redirectTo: '/',
+    },
 ];
 
 type TopbarProps = {
@@ -220,7 +221,4 @@ class Topbar extends Component<TopbarProps> {
     }
 }
 
-export default connect(
-    null,
-    { showRightSidebar }
-)(Topbar);
+export default connect(null, { showRightSidebar })(Topbar);
