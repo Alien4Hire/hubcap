@@ -7,6 +7,9 @@ import { fetchStockData } from '../../../redux/screener/actions';
 import HyperDatepicker from '../../../components/Datepicker';
 import RangeFilter from './RangeFilter';
 import { useHistory } from 'react-router-dom';
+import { debounce } from 'lodash';
+import { parse, stringify } from 'qs';
+import moment from 'moment';
 
 const columns = [
     {
@@ -41,8 +44,9 @@ const marketCapMinValue = 100000000;
 const marketCapMaxValue = 200000000000;
 const daysSinceEntryMinValue = 1;
 const daysSinceEntryMaxValue = 21;
-const exchangeOptions = ['Stock', 'Forex', 'Crypto', 'Industry'];
+const exchangeOptions = ['', 'Stock', 'Forex', 'Crypto', 'Industry'];
 const industryOptions = [
+    '',
     'Life Sciences Tools & Services',
     'Metals & Mining',
     'Diversified Consumer Services',
@@ -92,6 +96,10 @@ const industryOptions = [
     'Transportation Infrastructure',
 ];
 
+const handleFetchOnSliderChange = debounce(function (query, pagination, actionFn) {
+    actionFn({ ...query }, pagination);
+}, 500);
+
 const Screener = ({ fetchStockData, loading, data, pagination }) => {
     const history = useHistory();
     const [volumeFilter, updateVolumeFilter] = useState([volumeMinValue, volumeMaxValue]);
@@ -101,24 +109,139 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
         daysSinceEntryMaxValue,
     ]);
 
+    const [williamsPercentRange, toggleWilliamsPercentRange] = useState(false);
+    const [entryLongFlag, toggleEntryLongFlag] = useState(false);
+    const [entryShortFlag, toggleEntryShortFlag] = useState(false);
+    const [attarExplosionFlag, toggleAttarExplosionFlag] = useState(false);
+    const [safeEntryFlag, toggleSafeEntryFlag] = useState(false);
+    const [selectedExchange, updateSelectedExchange] = useState('');
+    const [selectedIndustry, updateSelectedIndustry] = useState('');
+    const [currentDate, updateCurrentDate] = useState(moment());
+
+    // On Load
     useEffect(() => {
-        fetchStockData({ date: '2020/10/01' }, {});
+        fetchStockData({ date: formatCurrentDate() }, {});
     }, []);
+
+    useEffect(() => {
+        const { william_percent_range, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (williamsPercentRange) {
+            queryParams.william_percent_range = 1;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [williamsPercentRange]);
+
+    useEffect(() => {
+        const { entry_long, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (entryLongFlag) {
+            queryParams.entry_long = 1;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [entryLongFlag]);
+
+    useEffect(() => {
+        const { entry_short, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (entryShortFlag) {
+            queryParams.entry_short = 1;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [entryShortFlag]);
+
+    useEffect(() => {
+        const { attar_explosion, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (attarExplosionFlag) {
+            queryParams.attar_explosion = 1;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [attarExplosionFlag]);
+
+    useEffect(() => {
+        const { safe_entry, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (safeEntryFlag) {
+            queryParams.safe_entry = 1;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [safeEntryFlag]);
+
+    useEffect(() => {
+        const { exchange, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (selectedExchange) {
+            queryParams.exchange = selectedExchange;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [selectedExchange]);
+
+    useEffect(() => {
+        const { industry, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        if (selectedIndustry) {
+            queryParams.industry = selectedIndustry;
+        }
+        fetchStockData({ ...queryParams }, {});
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    }, [selectedIndustry]);
+
+    const formatCurrentDate = (newDate) => {
+        return (newDate || currentDate).format('YYYY/MM/DD');
+    };
 
     const handleChangeVolumeFilter = (value) => {
         updateVolumeFilter(value);
-        fetchStockData({ date: '2020/10/01', volume_range: value.join(',') }, {});
-        console.log('history', history.location);
-        history.push(`?volume_range=${value.join(',')}`);
+        const volumeRange = value.join(',');
+
+        const queryParams = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+            volume_range: volumeRange,
+            date: formatCurrentDate(),
+        };
+        handleFetchOnSliderChange({ ...queryParams }, {}, fetchStockData);
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
     const handleChangeMarketCapFilter = (value) => {
         updateMarketCapFilter(value);
-        fetchStockData({ date: '2020/10/01', market_cap_range: value.join(',') }, {});
+        const marketCapRange = value.join(',');
+        const queryParams = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+            market_cap_range: marketCapRange,
+            date: formatCurrentDate(),
+        };
+        handleFetchOnSliderChange({ ...queryParams }, {}, fetchStockData);
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
     const handleChangeDaysSinceEntryFilter = (value) => {
         updateDaysSinceEntryFilter(value);
+    };
+
+    const handleChangeDate = (value) => {
+        const newDate = moment(value);
+        updateCurrentDate(newDate);
+        const queryParams = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+            date: `${formatCurrentDate(newDate)}`,
+        };
+        handleFetchOnSliderChange({ ...queryParams }, {}, fetchStockData);
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
     const customTotal = (from, to, size) => (
@@ -168,7 +291,11 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                         <div className="page-title-right">
                             <form className="form-inline">
                                 <div className="form-group">
-                                    <HyperDatepicker />
+                                    <HyperDatepicker
+                                        hideAddon={false}
+                                        value={currentDate.toDate()}
+                                        onChange={handleChangeDate}
+                                    />
                                 </div>
                                 <button className="btn btn-primary ml-2">
                                     <i className="mdi mdi-autorenew"></i>
@@ -202,7 +329,14 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 <Col>
                     <div>
                         <Label>Williams Percent Range</Label>
-                        <CustomInput type="checkbox" id="williamsPercentRange" label="" inline />
+                        <CustomInput
+                            type="checkbox"
+                            id="williamsPercentRange"
+                            label=""
+                            inline
+                            checked={williamsPercentRange}
+                            onChange={() => toggleWilliamsPercentRange(!williamsPercentRange)}
+                        />
                     </div>
                 </Col>
             </Row>
@@ -224,13 +358,25 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 <Col>
                     <div>
                         <Label>Entry Long</Label>
-                        <CustomInput type="checkbox" id="entryLong" label="" inline />
+                        <CustomInput
+                            type="checkbox"
+                            id="entryLong"
+                            label=""
+                            inline
+                            checked={entryLongFlag}
+                            onChange={() => toggleEntryLongFlag(!entryLongFlag)}
+                        />
                     </div>
                 </Col>
                 <Col>
                     <div>
                         <Label>Exchange</Label>
-                        <Input type="select" name="select" id="exchange">
+                        <Input
+                            type="select"
+                            name="select"
+                            id="exchange"
+                            value={selectedExchange}
+                            onChange={(e) => updateSelectedExchange(e.target.value)}>
                             {exchangeOptions.map((item) => (
                                 <option>{item}</option>
                             ))}
@@ -240,7 +386,12 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 <Col>
                     <div>
                         <Label>Industry</Label>
-                        <Input type="select" name="select" id="industry">
+                        <Input
+                            type="select"
+                            name="select"
+                            id="industry"
+                            value={selectedIndustry}
+                            onChange={(e) => updateSelectedIndustry(e.target.value)}>
                             {industryOptions.map((item) => (
                                 <option>{item}</option>
                             ))}
@@ -252,7 +403,14 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 <Col>
                     <div>
                         <Label>Entry Short</Label>
-                        <CustomInput type="checkbox" id="entryShort" label="" inline />
+                        <CustomInput
+                            type="checkbox"
+                            id="entryShort"
+                            label=""
+                            inline
+                            checked={entryShortFlag}
+                            onChange={() => toggleEntryShortFlag(!entryShortFlag)}
+                        />
                     </div>
                 </Col>
             </Row>
@@ -260,13 +418,27 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 <Col>
                     <div>
                         <Label>Attar Explosion</Label>
-                        <CustomInput type="checkbox" id="attarExplosion" label="" inline />
+                        <CustomInput
+                            type="checkbox"
+                            id="attarExplosion"
+                            label=""
+                            inline
+                            checked={attarExplosionFlag}
+                            onChange={() => toggleAttarExplosionFlag(!attarExplosionFlag)}
+                        />
                     </div>
                 </Col>
                 <Col>
                     <div>
                         <Label>Safe Entry</Label>
-                        <CustomInput type="checkbox" id="safeEntry" label="" inline />
+                        <CustomInput
+                            type="checkbox"
+                            id="safeEntry"
+                            label=""
+                            inline
+                            checked={safeEntryFlag}
+                            onChange={() => toggleSafeEntryFlag(!safeEntryFlag)}
+                        />
                     </div>
                 </Col>
             </Row>

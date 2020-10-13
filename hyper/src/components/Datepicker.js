@@ -62,6 +62,8 @@ class DatepickerInputWithAddon extends Component<DatepickerInputWithAddonProps> 
 
 type HyperDatepickerProps = {
     hideAddon?: boolean,
+    value?: Date,
+    onChange: PropTypes.func,
 };
 
 type HyperDatepickerState = {
@@ -72,7 +74,7 @@ class HyperDatepicker extends Component<HyperDatepickerProps, HyperDatepickerSta
     constructor(props: HyperDatepickerProps) {
         super(props);
         this.state = {
-            startDate: new Date(),
+            startDate: this.props.value ? this.props.value : new Date(),
         };
         this.handleDateSelectChange = this.handleDateSelectChange.bind(this);
     }
@@ -81,6 +83,7 @@ class HyperDatepicker extends Component<HyperDatepickerProps, HyperDatepickerSta
         this.setState({
             startDate: date,
         });
+        this.props.onChange && this.props.onChange(date);
     };
 
     render() {
