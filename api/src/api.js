@@ -33,8 +33,22 @@ router.get("/v1/symbols/:symbol/ohlc", async (req, res, nxt) => {
 
 router.get("/v1/stock-data", async (req, res, nxt) => {
   try {
-    const results = await database.getStockData(req.query ? req.query : {});
-    res.json(results);
+    const payload = req.query ? req.query : {};
+
+    // // add pagination limit and offset
+    let pageSize = 20;
+    let page = 1;
+    if (payload && payload.limit) {
+      pageSize = Number(payload.limit) || pageSize;
+    }
+
+    if (payload && payload.page) {
+      page = Number(payload.page) || page;
+    }
+    const results = await database
+      .getStockData(payload)
+      .paginate({ perPage: pageSize, currentPage: page });
+    res.json({ data: results.data, pagination: results.pagination });
   } catch (err) {
     nxt(err);
   }

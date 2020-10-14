@@ -44,9 +44,9 @@ const marketCapMinValue = 100000000;
 const marketCapMaxValue = 200000000000;
 const daysSinceEntryMinValue = 1;
 const daysSinceEntryMaxValue = 21;
-const exchangeOptions = ['', 'Stock', 'Forex', 'Crypto', 'Industry'];
+const exchangeOptions = ['Any', 'Stock', 'Forex', 'Crypto', 'Industry'];
 const industryOptions = [
-    '',
+    'Any',
     'Life Sciences Tools & Services',
     'Metals & Mining',
     'Diversified Consumer Services',
@@ -117,87 +117,119 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
     const [selectedExchange, updateSelectedExchange] = useState('');
     const [selectedIndustry, updateSelectedIndustry] = useState('');
     const [currentDate, updateCurrentDate] = useState(moment());
+    const [isPageLoaded, setPageLoaded] = useState(false);
 
     // On Load
     useEffect(() => {
-        fetchStockData({ date: formatCurrentDate() }, {});
+        let queryParams = { date: formatCurrentDate() };
+        let newPagination = { ...pagination };
+        if (history.location.search) {
+            const { pageSize, page, ...queryParams1 } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (pageSize) {
+                newPagination.pageSize = pageSize;
+            }
+            if (page) {
+                newPagination.page = page;
+            }
+            if (Object.keys(queryParams1).length) {
+                queryParams = { ...queryParams, ...queryParams1 };
+            }
+        }
+        fetchStockData({ ...queryParams }, { ...newPagination });
+        setPageLoaded(true);
     }, []);
 
     useEffect(() => {
-        const { william_percent_range, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (williamsPercentRange) {
-            queryParams.william_percent_range = 1;
+        if (isPageLoaded) {
+            const { william_percent_range, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (williamsPercentRange) {
+                queryParams.william_percent_range = 1;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [williamsPercentRange]);
 
     useEffect(() => {
-        const { entry_long, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (entryLongFlag) {
-            queryParams.entry_long = 1;
+        if (isPageLoaded) {
+            const { entry_long, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (entryLongFlag) {
+                queryParams.entry_long = 1;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [entryLongFlag]);
 
     useEffect(() => {
-        const { entry_short, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (entryShortFlag) {
-            queryParams.entry_short = 1;
+        if (isPageLoaded) {
+            const { entry_short, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (entryShortFlag) {
+                queryParams.entry_short = 1;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [entryShortFlag]);
 
     useEffect(() => {
-        const { attar_explosion, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (attarExplosionFlag) {
-            queryParams.attar_explosion = 1;
+        if (isPageLoaded) {
+            const { attar_explosion, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (attarExplosionFlag) {
+                queryParams.attar_explosion = 1;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [attarExplosionFlag]);
 
     useEffect(() => {
-        const { safe_entry, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (safeEntryFlag) {
-            queryParams.safe_entry = 1;
+        if (isPageLoaded) {
+            const { safe_entry, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (safeEntryFlag) {
+                queryParams.safe_entry = 1;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [safeEntryFlag]);
 
     useEffect(() => {
-        const { exchange, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (selectedExchange) {
-            queryParams.exchange = selectedExchange;
+        if (isPageLoaded) {
+            const { exchange, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (selectedExchange && selectedExchange !== 'Any') {
+                queryParams.exchange = selectedExchange;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [selectedExchange]);
 
     useEffect(() => {
-        const { industry, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
-        if (selectedIndustry) {
-            queryParams.industry = selectedIndustry;
+        if (isPageLoaded) {
+            const { industry, ...queryParams } = {
+                ...parse(history.location.search.replace(/\?/g, '')),
+            };
+            if (selectedIndustry && selectedIndustry !== 'Any') {
+                queryParams.industry = selectedIndustry;
+            }
+            fetchStockData({ ...queryParams }, { ...pagination });
+            history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
         }
-        fetchStockData({ ...queryParams }, {});
-        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     }, [selectedIndustry]);
 
     const formatCurrentDate = (newDate) => {
@@ -213,7 +245,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
             volume_range: volumeRange,
             date: formatCurrentDate(),
         };
-        handleFetchOnSliderChange({ ...queryParams }, {}, fetchStockData);
+        handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
         history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
@@ -225,7 +257,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
             market_cap_range: marketCapRange,
             date: formatCurrentDate(),
         };
-        handleFetchOnSliderChange({ ...queryParams }, {}, fetchStockData);
+        handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
         history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
@@ -240,8 +272,22 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
             ...parse(history.location.search.replace(/\?/g, '')),
             date: `${formatCurrentDate(newDate)}`,
         };
-        handleFetchOnSliderChange({ ...queryParams }, {}, fetchStockData);
+        handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
         history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
+    };
+
+    const handleTableChange = (type, { page, sizePerPage }) => {
+        const { pageSize, page: currentPage, ...queryParams } = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        const newPagination = { ...pagination, pageSize: sizePerPage, page: page };
+        fetchStockData({ ...queryParams }, newPagination);
+        history.push(
+            `/dashboard/screener?${stringify(
+                { ...queryParams, pageSize: newPagination.pageSize, page: newPagination.page },
+                { encode: false }
+            )}`
+        );
     };
 
     const customTotal = (from, to, size) => (
@@ -263,24 +309,24 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
         lastPageTitle: 'Last page',
         showTotal: true,
         paginationTotalRenderer: customTotal,
-        sizePerPageList: [
-            {
-                text: '5',
-                value: 5,
-            },
-            {
-                text: '10',
-                value: 10,
-            },
-            {
-                text: '25',
-                value: 25,
-            },
-            {
-                text: 'All',
-                value: data.length,
-            },
-        ], // A numeric array is also available. the purpose of above example is custom the text
+        // sizePerPageList: [
+        //     {
+        //         text: '5',
+        //         value: 5,
+        //     },
+        //     {
+        //         text: '10',
+        //         value: 10,
+        //     },
+        //     {
+        //         text: '25',
+        //         value: 25,
+        //     },
+        //     {
+        //         text: 'All',
+        //         value: data.length,
+        //     },
+        // ], // A numeric array is also available. the purpose of above example is custom the text
     };
 
     return (
@@ -356,48 +402,59 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
             </Row>
             <Row>
                 <Col>
-                    <div>
-                        <Label>Entry Long</Label>
-                        <CustomInput
-                            type="checkbox"
-                            id="entryLong"
-                            label=""
-                            inline
-                            checked={entryLongFlag}
-                            onChange={() => toggleEntryLongFlag(!entryLongFlag)}
-                        />
-                    </div>
+                    <Row>
+                        <Col className="col-center-left">
+                            <Label>Entry Long</Label>
+                            <CustomInput
+                                type="checkbox"
+                                id="entryLong"
+                                label=""
+                                inline
+                                checked={entryLongFlag}
+                                onChange={() => toggleEntryLongFlag(!entryLongFlag)}
+                            />
+                        </Col>
+                        <Col>
+                            <Row>
+                                <Col>
+                                    <Label>Exchange</Label>
+                                </Col>
+                                <Col>
+                                    <Input
+                                        type="select"
+                                        name="select"
+                                        id="exchange"
+                                        value={selectedExchange}
+                                        onChange={(e) => updateSelectedExchange(e.target.value)}>
+                                        {exchangeOptions.map((item) => (
+                                            <option>{item}</option>
+                                        ))}
+                                    </Input>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </Col>
                 <Col>
-                    <div>
-                        <Label>Exchange</Label>
-                        <Input
-                            type="select"
-                            name="select"
-                            id="exchange"
-                            value={selectedExchange}
-                            onChange={(e) => updateSelectedExchange(e.target.value)}>
-                            {exchangeOptions.map((item) => (
-                                <option>{item}</option>
-                            ))}
-                        </Input>
-                    </div>
+                    <Row>
+                        <Col>
+                            <Label>Industry</Label>
+                        </Col>
+                        <Col>
+                            <Input
+                                type="select"
+                                name="select"
+                                id="industry"
+                                value={selectedIndustry}
+                                onChange={(e) => updateSelectedIndustry(e.target.value)}>
+                                {industryOptions.map((item) => (
+                                    <option>{item}</option>
+                                ))}
+                            </Input>
+                        </Col>
+                    </Row>
                 </Col>
-                <Col>
-                    <div>
-                        <Label>Industry</Label>
-                        <Input
-                            type="select"
-                            name="select"
-                            id="industry"
-                            value={selectedIndustry}
-                            onChange={(e) => updateSelectedIndustry(e.target.value)}>
-                            {industryOptions.map((item) => (
-                                <option>{item}</option>
-                            ))}
-                        </Input>
-                    </div>
-                </Col>
+                <Col> </Col>
             </Row>
             <Row>
                 <Col>
@@ -441,6 +498,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                         />
                     </div>
                 </Col>
+                <Col> </Col>
             </Row>
             <Row>
                 <Col>
@@ -462,13 +520,19 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                         <CardBody>
                             <h4 className="header-title">Screener</h4>
                             <BootstrapTable
+                                remote
                                 bootstrap4
                                 keyField="ticker"
                                 data={data}
                                 columns={columns}
-                                // defaultSorted={defaultSorted}
-                                pagination={paginationFactory(paginationOptions)}
+                                pagination={paginationFactory({
+                                    ...paginationOptions,
+                                    page: pagination.page,
+                                    sizePerPage: pagination.pageSize,
+                                    totalSize: pagination.total,
+                                })}
                                 wrapperClasses="table-responsive"
+                                onTableChange={handleTableChange}
                             />
                         </CardBody>
                     </Card>

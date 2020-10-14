@@ -9,9 +9,22 @@ import { API, SuccessStatusCode } from '../../services/api';
 export function* fetchStockData() {
     yield takeEvery(FETCH_STOCK_DATA, function* ({ payload, pagination }) {
         try {
-            const response = yield call(API.fetchStockData, { ...payload, ...pagination });
+            const response = yield call(API.fetchStockData, {
+                ...payload,
+                pageSize: pagination.pageSize,
+                page: pagination.page,
+            });
             if (SuccessStatusCode.includes(response.status)) {
-                yield put(fetchStockDataReceive({ pagination: { ...pagination }, data: response.data }));
+                yield put(
+                    fetchStockDataReceive({
+                        pagination: {
+                            ...pagination,
+                            page: response.data.pagination.currentPage,
+                            total: response.data.pagination.total,
+                        },
+                        data: response.data.data,
+                    })
+                );
             } else {
                 yield put(fetchStockDataError(response.message));
             }

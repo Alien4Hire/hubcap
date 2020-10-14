@@ -9,6 +9,9 @@ const knex = require("knex")({
   pool: { min: 0, max: 100 },
 });
 
+const { attachPaginate } = require("knex-paginate");
+attachPaginate();
+
 exports.searchSymbols = async (search = "") => {
   const results = await knex("security")
     .distinct("ticker")
@@ -34,8 +37,6 @@ exports.getOHLC = (symbol = "", from, to) => {
 };
 
 exports.getStockData = (payload) => {
-  let pageSize = 20;
-  let offset = 0;
   const knexObj = knex("security")
     .innerJoin("company_data", "company_data.ticker", "security.ticker")
     .select(
@@ -129,18 +130,7 @@ exports.getStockData = (payload) => {
   if (payload && payload.industry) {
     knexObj.andWhere("company_data.finnhubIndustry", payload.industry);
   }
-
-  if (payload && payload.limit) {
-    pageSize = Number(payload.limit) || pageSize;
-  }
-
-  if (payload && payload.offset) {
-    offset = Number(payload.offset) || offset;
-  }
-
-  knexObj.limit(pageSize).offset(offset);
-
-  console.log("Query", knexObj.toString());
+  // console.log("Query", knexObj.toString());
 
   return knexObj;
 };
