@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Input } from 'reactstrap';
+import { Row, Col, Input, Label } from 'reactstrap';
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
@@ -17,11 +17,13 @@ const RangeFilter = ({ id, label, incrementNumber, value, minValue, maxValue, on
 
     return (
         <Row>
-            <Col>{label}</Col>
-            <Col>
+            <Col className="col-center-left">
+                <Label>{label}</Label>
+            </Col>
+            <Col className="col-center-left">
                 <Input disabled type="text" id={`minRange_${id}`} placeholder="" value={formatLargeNumber(value[0])} />
             </Col>
-            <Col>
+            <Col className="col-center-left">
                 <Range
                     allowCross={false}
                     value={[value[0], value[1]]}
@@ -31,7 +33,7 @@ const RangeFilter = ({ id, label, incrementNumber, value, minValue, maxValue, on
                     onChange={onSliderChange}
                 />
             </Col>
-            <Col>
+            <Col className="col-center-left">
                 <Input disabled type="text" id={`maxRange_${id}`} placeholder="" value={formatLargeNumber(value[1])} />
             </Col>
         </Row>

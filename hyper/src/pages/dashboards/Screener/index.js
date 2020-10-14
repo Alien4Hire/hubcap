@@ -360,7 +360,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                     <h4 className="page-title">TOOLS</h4>
                 </Col>
             </Row>
-            <Row>
+            <Row className="row-bottom-margin">
                 <Col>
                     <RangeFilter
                         id="volume"
@@ -372,21 +372,19 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                         onChange={handleChangeVolumeFilter}
                     />
                 </Col>
-                <Col>
-                    <div>
-                        <Label>Williams Percent Range</Label>
-                        <CustomInput
-                            type="checkbox"
-                            id="williamsPercentRange"
-                            label=""
-                            inline
-                            checked={williamsPercentRange}
-                            onChange={() => toggleWilliamsPercentRange(!williamsPercentRange)}
-                        />
-                    </div>
+                <Col className="col-center-left">
+                    <Label>Williams Percent Range</Label>
+                    <CustomInput
+                        type="checkbox"
+                        id="williamsPercentRange"
+                        label=""
+                        inline
+                        checked={williamsPercentRange}
+                        onChange={() => toggleWilliamsPercentRange(!williamsPercentRange)}
+                    />
                 </Col>
             </Row>
-            <Row>
+            <Row className="row-bottom-margin">
                 <Col>
                     <RangeFilter
                         id="marketCap"
@@ -400,7 +398,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 </Col>
                 <Col> </Col>
             </Row>
-            <Row>
+            <Row className="row-bottom-margin">
                 <Col>
                     <Row>
                         <Col className="col-center-left">
@@ -416,10 +414,10 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                         </Col>
                         <Col>
                             <Row>
-                                <Col>
+                                <Col className="col-center-left">
                                     <Label>Exchange</Label>
                                 </Col>
-                                <Col>
+                                <Col className="col-center-left">
                                     <Input
                                         type="select"
                                         name="select"
@@ -437,10 +435,10 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 </Col>
                 <Col>
                     <Row>
-                        <Col>
+                        <Col className="col-center-left">
                             <Label>Industry</Label>
                         </Col>
-                        <Col>
+                        <Col className="col-center-left">
                             <Input
                                 type="select"
                                 name="select"
@@ -456,51 +454,45 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 </Col>
                 <Col> </Col>
             </Row>
-            <Row>
-                <Col>
-                    <div>
-                        <Label>Entry Short</Label>
-                        <CustomInput
-                            type="checkbox"
-                            id="entryShort"
-                            label=""
-                            inline
-                            checked={entryShortFlag}
-                            onChange={() => toggleEntryShortFlag(!entryShortFlag)}
-                        />
-                    </div>
+            <Row className="row-bottom-margin">
+                <Col className="col-center-left">
+                    <Label>Entry Short</Label>
+                    <CustomInput
+                        type="checkbox"
+                        id="entryShort"
+                        label=""
+                        inline
+                        checked={entryShortFlag}
+                        onChange={() => toggleEntryShortFlag(!entryShortFlag)}
+                    />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <div>
-                        <Label>Attar Explosion</Label>
-                        <CustomInput
-                            type="checkbox"
-                            id="attarExplosion"
-                            label=""
-                            inline
-                            checked={attarExplosionFlag}
-                            onChange={() => toggleAttarExplosionFlag(!attarExplosionFlag)}
-                        />
-                    </div>
+            <Row className="row-bottom-margin">
+                <Col className="col-center-left">
+                    <Label>Attar Explosion</Label>
+                    <CustomInput
+                        type="checkbox"
+                        id="attarExplosion"
+                        label=""
+                        inline
+                        checked={attarExplosionFlag}
+                        onChange={() => toggleAttarExplosionFlag(!attarExplosionFlag)}
+                    />
                 </Col>
-                <Col>
-                    <div>
-                        <Label>Safe Entry</Label>
-                        <CustomInput
-                            type="checkbox"
-                            id="safeEntry"
-                            label=""
-                            inline
-                            checked={safeEntryFlag}
-                            onChange={() => toggleSafeEntryFlag(!safeEntryFlag)}
-                        />
-                    </div>
+                <Col className="col-center-left">
+                    <Label>Safe Entry</Label>
+                    <CustomInput
+                        type="checkbox"
+                        id="safeEntry"
+                        label=""
+                        inline
+                        checked={safeEntryFlag}
+                        onChange={() => toggleSafeEntryFlag(!safeEntryFlag)}
+                    />
                 </Col>
                 <Col> </Col>
             </Row>
-            <Row>
+            <Row className="row-bottom-margin">
                 <Col>
                     <RangeFilter
                         id="daysSinceEntry"
@@ -514,7 +506,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                 </Col>
                 <Col> </Col>
             </Row>
-            <Row>
+            <Row className="row-bottom-margin">
                 <Col>
                     <Card>
                         <CardBody>
