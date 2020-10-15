@@ -36,6 +36,42 @@ exports.getOHLC = (symbol = "", from, to) => {
     });
 };
 
+const addRangeFilter = (knexObj, rangeFieldValue, rangeFieldName) => {
+  const rangeValue = rangeFieldValue.split(",");
+  let isValidRange = true;
+  // ignore if wrong value sent
+  if (rangeValue.length < 2) {
+    isValidRange = false;
+  } else {
+    if (rangeValue[0] !== "x" || isNaN(rangeValue[0])) {
+      isValidRange = false;
+    }
+    if (rangeValue[1] !== "x" || isNaN(rangeValue[1])) {
+      isValidRange = false;
+    }
+  }
+  if (isValidRange) {
+    if (rangeValue[0] === "x") {
+      knexObj.andWhereBetween(
+        rangeFieldName,
+        "<=",
+        Number(rangeValue[1]) //max value
+      );
+    } else if (rangeValue[1] === "x") {
+      knexObj.andWhereBetween(
+        rangeFieldName,
+        ">=",
+        Number(rangeValue[0]) // min value
+      );
+    } else {
+      knexObj.andWhereBetween(
+        rangeFieldName,
+        rangeValue.map((item) => Number(item))
+      );
+    }
+  }
+};
+
 exports.getStockData = (payload) => {
   const knexObj = knex("security")
     .innerJoin("company_data", "company_data.ticker", "security.ticker")
@@ -65,17 +101,19 @@ exports.getStockData = (payload) => {
   }
 
   if (payload && payload.market_cap_range) {
-    knexObj.andWhereBetween(
-      "company_data.marketCapitalization",
-      payload.market_cap_range.split(",").map((item) => Number(item))
+    addRangeFilter(
+      knexObj,
+      payload.market_cap_range,
+      "company_data.marketCapitalization"
     );
+    // knexObj.andWhereBetween(
+    //   "company_data.marketCapitalization",
+    //   payload.market_cap_range.split(",").map((item) => Number(item))
+    // );
   }
 
   if (payload && payload.volume_range) {
-    knexObj.andWhereBetween(
-      "security.volume",
-      payload.volume_range.split(",").map((item) => Number(item))
-    );
+    addRangeFilter(knexObj, payload.volume_range, "security.volume");
   }
 
   if (payload && Number(payload.entry_long)) {

@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { parse, stringify } from 'qs';
 import moment from 'moment';
+import LoadingOverlay from 'react-loading-overlay';
 
 const columns = [
     {
@@ -119,33 +120,112 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
     const [currentDate, updateCurrentDate] = useState(moment());
     const [isPageLoaded, setPageLoaded] = useState(false);
 
+    const validateRangeValue = (range, min, max) => {
+        const rangeValue = range.split(',');
+        if (rangeValue.length === 2) {
+            if (rangeValue[0] !== 'x' && isNaN(rangeValue[0])) {
+                return null;
+            }
+            if (rangeValue[1] !== 'x' && isNaN(rangeValue[1])) {
+                return null;
+            }
+            if (rangeValue[0] === 'x') {
+                rangeValue[0] = min;
+            }
+            if (rangeValue[1] === 'x') {
+                rangeValue[1] = max;
+            }
+            return rangeValue;
+        } else {
+            return null;
+        }
+    };
+
+    const hydrateComponent = (queryParams) => {
+        if (queryParams.volume_range) {
+            const volumeRange = validateRangeValue(queryParams.volume_range, volumeMinValue, volumeMaxValue);
+            if (volumeRange) {
+                updateVolumeFilter(volumeRange);
+            }
+        }
+        if (queryParams.market_cap_range) {
+            const marketCapRange = validateRangeValue(
+                queryParams.market_cap_range,
+                marketCapMinValue,
+                marketCapMaxValue
+            );
+            if (marketCapRange) {
+                updateMarketCapFilter(marketCapRange);
+            }
+        }
+        if (queryParams.days_entry_range) {
+            const daysEntryRange = validateRangeValue(
+                queryParams.days_entry_range,
+                daysSinceEntryMinValue,
+                daysSinceEntryMaxValue
+            );
+            if (daysEntryRange) {
+                updateDaysSinceEntryFilter(daysEntryRange);
+            }
+        }
+
+        if (Number(queryParams.william_percent_range)) {
+            toggleWilliamsPercentRange(true);
+        }
+
+        if (Number(queryParams.entry_long)) {
+            toggleEntryLongFlag(true);
+        }
+
+        if (Number(queryParams.entry_short)) {
+            toggleEntryShortFlag(true);
+        }
+
+        if (Number(queryParams.attar_explosion)) {
+            toggleAttarExplosionFlag(true);
+        }
+
+        if (Number(queryParams.safe_entry)) {
+            toggleSafeEntryFlag(true);
+        }
+
+        if (exchangeOptions.includes(queryParams.exchange)) {
+            updateSelectedExchange(queryParams.exchange);
+        }
+
+        if (industryOptions.includes(queryParams.industry)) {
+            updateSelectedIndustry(queryParams.industry);
+        }
+
+        if (moment(queryParams.date, 'YYYY/MM/DD').isValid()) {
+            updateCurrentDate(moment(queryParams.date, 'YYYY/MM/DD'));
+        }
+
+        setPageLoaded(true);
+    };
+
     // On Load
     useEffect(() => {
         let queryParams = { date: formatCurrentDate() };
         let newPagination = { ...pagination };
-        if (history.location.search) {
-            const { pageSize, page, ...queryParams1 } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+        const { pageSize, page, ...queryParams1 } = parseQuery();
+        if (Object.keys(queryParams1).length) {
             if (pageSize) {
                 newPagination.pageSize = pageSize;
             }
             if (page) {
                 newPagination.page = page;
             }
-            if (Object.keys(queryParams1).length) {
-                queryParams = { ...queryParams, ...queryParams1 };
-            }
+            queryParams = { ...queryParams, ...queryParams1 };
         }
         fetchStockData({ ...queryParams }, { ...newPagination });
-        setPageLoaded(true);
+        // set component values here if found in query
+        hydrateComponent(queryParams);
     }, []);
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { william_percent_range, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { william_percent_range, ...queryParams } = parseQuery();
             if (williamsPercentRange) {
                 queryParams.william_percent_range = 1;
             }
@@ -156,9 +236,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { entry_long, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { entry_long, ...queryParams } = parseQuery();
             if (entryLongFlag) {
                 queryParams.entry_long = 1;
             }
@@ -169,9 +247,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { entry_short, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { entry_short, ...queryParams } = parseQuery();
             if (entryShortFlag) {
                 queryParams.entry_short = 1;
             }
@@ -182,9 +258,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { attar_explosion, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { attar_explosion, ...queryParams } = parseQuery();
             if (attarExplosionFlag) {
                 queryParams.attar_explosion = 1;
             }
@@ -195,9 +269,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { safe_entry, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { safe_entry, ...queryParams } = parseQuery();
             if (safeEntryFlag) {
                 queryParams.safe_entry = 1;
             }
@@ -208,11 +280,9 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { exchange, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { exchange, ...queryParams } = parseQuery();
             if (selectedExchange && selectedExchange !== 'Any') {
-                queryParams.exchange = selectedExchange;
+                queryParams.exchange = encodeURIComponent(selectedExchange);
             }
             fetchStockData({ ...queryParams }, { ...pagination });
             history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
@@ -221,11 +291,9 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
 
     useEffect(() => {
         if (isPageLoaded) {
-            const { industry, ...queryParams } = {
-                ...parse(history.location.search.replace(/\?/g, '')),
-            };
+            const { industry, ...queryParams } = parseQuery();
             if (selectedIndustry && selectedIndustry !== 'Any') {
-                queryParams.industry = selectedIndustry;
+                queryParams.industry = encodeURIComponent(selectedIndustry);
             }
             fetchStockData({ ...queryParams }, { ...pagination });
             history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
@@ -236,50 +304,60 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
         return (newDate || currentDate).format('YYYY/MM/DD');
     };
 
-    const handleChangeVolumeFilter = (value) => {
+    const parseQuery = () => {
+        const queryParams = {
+            ...parse(history.location.search.replace(/\?/g, '')),
+        };
+        return queryParams;
+    };
+
+    const handleChangeVolumeFilter = (value, queryValue) => {
         updateVolumeFilter(value);
-        const volumeRange = value.join(',');
+        const volumeRange = [...queryValue].join(',');
+        const { volume_range, ...queryParams } = parseQuery();
+        if (volumeRange) {
+            queryParams.volume_range = volumeRange;
+        }
 
-        const queryParams = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-            volume_range: volumeRange,
-            date: formatCurrentDate(),
-        };
         handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
         history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
-    const handleChangeMarketCapFilter = (value) => {
+    const handleChangeMarketCapFilter = (value, queryValue) => {
         updateMarketCapFilter(value);
-        const marketCapRange = value.join(',');
-        const queryParams = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-            market_cap_range: marketCapRange,
-            date: formatCurrentDate(),
-        };
+        const marketCapRange = [...queryValue].join(',');
+        const { market_cap_range, ...queryParams } = parseQuery();
+        if (marketCapRange) {
+            queryParams.market_cap_range = marketCapRange;
+        }
+
         handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
         history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
-    const handleChangeDaysSinceEntryFilter = (value) => {
+    const handleChangeDaysSinceEntryFilter = (value, queryValue) => {
         updateDaysSinceEntryFilter(value);
+        const daysSinceEntry = [...queryValue].join(',');
+        const { days_entry_range, ...queryParams } = parseQuery();
+        if (daysSinceEntry) {
+            queryParams.days_entry_range = daysSinceEntry;
+        }
+
+        handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
+        history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
     const handleChangeDate = (value) => {
         const newDate = moment(value);
         updateCurrentDate(newDate);
-        const queryParams = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-            date: `${formatCurrentDate(newDate)}`,
-        };
+        const queryParams = parseQuery();
+        queryParams.date = formatCurrentDate(newDate);
         handleFetchOnSliderChange({ ...queryParams }, { ...pagination }, fetchStockData);
         history.push(`/dashboard/screener?${stringify(queryParams, { encode: false })}`);
     };
 
     const handleTableChange = (type, { page, sizePerPage }) => {
-        const { pageSize, page: currentPage, ...queryParams } = {
-            ...parse(history.location.search.replace(/\?/g, '')),
-        };
+        const { pageSize, page: currentPage, ...queryParams } = parseQuery();
         const newPagination = { ...pagination, pageSize: sizePerPage, page: page };
         fetchStockData({ ...queryParams }, newPagination);
         history.push(
@@ -330,7 +408,23 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
     };
 
     return (
-        <React.Fragment>
+        <LoadingOverlay
+            active={loading}
+            spinner
+            text="Loading..."
+            styles={{
+                overlay: (base) => ({
+                    ...base,
+                    background: 'rgba(255, 255, 255, 0)',
+                }),
+                spinner: (base) => ({
+                    ...base,
+                    width: '100px',
+                    '& svg circle': {
+                        stroke: '#3d73dd',
+                    },
+                }),
+            }}>
             <Row>
                 <Col>
                     <div className="page-title-box">
@@ -530,7 +624,7 @@ const Screener = ({ fetchStockData, loading, data, pagination }) => {
                     </Card>
                 </Col>
             </Row>
-        </React.Fragment>
+        </LoadingOverlay>
     );
 };
 

@@ -6,13 +6,20 @@ import 'rc-slider/assets/index.css';
 import { formatLargeNumber } from '../../../utils';
 
 const RangeFilter = ({ id, label, incrementNumber, value, minValue, maxValue, onChange }) => {
+    const transformRangeValue = (value, min, max) => {
+        let newValue = [...value];
+        if (newValue[0] === min && newValue[1] === max) {
+            newValue = [];
+        } else if (newValue[0] === min) {
+            newValue[0] = 'x';
+        } else if (newValue[1] === max) {
+            newValue[1] = 'x';
+        }
+        return newValue;
+    };
+
     const onSliderChange = (changedValue) => {
-        console.log('changedValue', changedValue);
-        // onChange([
-        //     changedValue[0] === 0 ? minValue : changedValue[0] * incrementNumber,
-        //     changedValue[1] === 100 ? maxValue : changedValue[1] * incrementNumber,
-        // ]);
-        onChange(changedValue);
+        onChange(changedValue, transformRangeValue(changedValue, minValue, maxValue));
     };
 
     return (

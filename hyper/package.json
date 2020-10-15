@@ -46,6 +46,7 @@
         "react-draft-wysiwyg": "^1.14.5",
         "react-dropzone": "^11.0.1",
         "react-flatpickr": "^3.10.0",
+        "react-loading-overlay": "^1.0.1",
         "react-rating": "^2.0.5",
         "react-redux": "^7.2.0",
         "react-router-auth": "^1.0.1",
