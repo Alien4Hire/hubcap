@@ -27,7 +27,7 @@ export class TVChartContainer extends React.PureComponent {
 
   componentDidMount() {
     const widgetOptions = {
-      symbol: 'ACC',
+      symbol: 'TSLA',
       //symbol: 'BTC/USDT',
       //symbol: 'BTC/USD', //getUrlVars()["symbol"],
       datafeed: Datafeed,
@@ -320,14 +320,14 @@ const customIndicators = (PineJS) => {
       "_metainfoVersion": 40,
       "id": "strange-indicator@tv-basicstudies-1",
       "scriptIdPart": "",
-      "name": "strange-indicator",
+      "name": "Strange Indicator",
 
       // This description will be displayed in the Indicators window
       // It is also used as a "name" argument when calling the createStudy method
       "description": "strange-indicator",
 
       // This description will be displayed on the chart
-      "shortDescription": "strange-indicator",
+      "shortDescription": "Strange Indicator",
 
       "is_hidden_study": false,
       "is_price_study": true,
@@ -399,7 +399,11 @@ const customIndicators = (PineJS) => {
         console.log('CONTEXT:', this._context)
         console.log('CONTEXT TICKER:', PineJS.Std.ticker(this._context))
 
-        var symbol = "ACC#SI";
+        const ticker = PineJS.Std.ticker(this._context).replace(/"/g, '').replace('}', '')
+
+        console.log('Ticker:', ticker)
+
+        const symbol = `${ticker}#SI`;
         this._context.new_sym(symbol, PineJS.Std.period(this._context), PineJS.Std.period(this._context));
       };
 

@@ -104,7 +104,9 @@ export default {
       let bars = []
 
       if (symbolInfo.name.includes('#')) {
-        const values = await api.getStrangeIndicator('ACC', from, to)
+        const splitSymbol = symbolInfo.name.split('#')
+
+        const values = await api.getStrangeIndicator(splitSymbol[0], from, to)
 
         bars = values.map((value) => {
           return {
