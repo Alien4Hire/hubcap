@@ -27,4 +27,16 @@ router.get('/v1/symbols/:symbol/ohlc', async (req, res, nxt) => {
   } catch (err) { nxt(err) }
 })
 
+// get si
+router.get('/v1/symbols/:symbol/si', async (req, res, nxt) => {
+  try {
+    const { symbol } = req.params
+    const { from, to } = req.query
+
+    const ohlc = await database.getStrangeIndicator(symbol, from, to)
+
+    res.json(ohlc)
+  } catch (err) { nxt(err) }
+})
+
 module.exports = router

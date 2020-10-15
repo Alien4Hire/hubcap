@@ -31,3 +31,14 @@ exports.getOHLC = (symbol = '', from, to) => {
       t: 'time'
     })
 }
+
+exports.getStrangeIndicator = (symbol = '', from, to) => {
+  return knex('security')
+    .where('ticker', symbol)
+    .where('time', '>=', from)
+    .where('time', '<=', to)
+    .select({
+      i: 'strangeindicator',
+      t: 'time'
+    })
+}
