@@ -43,22 +43,22 @@ const addRangeFilter = (knexObj, rangeFieldValue, rangeFieldName) => {
   if (rangeValue.length < 2) {
     isValidRange = false;
   } else {
-    if (rangeValue[0] !== "x" || isNaN(rangeValue[0])) {
+    if (rangeValue[0] !== "x" && isNaN(rangeValue[0])) {
       isValidRange = false;
     }
-    if (rangeValue[1] !== "x" || isNaN(rangeValue[1])) {
+    if (rangeValue[1] !== "x" && isNaN(rangeValue[1])) {
       isValidRange = false;
     }
   }
   if (isValidRange) {
     if (rangeValue[0] === "x") {
-      knexObj.andWhereBetween(
+      knexObj.andWhere(
         rangeFieldName,
         "<=",
         Number(rangeValue[1]) //max value
       );
     } else if (rangeValue[1] === "x") {
-      knexObj.andWhereBetween(
+      knexObj.andWhere(
         rangeFieldName,
         ">=",
         Number(rangeValue[0]) // min value
@@ -125,7 +125,7 @@ exports.getStockData = (payload) => {
   }
 
   if (payload && payload.exchange) {
-    knexObj.andWhere("company_data.security_type", payload.exchange);
+    knexObj.andWhere("security.security_type", payload.exchange);
   }
 
   if (payload && Number(payload.attar_explosion)) {
@@ -142,7 +142,7 @@ exports.getStockData = (payload) => {
   if (payload && Number(payload.safe_entry)) {
     knexObj
       .andWhere(function () {
-        this.where("security.entry", ">=", 3).andWhere(
+        this.where("security.entry", ">=", 3).orWhere(
           "security.Entry_short",
           "<=",
           -3
@@ -157,7 +157,7 @@ exports.getStockData = (payload) => {
 
   if (payload && Number(payload.william_percent_range)) {
     knexObj.andWhere(function () {
-      this.where("security.R_check", "!=", 0).andWhere(
+      this.where("security.R_check", "!=", 0).orWhere(
         "security.R_checkone",
         "!=",
         0
@@ -166,9 +166,14 @@ exports.getStockData = (payload) => {
   }
 
   if (payload && payload.industry) {
-    knexObj.andWhere("company_data.finnhubIndustry", payload.industry);
+    if (payload.industry.toLowerCase() === "none") {
+      knexObj.whereNull("company_data.finnhubIndustry");
+    } else {
+      knexObj.andWhere("company_data.finnhubIndustry", payload.industry);
+    }
   }
-  // console.log("Query", knexObj.toString());
+
+  console.log("Query", knexObj.toString());
 
   return knexObj;
 };
