@@ -43,8 +43,8 @@ const volumeMinValue = 50000;
 const volumeMaxValue = 50000000;
 const marketCapMinValue = 100000000;
 const marketCapMaxValue = 200000000000;
-const daysSinceEntryMinValue = 1;
-const daysSinceEntryMaxValue = 21;
+const daysSinceEntryMinValue = 0;
+const daysSinceEntryMaxValue = 14;
 const exchangeOptions = ['Any', 'Stock', 'Forex', 'Crypto', 'Industry'];
 const industryOptions = [
     'Any',

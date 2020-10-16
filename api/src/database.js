@@ -85,7 +85,8 @@ exports.getStockData = (payload) => {
       "security.volume",
       "company_data.name",
       "company_data.finnhubIndustry",
-      "company_data.marketCapitalization"
+      "company_data.marketCapitalization",
+      "company_data.days_since_entry"
     );
   // .groupBy(
   //   "company_data.ticker",
@@ -153,6 +154,11 @@ exports.getStockData = (payload) => {
 
   // TODO: days since entry
   if (payload && payload.days_entry_range) {
+    addRangeFilter(
+      knexObj,
+      payload.days_entry_range,
+      "company_data.days_since_entry"
+    );
   }
 
   if (payload && Number(payload.william_percent_range)) {
