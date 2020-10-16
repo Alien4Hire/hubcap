@@ -36,7 +36,17 @@ exports.getOHLC = (symbol = "", from, to) => {
     });
 };
 
-const addRangeFilter = (knexObj, rangeFieldValue, rangeFieldName) => {
+const addRangeFilter = (
+  knexObj,
+  rangeFieldValue,
+  rangeFieldName,
+  transformValFn
+) => {
+  const transformFn =
+    transformValFn ||
+    function (val) {
+      return val;
+    };
   const rangeValue = rangeFieldValue.split(",");
   let isValidRange = true;
   // ignore if wrong value sent
@@ -55,21 +65,25 @@ const addRangeFilter = (knexObj, rangeFieldValue, rangeFieldName) => {
       knexObj.andWhere(
         rangeFieldName,
         "<=",
-        Number(rangeValue[1]) //max value
+        Number(transformFn(rangeValue[1])) //max value
       );
     } else if (rangeValue[1] === "x") {
       knexObj.andWhere(
         rangeFieldName,
         ">=",
-        Number(rangeValue[0]) // min value
+        Number(transformFn(rangeValue[0])) // min value
       );
     } else {
       knexObj.andWhereBetween(
         rangeFieldName,
-        rangeValue.map((item) => Number(item))
+        rangeValue.map((item) => Number(transformFn(item)))
       );
     }
   }
+};
+
+const marketCapTransform = (value) => {
+  return Math.round(value / 100000000);
 };
 
 exports.getStockData = (payload) => {
@@ -86,7 +100,7 @@ exports.getStockData = (payload) => {
       "company_data.name",
       "company_data.finnhubIndustry",
       "company_data.marketCapitalization",
-      "company_data.days_since_entry"
+      "security.rows_since_condition"
     );
   // .groupBy(
   //   "company_data.ticker",
@@ -105,12 +119,9 @@ exports.getStockData = (payload) => {
     addRangeFilter(
       knexObj,
       payload.market_cap_range,
-      "company_data.marketCapitalization"
+      "company_data.marketCapitalization",
+      marketCapTransform
     );
-    // knexObj.andWhereBetween(
-    //   "company_data.marketCapitalization",
-    //   payload.market_cap_range.split(",").map((item) => Number(item))
-    // );
   }
 
   if (payload && payload.volume_range) {
@@ -157,7 +168,7 @@ exports.getStockData = (payload) => {
     addRangeFilter(
       knexObj,
       payload.days_entry_range,
-      "company_data.days_since_entry"
+      "security.rows_since_condition"
     );
   }
 
