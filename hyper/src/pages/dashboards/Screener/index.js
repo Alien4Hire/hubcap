@@ -28,6 +28,9 @@ const columns = [
     {
         dataField: 'daily_change',
         text: 'Daily Change',
+        formatter: (cell) => {
+            return Number(cell)? `${Math.abs((1- Number(cell))*100).toFixed(1)}%` : `-`;
+        }
     },
     {
         dataField: 'volume',
