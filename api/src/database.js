@@ -42,3 +42,14 @@ exports.getStrangeIndicator = (symbol = '', from, to) => {
       t: 'time'
     })
 }
+
+exports.getEntrySLShort = (symbol = '', from, to) => {
+  return knex('security')
+    .where('ticker', symbol)
+    .where('time', '>=', from)
+    .where('time', '<=', to)
+    .select({
+      i: 'entrySLShort',
+      t: 'time'
+    })
+}

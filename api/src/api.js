@@ -33,9 +33,41 @@ router.get('/v1/symbols/:symbol/si', async (req, res, nxt) => {
     const { symbol } = req.params
     const { from, to } = req.query
 
-    const ohlc = await database.getStrangeIndicator(symbol, from, to)
+    const values = await database.getStrangeIndicator(symbol, from, to)
 
-    res.json(ohlc)
+    res.json(values)
+  } catch (err) { nxt(err) }
+})
+
+// get ess
+router.get('/v1/symbols/:symbol/ess', async (req, res, nxt) => {
+  try {
+    const { symbol } = req.params
+    const { from, to } = req.query
+
+    const values = await database.getEntrySLShort(symbol, from, to)
+
+    // extend to 10 bars in future
+    let index = 0
+    let lastValue = null
+    let lastIndex = 0
+
+    while (index < values.length) {
+      const value = values[index]
+
+      if (value && value.i) {
+        lastValue = value.i
+        lastIndex = index
+      } else {
+        if (lastValue) {
+          if (index < lastIndex + 10) value.i = lastValue
+        }
+      }
+
+      index++
+    }
+
+    res.json(values)
   } catch (err) { nxt(err) }
 })
 

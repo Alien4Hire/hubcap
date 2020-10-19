@@ -11,8 +11,8 @@ export default {
 
     return res.data
   },
-  getStrangeIndicator: async (symbol, from, to) => {
-    const res = await axios.get(`http://localhost:3500/v1/symbols/${symbol}/si?from=${from}&to=${to}`)
+  getIndicator: async (symbol, indicator = '', from, to) => {
+    const res = await axios.get(`http://localhost:3500/v1/symbols/${symbol}/${indicator}?from=${from}&to=${to}`)
 
     return res.data
   }
