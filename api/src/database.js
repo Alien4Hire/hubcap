@@ -32,35 +32,30 @@ exports.getOHLC = (symbol = '', from, to) => {
     })
 }
 
-exports.getStrangeIndicator = (symbol = '', from, to) => {
-  return knex('security')
-    .where('ticker', symbol)
-    .where('time', '>=', from)
-    .where('time', '<=', to)
-    .select({
-      i: 'strangeindicator',
-      t: 'time'
-    })
-}
+exports.getIndicator = (symbol = '', from, to, indicator = '') => knex('security')
+  .where('ticker', symbol)
+  .where('time', '>=', from)
+  .where('time', '<=', to)
+  .select({ t: 'time' })
+  .select({ i: indicator })
 
-exports.getEntrySLShort = (symbol = '', from, to) => {
-  return knex('security')
-    .where('ticker', symbol)
-    .where('time', '>=', from)
-    .where('time', '<=', to)
-    .select({
-      i: 'entrySLShort',
-      t: 'time'
-    })
-}
+// exports.getStrangeIndicator = (symbol = '', from, to) => {
+//   return knex('security')
+//     .where('ticker', symbol)
+//     .where('time', '>=', from)
+//     .where('time', '<=', to)
+//     .select({
+//       i: 'strangeindicator',
+//       t: 'time'
+//     })
+// }
 
-exports.getEntrySLLong = (symbol = '', from, to) => {
-  return knex('security')
-    .where('ticker', symbol)
-    .where('time', '>=', from)
-    .where('time', '<=', to)
-    .select({
-      i: 'entrySLLong',
-      t: 'time'
-    })
-}
+// exports.getEntrySLShort = (symbol, from, to) => {
+//   return commonQuery(symbol, from, to)
+//     .select({ i: 'entrySLShort' })
+// }
+
+// exports.getEntrySLLong = (symbol, from, to) => {
+//   return commonQuery(symbol, from, to)
+//     .select({ i: 'entrySLLong' })
+// }

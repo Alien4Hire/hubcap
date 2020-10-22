@@ -12,7 +12,7 @@ export default {
     return res.data
   },
   getIndicator: async (symbol, indicator = '', from, to) => {
-    const res = await axios.get(`http://localhost:3500/v1/symbols/${symbol}/${indicator}?from=${from}&to=${to}`)
+    const res = await axios.get(`http://localhost:3500/v1/symbols/${symbol}/indicators/${indicator}?from=${from}&to=${to}`)
 
     return res.data
   }

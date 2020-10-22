@@ -87,6 +87,10 @@ export class TVChartContainer extends React.PureComponent {
         // tvWidget.chart().createStudy('Strange Indicator', false, true)
         tvWidget.chart().createStudy('ESS Indicator', false, true)
         tvWidget.chart().createStudy('ESL Indicator', false, true)
+        tvWidget.chart().createStudy('EPS Indicator', false, true)
+        tvWidget.chart().createStudy('EPL Indicator', false, true)
+        tvWidget.chart().createStudy('ETS Indicator', false, true)
+        tvWidget.chart().createStudy('ETL Indicator', false, true)
 
       });
     });
