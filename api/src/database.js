@@ -53,3 +53,14 @@ exports.getEntrySLShort = (symbol = '', from, to) => {
       t: 'time'
     })
 }
+
+exports.getEntrySLLong = (symbol = '', from, to) => {
+  return knex('security')
+    .where('ticker', symbol)
+    .where('time', '>=', from)
+    .where('time', '<=', to)
+    .select({
+      i: 'entrySLLong',
+      t: 'time'
+    })
+}

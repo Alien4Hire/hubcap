@@ -2,19 +2,19 @@ export default (PineJS) => {
   return {
     // Replace the <study name> with your study name
     // The name will be used internally by the Charting Library
-    name: "Entry / Exit Indicator",
+    name: "ESS Indicator",
     metainfo: {
       "_metainfoVersion": 40,
-      "id": "entry-exit-indicator@tv-basicstudies-1",
+      "id": "ess-indicator@tv-basicstudies-1",
       "scriptIdPart": "",
-      "name": "Entry / Exit Indicator",
+      "name": "ESS Indicator",
 
       // This description will be displayed in the Indicators window
       // It is also used as a "name" argument when calling the createStudy method
-      "description": "Entry / Exit Indicator",
+      "description": "ESS Indicator",
 
       // This description will be displayed on the chart
-      "shortDescription": "Entry / Exit Indicator",
+      "shortDescription": "ESS Indicator",
 
       "is_hidden_study": false,
       "is_price_study": true,

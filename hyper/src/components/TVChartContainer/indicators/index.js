@@ -1,6 +1,11 @@
 import strangeIndicator from './simpleIndicator'
-import entryExitIndicator from './entryExitIndicator'
+import essIndicator from './essIndicator'
+import eslIndicator from './eslIndicator'
 
 export default (PineJS) => {
-  return Promise.resolve([strangeIndicator(PineJS), entryExitIndicator(PineJS)])
+  return Promise.resolve([
+    strangeIndicator(PineJS),
+    essIndicator(PineJS),
+    eslIndicator(PineJS)
+  ])
 }
