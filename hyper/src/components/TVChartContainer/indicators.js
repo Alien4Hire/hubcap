@@ -1,11 +1,8 @@
-import strangeIndicator from './simpleIndicator'
-import essIndicator from './essIndicator'
-import eslIndicator from './eslIndicator'
-
-
-
 export default (PineJS) => {
   const indicators = [{
+    name: 'Strange Indicator',
+    code: 'strangeindicator',
+  }, {
     name: 'ESS Indicator',
     code: 'entrySLShort',
   }, {
