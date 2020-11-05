@@ -17,7 +17,7 @@ function getLanguageFromURL() {
   const results = regex.exec(window.location.search);
   return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
-function getUrlVars() {
+function getUrlVars() { 
   var vars = {};
   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
     vars[key] = value;
