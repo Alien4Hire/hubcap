@@ -98,6 +98,8 @@ const ChartJs = React.lazy(() => import('../pages/charts/ChartJs'));
 // tables
 const BasicTables = React.lazy(() => import('../pages/tables/Basic'));
 const AdvancedTables = React.lazy(() => import('../pages/tables/Advanced'));
+//watchlist
+const Watchlist = React.lazy(() => import('../pages/TestPage'))
 // maps
 const GoogleMaps = React.lazy(() => import('../pages/GoogleMaps'));
 
@@ -140,7 +142,7 @@ const rootRoute = {
 // dashboards
 const dashboardRoutes = {
   path: '/dashboard',
-  name: 'Dashboards',
+  name: 'Dashboards', 
   icon: 'uil-home-alt',
   header: 'Navigation',
   children: [
@@ -299,7 +301,7 @@ const projectAppRoutes = {
     {
       path: '/apps/projects/list',
       name: 'List',
-      component: Projects,
+      component: Watchlist,
       route: PrivateRoute,
     },
     {
