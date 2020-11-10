@@ -1,11 +1,23 @@
 import React from "react";
-import { Typeahead } from "react-bootstrap-typeahead";
+import { Typeahead } from 'react-bootstrap-typeahead';
+import ReactDOM from 'react-dom';
+import options from './stocklist';
 
-export default class App extends React.Component {
-  state = {
-    taskName: ""
-  };
-  checkEnterKey(e){
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import './styles.css';
+
+
+export default class addWatchlistForm extends React.Component {
+  
+  constructor(props){
+		super(props)
+		this.state = {
+			taskName:""
+			};
+    this._typeahead = React.createRef();
+	};
+
+  checkEnterKey = e => {
     console.log('checkEnterKey')
     var keyCode = e.which || e.keyCode;
     if(keyCode == 13){
@@ -18,8 +30,6 @@ export default class App extends React.Component {
 
   updateTaskName = e => {
     console.log(e);   
-    if(e[0].ticker.length > 0)
-        this.props.newTask(e[0].ticker);
     this.setState({ taskName: e.length > 0 ? e[0].ticker : "" });
     console.log('updateTaskName')
 
@@ -28,26 +38,23 @@ export default class App extends React.Component {
   updateTask = e => {
     this.setState({taskName: e.target.value})
     console.log('updateTask')
+    
   };
 
-  handleAddTask = e => {
-    let name = e.target.value;
-    if (this.state.taskName.trim() !== "")
-      this.props.newTask(name);
-      console.log('handleAddTask')
-  };
 
   buttonAddTask = e =>{
     let name = e.target.value
     if(this.state.taskName.trim() !== "")
       this.props.newTask(this.state.taskName)
-      this.state.taskName = "";
-      this.setState({ taskName: e.length > 0 ? e[0].ticker : "" });
-      console.log(this.state.taskName)
       console.log('buttonAddTask')
-  }
-  
+      this.setState({ taskName: '' });
+      this._typeahead.current.clear();
+  };
 
+  emptyInput = e => {
+    this.setState({ taskName: '' });
+    console.log('empty input')
+  };
 
   render() {
     return (
@@ -57,43 +64,17 @@ export default class App extends React.Component {
             <div className="row">
               <div className="col-md-6">
                 <Typeahead
+                  ref={this._typeahead}
                   id="my-typeahead-id"
                   placeholder=""
                   onChange={this.updateTaskName}
-                  onClick={(e => this.updateTask(e), this.handleAddTask)}
+                  onOptionSelected={this.handleAddTask, this.emptyInput}
                   value={this.state.taskName}
-                  onKeyPress={e => this.checkEnterKey(e)}
+                  onKeyDown={e => this.checkEnterKey(e), this.emptyInput}
                   labelKey={option =>
                     `${option.ticker} ${option.security_type} `
                   }
-                  options={[
-                    {
-                      "": 0,
-                      ticker: "A",
-                      security_type: "Stock",
-                      big: 'hi'
-                    },
-                    {
-                      "": 1,
-                      ticker: "AA",
-                      security_type: "Stock"
-                    },
-                    {
-                      "": 2,
-                      ticker: "AAA",
-                      security_type: "Stock"
-                    },
-                    {
-                      "": 3,
-                      ticker: "AAAU",
-                      security_type: "Stock"
-                    },
-                    {
-                      "": 4,
-                      ticker: "AACG",
-                      security_type: "Stock"
-                    }
-                  ]}
+                  options={options}
                 />
               </div>
               <div className="col-md-4">
@@ -101,6 +82,7 @@ export default class App extends React.Component {
                   type="button"
                   className="btn btn-primary"
                   onClick={this.buttonAddTask}
+                  onKeyPress={e => this.checkEnterKey(e)}
                 >
                   Add New...
                 </button>
@@ -110,5 +92,5 @@ export default class App extends React.Component {
         </div>
       </div>
     );
-  }
-}
+  };
+};

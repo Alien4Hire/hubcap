@@ -1,6 +1,4 @@
-export default class choice {
-
-choice = [
+export default [
     {
       "": 0,
       "ticker": "A",
@@ -47711,6 +47709,4 @@ choice = [
       "ticker": "ZYXI",
       "security_type": "Stock"
     }
-  ]
-
-}
+];

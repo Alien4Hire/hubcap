@@ -10,7 +10,7 @@ import AddWatchlistForm from "../components/Watchlist/addWatchlistForm";
 class watchlist extends React.Component {
 
 	constructor(props){
-		super(props)
+		super(props) 
 		this.state = {
 			taskList:[]
 			};
@@ -30,7 +30,7 @@ class watchlist extends React.Component {
                         <div className = "row">
                             <div className="col-md-12">
                                 <div style = {{textAlign:"center"}}>
-                                    <h2> Bootstrap React TODO Application </h2>
+                                    <h2> Watchlist </h2>
                                 </div>
                             </div>
                         </div>
