@@ -23,8 +23,8 @@ const StatisticsWidget = (props: StatisticsWidgetProps) => {
         <Card className={classNames('widget-flat', props.bgclassName)}>
             <CardBody>
                 {props.icon && (
-                    <div className="float-right">
-                        <i className={classNames(props.icon, 'widget-icon')}></i>
+                    <div className="float-left">
+                        <img src={{uri: props.icon}}></img>
                     </div>
                 )}
                 <h5 className={classNames('font-weight-normal', 'mt-0', textClass)} title={props.description}>

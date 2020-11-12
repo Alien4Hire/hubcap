@@ -12,11 +12,11 @@ const Statistics = () => {
                     <TitleWidget
                         icon="mdi mdi-account-multiple"
                         description="Number of Customers"
-                        title="Customers"
+                        title="AAPL"
                         stats="36,254"
                         trend={{
                             textClass: 'text-success',
-                            icon: 'mdi mdi-arrow-up-bold',
+                            icon: 'https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png',
                             value: '5.27%',
                             time: 'Since last month',
                         }}></TitleWidget>
