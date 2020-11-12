@@ -1,0 +1,1 @@
+//Include information about how this stock correlates with different industries/s+p 500 etc

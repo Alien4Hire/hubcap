@@ -62,7 +62,7 @@ class RightSideBar extends Component<RightSideBarProps, RightSideBarState> {
     render() {
         const title = this.props.title;
         const component = this.props.children || null;
-
+        // console.log(this.props.children)
         return (
             <React.Fragment>
                 <SimpleBar style={{ maxHeight: '100%', zIndex: 10000 }}>

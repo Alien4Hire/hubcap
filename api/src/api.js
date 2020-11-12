@@ -1,6 +1,7 @@
 const express = require('express')
 
-const database = require('./database')
+const database = require('./database/chart')
+const industryApi = require('./database/industry')
 
 const router = express.Router()
 
@@ -135,4 +136,16 @@ router.get('/v1/symbols/:symbol/esl', async (req, res, nxt) => {
   } catch (err) { nxt(err) }
 })
 
+// get industry data
+router.get('/v1/symbols/:secType/gid', async (req, res, nxt) => {
+  try {
+    const { secType } = req.params
+    const gid = await industryApi.getIndustry(secType)
+
+    res.json(gid)
+  } catch (err) { nxt(err) }
+})
+
+
 module.exports = router
+

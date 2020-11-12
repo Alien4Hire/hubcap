@@ -99,14 +99,15 @@ const ChartJs = React.lazy(() => import('../pages/charts/ChartJs'));
 const BasicTables = React.lazy(() => import('../pages/tables/Basic'));
 const AdvancedTables = React.lazy(() => import('../pages/tables/Advanced'));
 //watchlist
-const Watchlist = React.lazy(() => import('../pages/TestPage'))
+const Watchlist = React.lazy(() => import('../pages/Watchlist'))
 // maps
 const GoogleMaps = React.lazy(() => import('../pages/GoogleMaps'));
 
 
 ///react charting container
 
-const TestPage = React.lazy(() => import('../pages/TestPage'));
+const TestPage = React.lazy(() => import('../pages/TestPage/TestPage'));
+const IndustryCharts = React.lazy(() => import('../pages/IndustryCharts'));
 // handle auth and authorization
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => (
@@ -148,8 +149,8 @@ const dashboardRoutes = {
   children: [
     {
       path: '/dashboard/analytics',
-      name: 'Analytics',
-      component: AnalyticsDashboard,
+      name: 'Charting',
+      component: IndustryCharts,
       route: PrivateRoute,
       children: [
         {
@@ -160,8 +161,8 @@ const dashboardRoutes = {
         },
         {
           path: '/Industry',
-          name: 'Macro',
-          component: AnalyticsDashboard,
+          name: 'Industry',
+          component: IndustryCharts,
           route: PrivateRoute,
         },
       ],
@@ -191,14 +192,34 @@ const dashboardRoutes = {
   ],
 };
 
-const calendarAppRoutes = {
-  path: '/apps/calendar',
+const use_Watchlist = {
+  path: '/apps/projects',
+  name: 'Watchlist',
+  route: PrivateRoute,
+  roles: ['Admin'],
+  icon: 'uil-briefcase',
+  header: 'Apps',
+
+  children: [
+    // <Watchlist />
+    {
+      path: '/watchlist',
+      name: 'Watchlist',
+      component: Watchlist,
+      route: PrivateRoute,
+    },
+
+  ],
+};
+
+const Portfolio = {
+  path: '/apps/Portfolio',
   name: 'Portfolio',
   route: PrivateRoute,
   roles: ['Admin'],
   icon: 'uil-calender',
   component: CalendarApp,
-  header: 'Apps',
+
 };
 
 const chatAppRoutes = {
@@ -290,41 +311,6 @@ const emailAppRoutes = {
   ],
 };
 
-const projectAppRoutes = {
-  path: '/apps/projects',
-  name: 'Watchlist',
-  route: PrivateRoute,
-  roles: ['Admin'],
-  icon: 'uil-briefcase',
-
-  children: [
-    {
-      path: '/apps/projects/list',
-      name: 'List',
-      component: Watchlist,
-      route: PrivateRoute,
-    },
-    {
-      path: '/apps/projects/:id/details',
-      name: 'Detail',
-      component: ProjectDetail,
-      route: PrivateRoute,
-    },
-    {
-      path: '/apps/projects/gantt',
-      name: 'Gantt',
-      component: ProjectGannt,
-      route: PrivateRoute,
-    },
-    {
-      path: '/apps/projects/new',
-      name: 'Create Project',
-      component: ProjectForm,
-      route: PrivateRoute,
-    },
-  ],
-};
-
 const socialAppRoutes = {
   path: '/apps/social',
   name: 'Twitter',
@@ -340,6 +326,7 @@ const testRoutes = {
   route: PrivateRoute,
   roles: ['Admin'],
   icon: 'uil-rss',
+  header: 'Custom',
   component: TestPage,
 };
 //const taskAppRoutes = {
@@ -365,11 +352,11 @@ const testRoutes = {
 //};
 
 const appRoutes = [
-  calendarAppRoutes,
+  use_Watchlist,
+  Portfolio,
   chatAppRoutes,
   ecommerceAppRoutes,
   emailAppRoutes,
-  projectAppRoutes,
   socialAppRoutes,
 
   //taskAppRoutes,
@@ -380,7 +367,6 @@ const pageRoutes = {
   path: '/pages',
   name: 'Upgrade',
   icon: 'uil-copy-alt',
-  header: 'Custom',
   children: [
     {
       path: '/pages/starter',

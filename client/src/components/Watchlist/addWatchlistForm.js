@@ -72,7 +72,7 @@ export default class addWatchlistForm extends React.Component {
                   value={this.state.taskName}
                   onKeyDown={e => this.checkEnterKey(e), this.emptyInput}
                   labelKey={option =>
-                    `${option.ticker} ${option.security_type} `
+                    `${option.ticker}    ${option.names}    ${option.security_type}`
                   }
                   options={options}
                 />
@@ -84,7 +84,7 @@ export default class addWatchlistForm extends React.Component {
                   onClick={this.buttonAddTask}
                   onKeyPress={e => this.checkEnterKey(e)}
                 >
-                  Add New...
+                  Add...
                 </button>
               </div>
             </div>

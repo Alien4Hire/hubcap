@@ -1,0 +1,188 @@
+ {
+ "industryList": [
+  {
+    "Industry": "Aerospace&Defense",
+    "icon": "mdi mdi-shield-airplane-outline"
+  },
+  {
+    "Industry": "Airlines",
+    "icon": "mdi mdi-airplane-takeoff"
+  },
+  {
+    "Industry": "AutoComponents",
+    "icon": "mdi mdi-engine"
+  },
+  {
+    "Industry": "Automobiles",
+    "icon": "mdi mdi-car-estate"
+  },
+  {
+    "Industry": "Banking",
+    "icon": "mdi mdi-bank-outline"
+  },
+  {
+    "Industry": "Beverages",
+    "icon": "mdi mdi-coffee"
+  },
+  {
+    "Industry": "Biotechnology",
+    "icon": "mdi mdi-biohazard"
+  },
+  {
+    "Industry": "Building",
+    "icon": "uil-building"
+  },
+  {
+    "Industry": "Chemicals",
+    "icon": "mdi mdi-beaker"
+  },
+  {
+    "Industry": "CommercialServices&Supplies",
+    "icon": "dripicons-user"
+  },
+  {
+    "Industry": "Communications",
+    "icon": "mdi mdi-cellphone-nfc"
+  },
+  {
+    "Industry": "Construction",
+    "icon": "mdi mdi-worker"
+  },
+  {
+    "Industry": "Consumerproducts",
+    "icon": "mdi mdi-shopping"
+  },
+  {
+    "Industry": "Distributors",
+    "icon": "mdi mdi-truck-delivery"
+  },
+  {
+    "Industry": "DiversifiedConsumerServices",
+    "icon": "mdi mdi-headset"
+  },
+  {
+    "Industry": "ElectricalEquipment",
+    "icon": "mdi mdi-power-plug"
+  },
+  {
+    "Industry": "Energy",
+    "icon": "mdi mdi-solar-power"
+  },
+  {
+    "Industry": "FinancialServices",
+    "icon": "mdi mdi-finance"
+  },
+  {
+    "Industry": "FoodProducts",
+    "icon": "mdi mdi-food-apple"
+  },
+  {
+    "Industry": "HealthCare",
+    "icon": "mdi mdi-hospital-building"
+  },
+  {
+    "Industry": "Hotels",
+    "icon": "mdi mdi-hotel"
+  },
+  {
+    "Industry": "Restaurants&Leisure",
+    "icon": "mdi mdi-food-fork-drink"
+  },
+  {
+    "Industry": "IndustrialConglomerates",
+    "icon": "mdi mdi-factory"
+  },
+  {
+    "Industry": "Insurance",
+    "icon": "mdi mdi-home-flood"
+  },
+  {
+    "Industry": "LeisureProducts",
+    "icon": "mdi mdi-grill"
+  },
+  {
+    "Industry": "LifeSciencesTools&Services",
+    "icon": "mdi mdi-dna"
+  },
+  {
+    "Industry": "Logistics&Transportation",
+    "icon": "mdi mdi-truck-fast"
+  },
+  {
+    "Industry": "Machinery",
+    "icon": "mdi mdi-robot-industrial"
+  },
+  {
+    "Industry": "Marine",
+    "icon": "mdi mdi-ship-wheel"
+  },
+  {
+    "Industry": "Media",
+    "icon": "mdi mdi-newspaper"
+  },
+  {
+    "Industry": "Metals&Mining",
+    "icon": "mdi mdi-pickaxe"
+  },
+  {
+    "Industry": "Packaging",
+    "icon": "mdi mdi-package-variant"
+  },
+  {
+    "Industry": "Pharmaceuticals",
+    "icon": "mdi mdi-pill"
+  },
+  {
+    "Industry": "ProfessionalServices",
+    "icon": "mdi mdi-tie"
+  },
+  {
+    "Industry": "RealEstate",
+    "icon": "mdi mdi-sign-real-estate"
+  },
+  {
+    "Industry": "Retail",
+    "icon": "mdi mdi-cart-outline"
+  },
+  {
+    "Industry": "Road&Rail",
+    "icon": "mdi mdi-railroad-light"
+  },
+  {
+    "Industry": "Semiconductors",
+    "icon": "mdi mdi-chip"
+  },
+  {
+    "Industry": "Technology",
+    "icon": "mdi mdi-rocket"
+  },
+  {
+    "Industry": "Telecommunication",
+    "icon": "mdi mdi-phone-classic"
+  },
+  {
+    "Industry": "Textiles",
+    "icon": " mdi mdi-tshirt-crew-outline"
+  },
+  {
+  "Industry": "Apparel&LuxuryGoods",
+    "icon": "mdi mdi-ring"
+  },
+  {
+    "Industry": "Tobacco",
+    "icon": "mdi mdi-cigar"
+  },
+  {
+    "Industry": "TradingCompanies&Distributors",
+    "icon": "mdi mdi-account-cash"
+  },
+  {
+    "Industry": "TransportationInfrastructure",
+    "icon": "mdi mdi-bus-stop-uncovered"
+  },
+  {
+    "Industry": "Utilities",
+    "icon": "mdi mdi-water-well-outline"
+  }
+]
+ }
