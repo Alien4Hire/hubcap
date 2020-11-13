@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import SimpleBar from 'simplebar-react';
-
+import { Button } from 'reactstrap';
 import logoSm from '../assets/images/logo_sm.png';
 import logoDark from '../assets/images/logo-dark.png';
 import logoDarkSm from '../assets/images/logo_sm_dark.png';
@@ -108,6 +108,10 @@ class LeftSidebar extends Component<LeftSidebarProps> {
         const hideLogo = this.props.hideLogo || false;
         const hideUserProfile = this.props.hideUserProfile || false;
 
+        // condensedMenu = () => {
+
+        // }
+
         return (
             <React.Fragment>
                 <div className="left-side-menu" ref={node => (this.menuNodeRef = node)}>
@@ -120,7 +124,7 @@ class LeftSidebar extends Component<LeftSidebarProps> {
                                 <img src={isLight ? logoSm : logoDarkSm} alt="logo" height="16" />
                             </span>
                         </Link>
-
+                            
                         <Link to="/" className="logo text-center logo-dark">
                             <span className="logo-lg">
                                 <img src={isLight ? logoDark : logo} alt="logo" height="16" />
@@ -134,6 +138,7 @@ class LeftSidebar extends Component<LeftSidebarProps> {
 
                     {!isCondensed && (
                         <SimpleBar style={{ maxHeight: '100%' }} timeout={500} scrollbarMaxSize={320}>
+                            {/* <button onClick={isCondensed}><i className='mdi mdi-less-than'></i></button> */}
                             <SideBarContent
                                 menuClickHandler={this.handleClick}
                                 isLight={isLight}

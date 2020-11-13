@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import MetisMenu from 'metismenujs/dist/metismenujs';
 
 import { initMenu, changeActiveMenuFromLocation } from '../redux/actions';
+import Watchlist from '../pages/Watchlist';
 
 const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activatedMenuItemIds }) => {
     return (
@@ -32,6 +33,16 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
                 })}
                 aria-expanded={activatedMenuItemIds.indexOf(item.id) >= 0}>
                 {item.children.map((child, i) => {
+
+                    if (child.name === 'watchlist') {
+                        // console.log(child)
+                        return(
+                            <React.Fragment key={i}>
+                                <Watchlist/>
+                            </React.Fragment>
+                        )
+                    }
+
                     return (
                         <React.Fragment key={i}>
                             {child.children ? (

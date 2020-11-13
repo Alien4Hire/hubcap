@@ -26,14 +26,7 @@ export default class watchlist extends React.Component {
 
 	render(){
 		return(
-                    <div>
-                        <div className = "row">
-                            <div className="col-md-12">
-                                <div style = {{textAlign:"center"}}>
-                                    <h2> Watchlist </h2>
-                                </div>
-                            </div>
-                        </div>
+                    <div className='navbar-watchlist'>
                         {/*Create Task Form */}
                         <AddWatchlistForm
                             newTask = {this.handleAddTask}                        

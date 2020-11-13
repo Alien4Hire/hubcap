@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 
 import { isUserAuthenticated, getLoggedInUser } from '../helpers/authUtils';
-
+import options from '../components/Watchlist/stocklist'
 // lazy load all the views
 
 // auth
@@ -17,6 +17,7 @@ const EcommerceDashboard = React.lazy(() => import('../pages/dashboards/TradingL
 const CRMDashboard = React.lazy(() => import('../pages/dashboards/CRM'));
 const AnalyticsDashboard = React.lazy(() => import('../pages/dashboards/Analytics'));
 const ProjectDashboard = React.lazy(() => import('../pages/dashboards/Project'));
+const ScreenerDashboard = React.lazy(() => import('../pages/dashboards/Screener'));
 // apps
 const CalendarApp = React.lazy(() => import('../pages/apps/Calendar'));
 const Projects = React.lazy(() => import('../pages/apps/Projects/'));
@@ -168,9 +169,9 @@ const dashboardRoutes = {
       ],
     },
     {
-      path: '/dashboard/crm',
+      path: '/dashboard/screener',
       name: 'Screener',
-      component: CRMDashboard,
+      component: ScreenerDashboard,
       route: PrivateRoute,
     },
     {
@@ -198,13 +199,13 @@ const use_Watchlist = {
   route: PrivateRoute,
   roles: ['Admin'],
   icon: 'uil-briefcase',
-  header: 'Apps',
+  
 
   children: [
     // <Watchlist />
     {
       path: '/watchlist',
-      name: 'Watchlist',
+      name: 'watchlist',
       component: Watchlist,
       route: PrivateRoute,
     },
@@ -219,6 +220,7 @@ const Portfolio = {
   roles: ['Admin'],
   icon: 'uil-calender',
   component: CalendarApp,
+  header: 'Apps',
 
 };
 

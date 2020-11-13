@@ -84,7 +84,7 @@ export default class addWatchlistForm extends React.Component {
                   onClick={this.buttonAddTask}
                   onKeyPress={e => this.checkEnterKey(e)}
                 >
-                  Add New...
+                  +
                 </button>
               </div>
             </div>

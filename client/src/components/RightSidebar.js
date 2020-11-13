@@ -20,7 +20,7 @@ class RightSideBar extends Component<RightSideBarProps, RightSideBarState> {
     rightBarNodeRef: any;
 
     static defaultProps = {
-        title: 'Right Sidebar',
+        title: 'Settings',
     };
 
     constructor(props) {
