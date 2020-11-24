@@ -1,0 +1,630 @@
+// Styles
+
+// title section
+.Title-card {
+    width: 50vw;
+    display: flex;
+}
+
+.ticker-info {
+    display: inline-flex;
+}
+
+.company-name-container {
+    display: inline-flex;
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.top-left img {
+    position: relative;
+    margin-top: -2vh;
+    max-width: 100%;
+    height: auto;
+}
+
+.company-ticker {
+    margin-left: 2.5vh;
+    padding: 0.7vh 1.4vh;
+    position: absolute;
+    border: 1px gray solid;
+    font-size: 2vh;
+}
+
+.company-name {
+    margin-top: 3vh;
+    padding-left: 2vh;
+}
+
+.right-column {
+    flex: 20 0 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 30vw;
+    margin-top: -10vh;
+    padding-bottom: 2vh;
+}
+
+.text-below {
+    text-align: center;
+}
+
+.right-column .current-price {
+    padding-bottom: 1vh;
+    font-size: 2.2vh;
+}
+
+.price-change-green {
+    color: green;
+    font-size: 2.7vh;
+    padding-bottom: 1.5vh;
+}
+
+.price-change-red {
+    color: red;
+    font-size: 2.7vh;
+    padding-bottom: 3vh;
+}
+// Charts
+.real-time-info,
+.view-advanced-chart {
+    font-size: 1.3vh;
+}
+// related table
+.Related-card {
+    max-width: 55vh;
+}
+
+.big-table tr td {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    height: 1vh !important;
+    position: relative;
+}
+
+.table-header {
+    position: sticky;
+}
+
+.first-column {
+    display: block;
+}
+
+.table-logo {
+    max-width: 90%;
+    text-align: start;
+    padding: 0 0;
+}
+
+.ticker-text {
+    text-align: right;
+}
+
+.mobile-position {
+    display: none;
+}
+
+@media (max-width: 3300px) {
+    .table-logo {
+        max-width: 60%;
+    }
+}
+
+@media (max-width: 1750px) {
+    .last-column {
+        display: none;
+    }
+
+    .table-logo {
+        max-width: 40%;
+        text-align: start;
+        padding: 0 0;
+    }
+
+    .mobile-position {
+        display: none;
+    }
+}
+
+@media (max-width: 1370px) {
+    .table-logo {
+        max-width: 70%;
+        min-width: 40%;
+        text-align: start;
+        padding: 0 0;
+    }
+
+    .mobile-position {
+        display: none;
+    }
+}
+
+@media (max-width: 1350px) {
+    .second-col {
+        display: flexbox;
+    }
+
+    .secondary-column {
+        display: none;
+    }
+    .text-muted {
+        display: none;
+    }
+
+    .Related-card {
+        max-width: 13vh;
+        padding: 0 0;
+    }
+
+    .table-logo {
+        display: none;
+    }
+
+    .first-column {
+        display: none;
+    }
+
+    .mobile-logo {
+        max-width: 40%;
+        min-width: 40%;
+        text-align: start;
+        padding: 0 0;
+    }
+
+    .mobile-ticker {
+        margin-right: -6vw;
+        margin-bottom: -2vh;
+        text-align: right;
+        overflow: hidden;
+    }
+
+    .mobile-position {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 1170px) {
+    .Title-card {
+        width: 80vw;
+        display: flex;
+    }
+
+    .ticker-info {
+        display: inline-flex;
+    }
+
+    .company-name-container {
+        display: inline-flex;
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .top-left img {
+        position: relative;
+        margin-top: 1vh;
+        max-width: 80%;
+        height: auto;
+    }
+
+    .company-ticker {
+        margin-left: 1vh;
+        padding: 0.7vh 1.4vh;
+        position: absolute;
+        border: 1px gray solid;
+        font-size: 2vh;
+    }
+
+    .company-name {
+        margin-top: 3vh;
+        padding-left: 2vh;
+        display: none;
+    }
+
+    .right-column {
+        flex: 20 0 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 28vw;
+        margin-top: -8vh;
+        padding-bottom: 2vh;
+    }
+
+    .text-below {
+        text-align: center;
+    }
+
+    .right-column .current-price {
+        padding-bottom: 1vh;
+        font-size: 2.2vh;
+    }
+
+    .price-change-green {
+        color: green;
+        font-size: 2.7vh;
+        padding-bottom: 1.5vh;
+    }
+
+    .price-change-red {
+        color: red;
+        font-size: 2.7vh;
+        padding-bottom: 3vh;
+    }
+
+    .real-time-info,
+    .view-advanced-chart {
+        font-size: 1.3vh;
+    }
+
+    .last-column {
+        display: none;
+    }
+
+    .last-column {
+        display: none;
+    }
+
+    .table-logo {
+        max-width: 40%;
+        min-width: 40%;
+        text-align: start;
+        padding: 0 0;
+    }
+}
+@media (max-width: 769px) {
+    .trading-Lab {
+        margin-top: -10vh;
+    }
+
+    .Title-card {
+        width: 100vh;
+        display: flex;
+    }
+
+    .ticker-info {
+        display: inline-flex;
+    }
+
+    .company-title-section {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .company-name-container {
+        display: inline-flex;
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .top-left img {
+        position: relative;
+        margin-top: -2vh;
+        max-width: 75%;
+        height: auto;
+    }
+
+    .company-ticker {
+        margin-left: 1vh;
+        margin-bottom: -5vh;
+        padding: 0.7vh 1.4vh;
+        position: absolute;
+        border: 1px gray solid;
+        font-size: 2vh;
+    }
+
+    .company-name {
+        margin-top: 2vh;
+        margin-left: -3vh;
+        display: block;
+    }
+
+    .right-column {
+        flex: 20 0 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 40vw;
+        margin-top: -13vh;
+        padding-bottom: 0vh;
+    }
+
+    .text-below {
+        text-align: center;
+        margin-top: 10vh;
+    }
+
+    .right-column .current-price {
+        padding-bottom: 1vh;
+        font-size: 2vh;
+    }
+
+    .price-change-green {
+        color: green;
+        font-size: 2vh;
+        padding-bottom: 1vh;
+    }
+
+    .price-change-red {
+        color: red;
+        font-size: 2vh;
+        padding-bottom: 0.1vh;
+    }
+
+    .real-time-info,
+    .view-advanced-chart {
+        font-size: 1vh;
+        padding-bottom: 0px;
+    }
+
+    .last-column {
+        display: none;
+    }
+
+    .last-column {
+        display: none;
+    }
+
+    .table-logo {
+        max-width: 40%;
+        min-width: 40%;
+        text-align: start;
+        padding: 0 0;
+    }
+}
+
+@media (width: 768px) {
+    .right-column {
+        flex: 20 0 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 25vw;
+        margin-top: -12vh;
+        padding-bottom: 0vh;
+    }
+
+    .last-column {
+        display: none;
+    }
+}
+
+@media (max-width: 501px) {
+    .trading-Lab {
+        margin-top: -10vh;
+    }
+
+    .Title-card {
+        width: 100vh;
+        display: flex;
+    }
+
+    .ticker-info {
+        display: inline-flex;
+    }
+
+    .company-title-section {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .company-name-container {
+        display: inline-flex;
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .top-left img {
+        position: relative;
+        margin-top: 2vh;
+        max-width: 25%;
+        height: auto;
+        margin-left: 0.5vh;
+    }
+
+    .company-ticker {
+        margin-left: -0.6vw;
+        margin-bottom: -5.5vh;
+        padding: 0.2vh 0.4vh;
+        position: absolute;
+        border: 1px gray solid;
+        font-size: 2vh;
+    }
+
+    .company-name {
+        // margin-left: -6vw;
+        // margin-top: 3vh;
+        // padding: 0.2vh 0.4vh;
+        // position: absolute;
+        // font-size: 3vh;
+        display: none;
+    }
+
+    .right-column {
+        flex: 20 0 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 30vw;
+        margin-top: -13vh;
+        padding-bottom: 2vh;
+    }
+
+    .text-below {
+        text-align: center;
+        margin-top: 10vh;
+    }
+
+    .right-column .current-price {
+        padding-bottom: 1.5vh;
+        font-size: 2vh;
+    }
+
+    .price-change-green {
+        color: green;
+        font-size: 2vh;
+        padding-bottom: 1vh;
+    }
+
+    .price-change-red {
+        color: red;
+        font-size: 2vh;
+        padding-bottom: 1vh;
+    }
+
+    .real-time-info,
+    .view-advanced-chart {
+        font-size: 1vh;
+        padding-bottom: 0px;
+    }
+
+    .last-column {
+        display: none;
+    }
+}
+
+@media (width: 411px) {
+    .top-left img {
+        position: relative;
+        margin-top: 1vh;
+        max-width: 40%;
+        height: auto;
+        margin-left: -2vh;
+    }
+    .company-name {
+        margin-left: 13vw;
+        margin-top: 1vh;
+        padding: 0.2vh 0.4vh;
+        position: absolute;
+        font-size: 3vh;
+        display: block;
+    }
+    .right-column {
+        flex: 20 0 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 30vw;
+        margin-top: -11vh;
+        padding-bottom: 0vh;
+    }
+    .company-ticker {
+        margin-left: -4vw;
+        margin-bottom: -3vh;
+        padding: 0.2vh 0.4vh;
+        position: absolute;
+        border: 1px gray solid;
+        font-size: 1.5vh;
+    }
+
+    .last-column {
+        display: none;
+    }
+}
+
+@media (max-width: 300px) {
+    .trading-Lab {
+        margin-top: -10vh;
+    }
+
+    .Title-card {
+        width: 100vh;
+        display: flex;
+    }
+
+    .ticker-info {
+        display: inline-flex;
+    }
+
+    .company-title-section {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .company-name-container {
+        display: inline-flex;
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .top-left img {
+        position: relative;
+        margin-bottom: -2vh;
+        margin-top: -2vh;
+        max-width: 25%;
+        height: auto;
+        margin-left: -3vh;
+    }
+
+    .company-ticker {
+        margin-left: -9.6vw;
+        margin-bottom: -4vh;
+        padding: 0.2vh 0.4vh;
+        position: absolute;
+        border: 1px gray solid;
+        font-size: 2vh;
+    }
+
+    .company-name {
+        // margin-left: -6vw;
+        // margin-top: 3vh;
+        // padding: 0.2vh 0.4vh;
+        // position: absolute;
+        // font-size: 3vh;
+        display: none;
+    }
+
+    .right-column {
+        flex: 20 0 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 15vw;
+        margin-top: -12vh;
+        padding-bottom: 2vh;
+    }
+
+    .text-below {
+        text-align: center;
+        margin-top: 10vh;
+    }
+
+    .right-column .current-price {
+        padding-bottom: 1.5vh;
+        font-size: 2vh;
+    }
+
+    .price-change-green {
+        color: green;
+        font-size: 2vh;
+        padding-bottom: 1vh;
+    }
+
+    .price-change-red {
+        color: red;
+        font-size: 2vh;
+        padding-bottom: 1vh;
+    }
+
+    .real-time-info,
+    .view-advanced-chart {
+        font-size: 1vh;
+        padding-bottom: 0px;
+    }
+
+    .last-column {
+        display: none;
+    }
+}

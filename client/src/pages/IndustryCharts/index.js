@@ -1,17 +1,13 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col } from 'reactstrap';
 import { TVChartContainer } from '../../components/TVChartContainer/index';
-import CardContainer from './CardContainer'
-
-
-
+import CardContainer from './CardContainer';
 
 const IndustryCharts = () => {
-
+    const [symbol, setSymbol] = useState('TECHNOLOGY');
 
     return (
-
         <React.Fragment>
             {/* <Row>
                 <Col>
@@ -33,11 +29,10 @@ const IndustryCharts = () => {
 
             <Row>
                 <Col xl={3} lg={4}>
-                    <CardContainer/>
+                    <CardContainer />
                 </Col>
                 <Col xl={9} lg={8}>
-                    
-                    <TVChartContainer style={{ maxHeight: '800px', width: '80%' }}/>
+                    <TVChartContainer style={{ maxHeight: '800px', width: '80%' }} symbol={symbol} />
                 </Col>
             </Row>
 

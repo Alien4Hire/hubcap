@@ -4,10 +4,10 @@ import Chart from 'react-apexcharts';
 import { Card, CardBody } from 'reactstrap';
 
 // SplineAreaChart
-const SplineAreaChart = () => {
+const SplineAreaChart = ({ allClose, ticker, time }) => {
     const apexAreaChart1Opts = {
         chart: {
-            height: 380,
+            height: 600,
             type: 'area',
         },
         dataLabels: {
@@ -20,9 +20,31 @@ const SplineAreaChart = () => {
         colors: ['#727cf5', '#6c757d'],
         legend: {
             offsetY: -10,
+            show: false,
         },
         xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            labels: {
+                show: false,
+                formatter: (time) => {
+                    return new Date(time * 1000).toLocaleDateString('en-US');
+                },
+                datetimeFormatter: {
+                    year: 'yyyy',
+                },
+            },
+
+            enabled: false,
+            show: false,
+            categories: time,
+        },
+        yaxis: {
+            enabled: true,
+            show: true,
+            labels: {
+                formatter: (allClose) => {
+                    return '$' + Math.round(allClose);
+                },
+            },
         },
         tooltip: {
             fixed: {
@@ -37,23 +59,39 @@ const SplineAreaChart = () => {
             },
             borderColor: '#f1f3fa',
         },
+        title: {
+            margin: 10,
+        },
     };
 
     const apexAreaChart1Data = [
         {
-            name: 'Series 1',
-            data: [31, 40, 28, 51, 42, 109, 100],
-        },
-        {
-            name: 'Series 2',
-            data: [11, 32, 45, 32, 34, 52, 41],
+            name: ticker,
+            data: allClose,
         },
     ];
+    const myStyle = {
+        marginTop: -15,
+        marginLeft: 20,
+    };
+    const myCard = {
+        paddingBottom: 0,
+        paddingLeft: 2,
+        paddingRight: 2,
+        maxWidth: 680,
+        minWidth: 280,
+    };
+    const cardBody = {
+        maxWidth: 780,
+        minWidth: 280,
+    };
 
     return (
-        <Card>
-            <CardBody>
-                <h4 className="header-title mb-3">Spline Area</h4>
+        <Card className="cardBody" style={cardBody}>
+            <CardBody className="myCard" style={myCard}>
+                <h4 className="header-title mb-3" style={myStyle}>
+                    {/* {ticker} */}
+                </h4>
                 <Chart options={apexAreaChart1Opts} series={apexAreaChart1Data} type="area" className="apex-charts" />
             </CardBody>
         </Card>

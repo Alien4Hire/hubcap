@@ -1,0 +1,56 @@
+// watchlist
+
+// app menu top level class
+.in-bar-watchlist {
+    width: 15vw;
+    position: relative;
+}
+
+// watchlist.js 2nd level
+.navbar-watchlist {
+    max-width: 100vh;
+    overflow: visible;
+}
+
+// watchlist container/form elements
+.watchlist-Container {
+    //\\
+    font-variant: normal;
+}
+
+.watchlist-form {
+    //
+    font-variant: normal;
+}
+
+// security container
+//  .row
+// .col-md-8 col-md-offset-2
+// .panel panel-default
+// .panel-body
+// .list-group
+
+// security
+
+.security-elem {
+    font-variant: normal;
+}
+
+////Watchlist form
+
+// <div className="row">
+// <div className="col-md-6 col-md-offset-3">
+//   <div style={{ margin: "20px" }}>
+//     <div className="row">
+//       <div className="col-md-6">
+//         <Typeahead
+//           ref={this._typeahead}
+//           id="my-typeahead-id"
+
+//security page
+
+// <a href="#" className="list-group-item">
+// {this.props.name}
+// <button onClick = {this.handleCloseTask} style = {{float:"right"}}>
+//   <i className="glyphicon glyphicon-remove"></i>
+// </button>

@@ -33,14 +33,13 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
                 })}
                 aria-expanded={activatedMenuItemIds.indexOf(item.id) >= 0}>
                 {item.children.map((child, i) => {
-
                     if (child.name === 'watchlist') {
                         // console.log(child)
-                        return(
-                            <React.Fragment key={i}>
-                                <Watchlist/>
+                        return (
+                            <React.Fragment key={i} className="in-bar-watchlist">
+                                <Watchlist />
                             </React.Fragment>
-                        )
+                        );
                     }
 
                     return (
@@ -123,7 +122,7 @@ class AppMenu extends Component<Props> {
         });
     };
 
-    componentDidUpdate = prevProps => {
+    componentDidUpdate = (prevProps) => {
         if (
             !prevProps.menu.menuItems ||
             (prevProps.menu.menuItems && prevProps.menu.menuItems !== this.props.menu.menuItems)
@@ -138,9 +137,9 @@ class AppMenu extends Component<Props> {
 
     initMenu() {
         if (this.props.mode === 'horizontal') {
-            const menuRef = new MetisMenu('#menu-bar').on('shown.metisMenu', event => {
+            const menuRef = new MetisMenu('#menu-bar').on('shown.metisMenu', (event) => {
                 this.openedMenuItems.push(event.detail.shownElement);
-                const menuClick = e => {
+                const menuClick = (e) => {
                     if (!event.target.contains(e.target)) {
                         menuRef.hide(event.detail.shownElement);
                         window.removeEventListener('click', menuClick);
@@ -225,14 +224,9 @@ class AppMenu extends Component<Props> {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         menu: state.AppMenu,
     };
 };
-export default withRouter(
-    connect(
-        mapStateToProps,
-        { initMenu, changeActiveMenuFromLocation }
-    )(AppMenu)
-);
+export default withRouter(connect(mapStateToProps, { initMenu, changeActiveMenuFromLocation })(AppMenu));

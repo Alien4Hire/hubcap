@@ -13,6 +13,13 @@ const records = [
 ];
 
 const BasicTable = () => {
+    const doeswork = [
+        { id: 1, firstName: 'This', lastName: 'Otto', username: '@secks' },
+        { id: 2, firstName: 'Bad', lastName: 'Thornton', username: '@fat' },
+        { id: 3, firstName: 'Boy', lastName: 'G', username: '@dave' },
+        { id: 4, firstName: 'Works', lastName: 'N', username: '@nikn' },
+        { id: 5, firstName: 'Shreyu', lastName: 'Navadiya', username: '@sn' },
+    ];
     return (
         <Card>
             <CardBody>
@@ -31,7 +38,7 @@ const BasicTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {records.map((record, index) => {
+                        {doeswork.map((record, index) => {
                             return (
                                 <tr key={index}>
                                     <th scope="row">{record.id}</th>

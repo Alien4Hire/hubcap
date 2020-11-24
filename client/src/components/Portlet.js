@@ -33,7 +33,7 @@ class Portlet extends Component<PortletProps, PortletState> {
      */
     /*:: toggleContent: () => void */
     toggleContent() {
-        this.setState(state => ({ collapse: !state.collapse }));
+        this.setState((state) => ({ collapse: !state.collapse }));
     }
 
     /**
@@ -82,10 +82,6 @@ class Portlet extends Component<PortletProps, PortletState> {
                             <i className="mdi mdi-close"></i>
                         </Button>
                     </div>
-
-                    <CardTitle tag="h5" className="mb-0">
-                        Card title
-                    </CardTitle>
 
                     <Collapse isOpen={this.state.collapse} className="pt-3">
                         {children}
