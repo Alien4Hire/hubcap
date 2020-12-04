@@ -1,0 +1,258 @@
+//user dashboard
+@font-face {
+    font-family: 'Martel Sans';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/martelsans/v7/h0GxssGi7VdzDgKjM-4d8hBz5fuBH0gXqA.woff2) format('woff2');
+    unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8, U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+.update-account {
+    font-family: Martel Sans;
+}
+//profile picture
+.profile-card {
+    max-width: 30vh;
+    max-height: 30vh;
+}
+
+.profile-card img {
+    border-radius: 50%;
+    text-align: center;
+}
+
+//account + billing
+
+//account page
+.account-card {
+    max-width: 60vw;
+}
+.account-title {
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.account-title-one {
+    margin-bottom: 2vh;
+    margin-left: 1vw;
+    font-weight: 800;
+}
+
+.account-body {
+    max-width: 50vw;
+    margin: 0 4vw;
+}
+
+.row-2-left {
+    float: left;
+    margin-top: 0.7vh;
+}
+
+.memberbilling {
+    font-weight: 500;
+    color: #757575;
+}
+
+.plan-details {
+    font-weight: 500;
+    color: #757575;
+}
+
+.profile-form {
+    font-weight: 500;
+    color: #757575;
+}
+
+.btn-edit {
+    background-color: #e6e6e6;
+    color: black;
+    font-size: 13px;
+    width: 90%;
+    background-image: linear-gradient(to bottom, #e6e6e6, #ddd);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    border-radius: 2px;
+    text-align: center;
+    border: 0;
+    overflow: visible;
+    font: inherit;
+    text-rendering: auto;
+    text-indent: 0px;
+    text-shadow: none;
+    align-items: flex-start;
+    font-family: sans-serif;
+}
+
+.update-payment {
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.group-one {
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.Col-2-right {
+    padding-left: 5vw;
+}
+
+.move-right {
+    margin-left: 4vw;
+}
+
+.left-text {
+    text-align: left;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.spacing {
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+
+.change-password {
+    margin-top: 2vh;
+}
+
+.padding-bottom {
+    padding-bottom: 3vh;
+}
+
+.padding-top {
+    margin-top: 1vh;
+}
+
+//plan details
+
+.top-border {
+    border-top-color: black;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.move-left {
+    text-align: left;
+    float: left;
+}
+
+.right-border {
+    max-width: 35%;
+}
+
+.space-below {
+    padding-bottom: 3vh;
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+//profile
+.block {
+    display: block;
+}
+
+.float-left {
+    float: left;
+}
+
+.small-text {
+    max-height: 3.2vh;
+}
+
+.profile-form {
+    margin-top: 3vh;
+}
+
+.block Label,
+.block .save-button {
+    padding-top: 1vh;
+}
+
+.save-button {
+    float: right;
+}
+
+.padding-small {
+    padding-bottom: 2vh;
+}
+
+//upgrade page
+
+.big-card-plan {
+    max-width: 75%;
+    margin: 0 9vw;
+}
+
+.plan-title-one {
+    font-weight: 500;
+    color: black;
+    padding-bottom: 2vh;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.plan-description {
+    text-align: left;
+}
+
+.plan-price {
+    text-align: right;
+    padding-right: 2vw;
+    color: black;
+    font-weight: 550;
+}
+
+.plan-selector {
+    color: black;
+    font-weight: 950;
+    font-size: 1.4vh;
+}
+.plan-font {
+    color: black;
+    font-weight: 550;
+}
+
+.profile-box-one {
+    border: rgb(163, 163, 163) 3px solid;
+    border-radius: 0px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.profile-box-two {
+    border: rgb(0, 60, 255) 3px solid;
+    border-radius: 0px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.max-width-plan {
+    max-width: 15%;
+    background-color: #f3f3f3;
+    padding: 3vh 0;
+    text-align: center;
+}
+
+.padding-plan-top {
+    padding-top: 4vh;
+}
+
+.max-plan-width {
+    max-width: 55%;
+}

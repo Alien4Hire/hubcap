@@ -6,9 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node .",
+    "server": "nodemon server.js",
+    "client": "npm run start --prefix client",
+    "sales": "npm run start --prefix sales",
     "lint:dev": "standard --fix",
     "start:dev": "nodemon --exec \"npm run lint:dev && npm start\"",
-    "tunnel:db": "ssh -L 3306:localhost:3306 -N freelancer@167.172.30.247"
+    "tunnel:db": "ssh -L 3306:localhost:3306 -N freelancer@167.172.30.247 password@Freelancer1",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run sales\" \"npm run tunnel:db\""
   },
   "author": "abskmj@gmail.com",
   "license": "ISC",
@@ -18,11 +22,30 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^5.3.0",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "generate-password": "^1.5.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.5",
     "knex-paginate": "^1.2.3",
-    "mysql": "^2.18.1"
+    "lodash": "^4.17.20",
+    "mongoose": "^5.10.16",
+    "mysql": "^2.18.1",
+    "nunjucks": "^3.2.2",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "passport-oauth2": "^1.5.0",
+    "passport-twitter": "^1.0.4",
+    "path-parser": "^6.1.0",
+    "sendgrid": "^5.2.3",
+    "stripe": "^8.126.0",
+    "url": "^0.11.0",
+    "webpack": "^5.6.0"
   }
 }

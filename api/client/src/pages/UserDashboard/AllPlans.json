@@ -1,0 +1,19 @@
+{
+    "AllPlans": [
+        {
+            "plan": "basic",
+            "description": "Unlimited access to stream and tools for 30 days",
+            "price": "0"
+        },
+        {
+            "plan": "Personal",
+            "description": "Unlimited access to trading tools and stream. Get the trading masterclass",
+            "price": "34.99"
+        },
+        {
+            "plan": "Business",
+            "description": "Unlimited access, plus get your own custom strategies added to the site.",
+            "price": "79.99"
+        }
+    ]
+}
