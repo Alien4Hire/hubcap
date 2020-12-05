@@ -5,6 +5,7 @@ const user = require('../models/User');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const { rest } = require('lodash');
+const cookieSession = require('cookie-session');
 const requireLogin = require('../middlewares/requireLogin');
 module.exports = (app) => {
   //test route
@@ -14,43 +15,60 @@ module.exports = (app) => {
 
   //local
   app.post('/auth/register', async (req, res) => {
-    const existingUser = await User.findOne({
+    // console.log(req.body.password);
+    // console.log(req.body.email);
+
+    const existingUser = await user.findOne({
       email: req.body.email,
     });
 
+    // console.log(existingUser);
+
     if (existingUser) {
       if (existingUser.googleId) {
-        console.log('Login with google');
-        return 'Login with Google';
+        // console.log('Login with google');
+        return res.json('Login with Google');
       } else if (existingUser.facebookId) {
-        console.log('Login with facebook');
-        return res.redirect('/auth/facebook');
+        // console.log('Login with facebook');
+        return res.json('Login with Facebook');
       } else if (existingUser.twitterId) {
-        console.log('Login with twitter');
-        return res.redirect('/auth/twitter');
+        // console.log('Login with twitter');
+        return res.json('Login with Twitter');
       } else {
-        console.log('User with this email already exists');
+        return res.json('User with this email already exists');
+        // console.log('User with this email already exists');
       }
+      // console.log(existingUser.googleId);
+      // console.log(existingUser.facebookId);
+      // console.log("User with this email already exists");
+      // return done(null, existingUser);
     } else {
       try {
+        console.log(req);
         let newuser = await user.create(req.body);
+
         let token = jwt.sign({ userid: newuser.id }, keys.cookieKey);
         res.json({ token });
       } catch (e) {
         console.log(e);
       }
-      console.log(req.body);
+      // console.log("not working");
     }
   });
 
-  //local
-  app.post(
-    '/auth/local',
-    passport.authenticate('local', { failureRedirect: '/login' }),
-    (req, res) => {
-      res.redirect('/');
-    }
-  );
+  // // //local
+  // app.post(
+  //   '/auth/local',
+  //   passport.authenticate('local', {
+  //     successRedirect: '/',
+  //     failureRedirect: '/register',
+  //     failureFlash: true,
+  //   }),
+  //   (req, res) => {
+  //     console.log(req.body);
+  //     // res.redirect('/');
+  //   }
+  // );
 
   //google
   app.get(
@@ -63,8 +81,8 @@ module.exports = (app) => {
   app.get(
     '/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
-    (req, res) => {
-      res.redirect('/dashboard');
+    function (req, res) {
+      res.redirect('/');
     }
   );
 
@@ -94,6 +112,7 @@ module.exports = (app) => {
     passport.authenticate('twitter', { failureRedirect: '/login' }),
     function (req, res) {
       // Successful authentication, redirect home.
+      console.log(user);
       res.redirect('/');
     }
   );
@@ -105,6 +124,6 @@ module.exports = (app) => {
   });
 
   app.get('/api/current_user', requireLogin, (req, res) => {
-    res.json(req.user);
+    res.send(req.user);
   });
 };

@@ -36,15 +36,37 @@ function RegisterPage() {
     };
   });
 
-  const google = () => {};
-
   const register = (ev) => {
     ev.preventDefault();
-    api.post('/auth/register', user).then((result) => {
-      localStorage.setItem('token', result.data.token);
-      window.location.href = 'localhost:3000';
-    });
+    try {
+      api.post('/auth/register', user).then((result) => {
+        if (result.data.token == undefined) {
+          return alert('User with this email already exists');
+        } else {
+          localStorage.setItem('token', result.data.token);
+          window.location.href = '/';
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  // const google = (ev) => {
+  //   ev.preventDefault();
+  //   try {
+  //     api.get('/auth/google', user).then((result) => {
+  //       if (result.data.token == undefined) {
+  //         return alert('User with this email already exists');
+  //       } else {
+  //         localStorage.setItem('token', result.data.token);
+  //         window.location.href = '/';
+  //       }
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <>

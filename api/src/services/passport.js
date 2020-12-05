@@ -11,6 +11,8 @@ const mongoose = require('mongoose');
 const keys = require('../config/keys');
 const generator = require('generate-password');
 
+const jwt = require('jsonwebtoken');
+
 const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
@@ -34,21 +36,36 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({
-        googleId: profile.id,
+        // googleId: profile.id,
         email: profile.emails[0].value,
       });
-
       if (existingUser) {
-        return done(null, existingUser);
-      }
+        if (existingUser.googleId) {
+          return done(null, existingUser);
+        } else if (existingUser.facebookId) {
+          return done(null, existingUser);
+        } else if (existingUser.twitterId) {
+          return done(null, existingUser);
+        } else {
+          return done(null, existingUser);
+        }
+      } else {
+        const user = await new User({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          profilePic: profile.photos[0].value,
+          password: generator.generate({ length: 10, numbers: true }),
+        }).save();
 
-      const user = await new User({
-        googleId: profile.id,
-        email: profile.emails[0].value,
-        profilePic: profile.photos[0].value,
-        password: generator.generate({ length: 10, numbers: true }),
-      }).save();
-      done(null, user);
+        // try {
+        //   let newuser = { email: user.email, password: user.password };
+        //   let token = jwt.sign({ userid: newuser.id }, keys.cookieKey);
+        //   res.json({ token });
+        // } catch (e) {
+        //   console.log(e);
+        // }
+        done(null, user);
+      }
     }
   )
 );
@@ -63,19 +80,30 @@ passport.use(
       profileFields: ['email'],
     },
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ facebookId: profile.id });
+      const existingUser = await User.findOne({
+        email: profile.emails[0].value,
+      });
       // const existingEmail = await User.findOne({ email: profile.email });
       if (existingUser) {
-        return done(null, existingUser);
+        if (existingUser.googleId) {
+          return done(null, existingUser);
+        } else if (existingUser.facebookId) {
+          return done(null, existingUser);
+        } else if (existingUser.twitterId) {
+          return done(null, existingUser);
+        } else {
+          return done(null, existingUser);
+        }
+      } else {
+        console.log(profile.id);
+        const user = await new User({
+          facebookId: profile.id,
+          email: profile.emails[0].value,
+          // profilePic: profile.photos[0].value,
+          password: generator.generate({ length: 10, numbers: true }),
+        }).save();
+        done(null, user);
       }
-      console.log(profile.id);
-      const user = await new User({
-        facebookId: profile.id,
-        email: profile.emails[0].value,
-        // profilePic: profile.photos[0].value,
-        password: generator.generate({ length: 10, numbers: true }),
-      }).save();
-      done(null, user);
     }
   )
 );
@@ -89,40 +117,85 @@ passport.use(
       proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ twitterId: profile.id });
-
-      if (existingUser) {
-        return done(null, existingUser);
-      }
-
-      const user = await new User({
-        twitterId: profile.id,
+      const existingUser = await User.findOne({
         email: profile.emails[0].value,
-        // profilePic: profile.photos[0].value,
-        password: generator.generate({ length: 10, numbers: true }),
-      }).save();
-      done(null, user);
+      });
+      if (existingUser) {
+        if (existingUser.googleId) {
+          return done(null, existingUser);
+        } else if (existingUser.facebookId) {
+          return done(null, existingUser);
+        } else if (existingUser.twitterId) {
+          return done(null, existingUser);
+        } else {
+          return done(null, existingUser);
+        }
+      } else {
+        const user = await new User({
+          twitterId: profile.id,
+          email: profile.emails[0].value,
+          // profilePic: profile.photos[0].value,
+          password: generator.generate({ length: 10, numbers: true }),
+        }).save();
+        done(null, user);
+      }
     }
   )
 );
 
-//user register
-passport.use(
-  new LocalStrategy(function (username, password, done) {
-    const existingUser = User.findOne({ email: username });
-    if (existingUser) {
-      return done(null, existingUser);
-    }
-    console.log(username);
-    const user = new User({
-      localId: generator.generate({ length: 10, numbers: true }),
-      email: username,
-      password: password,
-    }).save();
-    done(null, user);
-  })
-);
+// //user register
+// passport.use(
+//   new LocalStrategy(
+//     { usernameField: 'email', passwordField: 'password' },
+//     function (email, password, done) {
+//       const existingUser = User.findOne({ email: email });
+//       if (existingUser) {
+//         if (existingUser.googleId) {
+//           // verify password
+//           return done(null, false, { message: 'Login using Google' });
+//         } else if (existingUser.facebookId) {
+//           return done(null, false, { message: 'Login using Facebook' });
+//         } else if (existingUser.twitterId) {
+//           return done(null, false, { message: 'Login using Twitter' });
+//         } else {
+//           return done(null, existingUser);
+//         }
+//       } else {
+//         console.log(email);
+//         const user = new User({
+//           localId: generator.generate({ length: 10, numbers: true }),
+//           email: email,
+//           password: password,
+//         }).save();
+//         done(null, user);
+//       }
+//     }
+//   )
+// );
 
+// passport.use(
+//   'jwt',
+//   new JWTstrategy(opts, (jwt_payload, done) => {
+//     try {
+//       User.findOne({
+//         where: {
+//           username: jwt_payload.id,
+//         },
+//       }).then((user) => {
+//         if (user) {
+//           console.log('user found in db in passport');
+//           // note the return removed with passport JWT - add this return for passport local
+//           done(null, user);
+//         } else {
+//           console.log('user not found in db');
+//           done(null, false);
+//         }
+//       });
+//     } catch (err) {
+//       done(err);
+//     }
+//   })
+// );
 // //tutorial jwt.strategy
 // const cookieExtractor = req => {
 //   let token = null;

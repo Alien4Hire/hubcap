@@ -1,19 +1,23 @@
-1. cd hyper
+<!-- @format -->
 
-2. npm install and npm start
+1. cd api
 
-3. New Terminal
+2. npm install
 
-4. cd API
+3. cd API/client
 
-5. npm install, npm run tunnel:db
+4. npm install
 
-6. new terminal and 
+5. cd API/sales
+
+6. npm install
 
 7. cd API
 
-8. npm start
+8. npm run dev
 
+9. New terminal
 
+10. cd API
 
-
+11. npm run tunnel:db //Inquire with webmaster for password

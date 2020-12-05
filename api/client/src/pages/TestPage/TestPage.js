@@ -9,13 +9,8 @@ import SalesChart from './SalesChart';
 import Activity from './Activity';
 import Products from './Products';
 
-
-
 const AnalyticsDashboardPage = () => {
-
-
     return (
-
         <React.Fragment>
             <Row>
                 <Col>
@@ -38,7 +33,7 @@ const AnalyticsDashboardPage = () => {
                 </Col>
             </Row>
 
-            <Row>
+            {/* <Row>
                 <Col xl={5}>
                     <Statistics />
                 </Col>
@@ -64,8 +59,7 @@ const AnalyticsDashboardPage = () => {
                 <Col>
                     <Products />
                 </Col>
-            </Row>
-
+            </Row> */}
         </React.Fragment>
     );
 };

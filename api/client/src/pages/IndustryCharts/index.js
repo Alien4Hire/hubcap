@@ -38,7 +38,7 @@ const IndustryCharts = () => {
 
     useEffect(() => {
         updateChart();
-    }, [selectedCard]);
+    }, [selectedCard, symbol]);
     return (
         <React.Fragment>
             <Row>
