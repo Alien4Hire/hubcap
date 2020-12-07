@@ -15,7 +15,13 @@ require('./models/Survey');
 require('./services/passport');
 //database stuff
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, { useUnifiedTopology: true, useNewUrlParser: true }).then(
+  () => {
+    console.log('Connected to Mongo') },
+  err => {
+    console.error('Mongo Connection error', err)
+  }
+);
 
 const app = express();
 const port = 3500;
