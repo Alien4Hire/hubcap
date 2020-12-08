@@ -1,29 +1,29 @@
-import React from "react";
+/** @format */
+
+import React from 'react';
 
 // reactstrap components
-import {
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+import { Container, Row, Col } from 'reactstrap';
 
 // core components
 
 function SectionHeaderfive() {
   return (
     <>
-      <div className="section section-feature cd-section" id="features">
+      <div
+        className="section section-feature cd-section eliminate-padding"
+        id="features"
+      >
         {/* ********* FEATURES 5 ********* */}
         <div
           className="features-5 section-image"
           style={{
             backgroundImage:
-              "url(" +
-              require("assets/img/sections/the-how-photographer.jpg") +
-              ")",
+              'url(' +
+              require('assets/img/sections/the-how-photographer.jpg') +
+              ')',
           }}
         >
-        
           <Container>
             <Row>
               <div className="ml-auto mr-auto">
@@ -32,7 +32,7 @@ function SectionHeaderfive() {
                 </h2>
               </div>
             </Row>
-            <Row >
+            <Row>
               <Col className="ml-auto" sm="5">
                 <div className="info">
                   <div className="icon">
@@ -40,9 +40,10 @@ function SectionHeaderfive() {
                   </div>
                   <h4 className="title">Day Traders</h4>
                   <p>
-                    We provide pre-made strategies to jumpstart your day trading career.
-                    While you take the time to learn more about the market you can customize our tools
-                     as you go to continuously improve profits.
+                    We provide pre-made strategies to jumpstart your day trading
+                    career. While you take the time to learn more about the
+                    market you can customize our tools as you go to continuously
+                    improve profits.
                   </p>
                 </div>
               </Col>
@@ -53,8 +54,10 @@ function SectionHeaderfive() {
                   </div>
                   <h4 className="title">Investors</h4>
                   <p>
-                    Buy and hold strategies work perfectly within our system, our average hold time is 45 days for a trade.
-                    We rarely miss a trend and using our tools you will be able to identify stocks that are about to begin trending.
+                    Buy and hold strategies work perfectly within our system,
+                    our average hold time is 45 days for a trade. We rarely miss
+                    a trend and using our tools you will be able to identify
+                    stocks that are about to begin trending.
                   </p>
                 </div>
               </Col>
@@ -67,8 +70,9 @@ function SectionHeaderfive() {
                   </div>
                   <h4 className="title">Entrepreneurs</h4>
                   <p>
-                    Many of our clients use our tools to generate signals for their following 
-                    and if you purchase the Business plan you will be able to add our tools to your own website also.
+                    Many of our clients use our tools to generate signals for
+                    their following and if you purchase the Business plan you
+                    will be able to add our tools to your own website also.
                   </p>
                 </div>
               </Col>
@@ -79,14 +83,15 @@ function SectionHeaderfive() {
                   </div>
                   <h4 className="title">Save Time</h4>
                   <p>
-                    No matter your trading goals, our system will shave years off the learning curve to get started trading.
-                     You can use the tools to select profitable trades in just 15 minutes per day so you have more time to do things you love.
+                    No matter your trading goals, our system will shave years
+                    off the learning curve to get started trading. You can use
+                    the tools to select profitable trades in just 15 minutes per
+                    day so you have more time to do things you love.
                   </p>
                 </div>
               </Col>
             </Row>
           </Container>
-        
         </div>
         {/* ********* END FEATURES 5 ********* */}
       </div>

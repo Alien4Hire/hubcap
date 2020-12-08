@@ -16,22 +16,23 @@ const NewsCard = ({ news }) => {
                     <Container>
                         {records &&
                             records.map((record, index) => {
-                                const update = new Date(records.datetime * 1000).toLocaleDateString('en-US');
-                                console.log(update);
+                                // const update = new Date(records.datetime * 1000).toLocaleDateString('en-US');
+                                // console.log(update);
                                 return (
                                     <Card className="News-card">
                                         <CardBody className="News-body">
                                             <div className="news-head">
-                                                <img className="News-Image" src={record.image}></img>
+                                                <img className="News-Image" src={record.urlToImage}></img>
                                                 <div className="News-text">
                                                     <h4 className="News-headline" href={record.url}>
-                                                        {record.headline}
+                                                        {record.content}
                                                     </h4>
                                                     <h6 className="date-news">
-                                                        <span>{record.source}</span>|<span>{record.datetime}</span>
+                                                        <span>{record.source.name}</span>|
+                                                        <span>{record.publishedAt}</span>
                                                     </h6>
                                                 </div>
-                                                <p className="News-summary">{record.summary}</p>
+                                                <p className="News-summary">{record.description}</p>
                                             </div>
                                         </CardBody>
                                     </Card>

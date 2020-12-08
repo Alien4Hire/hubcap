@@ -1,0 +1,28 @@
+/** @format */
+
+.center-logo {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+
+  gap: 1.5vw;
+  grid-auto-flow: column;
+}
+
+.logo-stream {
+  padding: 0;
+  margin: 0;
+  max-width: 10vw;
+}
+
+.tradingview {
+  margin-top: -3em;
+}
+
+.section .section-feature {
+  padding-bottom: 0px !important;
+}
+
+.eliminate-padding {
+  padding-bottom: 0px !important;
+}

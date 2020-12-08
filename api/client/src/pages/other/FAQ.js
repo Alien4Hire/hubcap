@@ -9,37 +9,40 @@ const FAQ = () => {
     const rawFaqs1 = [
         {
             id: 1,
-            question: 'Can I use this template for my client?',
+            question: 'How do I access the Hubcap Trading Platform?',
             answer:
-                'Yup, the marketplace license allows you to use this theme in any end products. For more information on licenses, contact us',
+                'If you are seeing this question you probably already have access to the platform, Select an option such a charting to get started',
         },
         {
             id: 2,
-            question: 'Can this theme work with Wordpress?',
+            question: 'Can I add my own indicators?',
             answer:
-                "No. This is a static react template. It won't directly with wordpress, though you can avail html version of the same and convert this into wordpress compatible theme",
+                "Not yet. If you have an indicator you'd like to see on the site, tell us about it during a live stream, or if you have a premium membership submit it as a support ticket.",
         },
     ];
 
     const rawFaqs2 = [
         {
             id: 3,
-            question: 'How do I get help with the theme?',
+            question: 'How do I get help with trading?',
             answer:
-                'Use our dedicated support email (support@coderthemes.com) to send your issues or feedback. We are here to help anytime',
+                'contact us for support, and also check out our Youtube/ Twitch content for up to date tutorials and video on how to use the site.',
         },
         {
             id: 4,
-            question: 'Will you regularly give updates of Hyper?',
+            question: 'Will you regularly give updates?',
             answer:
-                'Yes, We will update the Hyper regularly. All the future updates would be available without any cost',
+                'Yes, We update all securities as fast as we can. I recomend trading on the daily chart using our software, so you wont miss the minute data.',
         },
     ];
 
     return (
         <React.Fragment>
             <PageTitle
-                breadCrumbItems={[{ label: 'Pages', path: '/pages/faq' }, { label: 'FAQ', active: true }]}
+                breadCrumbItems={[
+                    { label: 'Pages', path: '/pages/faq' },
+                    { label: 'FAQ', active: true },
+                ]}
                 title={'FAQ'}
             />
 
@@ -49,17 +52,21 @@ const FAQ = () => {
                         <h3 className="">Frequently Asked Questions</h3>
                         <p className="text-muted mt-3">
                             {' '}
-                            Nisi praesentium similique totam odio obcaecati, reprehenderit, dignissimos rem temporibus
-                            ea inventore alias!
-                            <br /> Beatae animi nemo ea tempora, temporibus laborum facilis ut!
+                            Review the information below if you have any questions about our website. I will try to
+                            respond as fast
+                            <br /> as possible via email or twitter, but I will not repond if answer is already in the
+                            FAQs
                         </p>
-
-                        <button type="button" className="btn btn-success btn-sm mt-2">
-                            <i className="mdi mdi-email-outline mr-1"></i> Email us your question
-                        </button>
-                        <button type="button" className="btn btn-info btn-sm mt-2 ml-1">
-                            <i className="mdi mdi-twitter mr-1"></i> Send us a tweet
-                        </button>
+                        <a href="mailto:jason@hubcap.com" target="_blank">
+                            <button type="button" className="btn btn-success btn-sm mt-2">
+                                <i className="mdi mdi-email-outline mr-1"></i> Email us your question
+                            </button>
+                        </a>
+                        <a href="https://twitter.com/HubcapFounder" target="_blank">
+                            <button type="button" className="btn btn-info btn-sm mt-2 ml-1">
+                                <i className="mdi mdi-twitter mr-1"></i> Send us a tweet
+                            </button>
+                        </a>
                     </div>
                 </Col>
             </Row>

@@ -96,7 +96,8 @@ const EcommerceDashboardPage = () => {
         // setSource(data.data.source);
         // setNewsSummary(data.data.summary);
         // setNewsUrl(data.data.url);
-        setNews(data.data);
+        setNews(data.data.articles);
+        console.log(data.data.articles);
     };
 
     // const GetRelatedStock = async (industry) => {

@@ -3,30 +3,43 @@ export default (PineJS) => {
         {
             name: 'Strange Indicator',
             code: 'strangeindicator',
+            priceStudy: true,
         },
         {
             name: 'ESS Indicator',
             code: 'entrySLShort',
+            priceStudy: true,
         },
         {
             name: 'ESL Indicator',
             code: 'entrySLLong',
+            priceStudy: true,
         },
         {
             name: 'EPS Indicator',
             code: 'entryPriceShort',
+            priceStudy: true,
         },
         {
             name: 'EPL Indicator',
             code: 'entryPriceLong',
+            priceStudy: true,
         },
         {
             name: 'ETS Indicator',
             code: 'entryTPShort',
+            priceStudy: true,
         },
         {
             name: 'ETL Indicator',
             code: 'entryTPLong',
+            priceStudy: true,
+        },
+        {
+            name: 'ASH',
+            code: 'SmthBulls',
+            codeTwo: 'SmthBears',
+            priceStudy: false,
         },
     ];
 
@@ -50,7 +63,7 @@ export default (PineJS) => {
                     shortDescription: indicator.name,
 
                     is_hidden_study: false,
-                    is_price_study: true,
+                    is_price_study: indicator.priceStudy,
                     isCustomIndicator: true,
 
                     plots: [
@@ -131,6 +144,8 @@ export default (PineJS) => {
                             PineJS.Std.period(this._context),
                             PineJS.Std.period(this._context)
                         );
+                        console.log('symbol...');
+                        console.log(symbol);
                     };
 
                     this.main = function (context, inputCallback) {

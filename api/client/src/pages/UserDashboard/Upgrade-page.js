@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Cards from './UpgradeCard';
-import { Container, Row, Col, Card, CardBody, Button, Form } from 'reactstrap';
+import { Card, CardBody, Button, Form } from 'reactstrap';
 import AllPlans from './AllPlans';
 
 const LemmeUpgradeYa = (props) => {
     const [pickedCard, setPickedCard] = useState(null);
-    const [path, setPath] = useState('/plans/basic');
+    // const [path, setPath] = useState('/plans/basic');
     const [allPaths, setAllPaths] = useState(['/plans/basic', '/plans/personal', '/plans/business']);
-    const [border, setBorder] = useState('profile-box-one');
+    // const [border, setBorder] = useState('profile-box-one');
     const [selectedPlan, setSelectedPlan] = useState(AllPlans.AllPlans.map(() => 'profile-box-one'));
 
     const pickACard = (index) => {

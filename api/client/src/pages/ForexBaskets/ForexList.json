@@ -1,0 +1,36 @@
+{
+    "ForexList": [
+        {
+            "Forex": "USD",
+            "icon": "mdi mdi-shield-airplane-outline"
+        },
+        {
+            "Forex": "NZD",
+            "icon": "mdi mdi-airplane-takeoff"
+        },
+        {
+            "Forex": "AUD",
+            "icon": "mdi mdi-engine"
+        },
+        {
+            "Forex": "CAD",
+            "icon": "mdi mdi-car-estate"
+        },
+        {
+            "Forex": "CHF",
+            "icon": "mdi mdi-bank-outline"
+        },
+        {
+            "Forex": "EUR",
+            "icon": "mdi mdi-coffee"
+        },
+        {
+            "Forex": "GBP",
+            "icon": "mdi mdi-biohazard"
+        },
+        {
+            "Forex": "JPY",
+            "icon": "uil-building"
+        }
+    ]
+}

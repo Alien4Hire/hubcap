@@ -19,6 +19,7 @@ const ApiString =
 
 const StockData = async () => {
     const stockData = await Axios.get(ApiString);
+    console.log(endTime);
     return stockData;
 };
 

@@ -53,7 +53,7 @@ const TitleWidget = ({ ticker, close, name, dailyChange, changePrice, logo, arro
                                             <em>Price as of {date}</em>
                                         </div>
                                         <div className="view-advanced-chart">
-                                            <a href="#InteractiveChart">View Interactive {ticker} Charts</a>
+                                            <a href="http://localhost:3000/charts">View Interactive {ticker} Charts</a>
                                         </div>
                                     </div>
                                 </div>

@@ -1,5 +1,4 @@
-import querystring from 'querystring';
-
+// import querystring from 'querystring';
 const { default: Axios } = require('axios');
 
 const RelatedStock = async (industry) => {

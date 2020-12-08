@@ -53,13 +53,13 @@ export default {
 
     searchSymbols: async (userInput, exchange, symbolType, onResultReadyCallback) => {
         const symbols = await api.searchSymbols(userInput);
-
+        // console.log('here' + userInput + exchange);
         const results = symbols.map((symbol) => {
             return {
                 symbol,
                 full_name: symbol,
                 description: symbol,
-                exchange: symbol,
+                exchange: exchange,
                 ticker: symbol,
             };
         });
@@ -90,14 +90,14 @@ export default {
 
         setTimeout(function () {
             onSymbolResolvedCallback(symbol_stub);
-            console.log('Resolving that symbol....', symbol_stub);
+            // console.log('Resolving that symbol....', symbol_stub);
         }, 0);
     },
 
     getBars: async (symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) => {
         try {
             console.log('//===== GET BARS =====//');
-            console.log(symbolInfo, resolution, from, to);
+            //console.log(to); //symbolInfo, resolution, from,
 
             let bars = [];
 
@@ -107,6 +107,7 @@ export default {
                 const values = await api.getIndicator(splitSymbol[0], splitSymbol[1], from, to);
 
                 bars = values.map((value) => {
+                    console.log(value);
                     return {
                         time: value.t * 1000, // trading view need time in milisecond
                         low: value.i,
@@ -125,11 +126,12 @@ export default {
                         high: price.h,
                         open: price.o,
                         close: price.c,
+                        volume: price.v,
                     };
                 });
             }
 
-            console.log('BARS:', bars);
+            // console.log('BARS:', bars);
 
             if (bars.length) {
                 onHistoryCallback(bars, { noData: false });

@@ -1,0 +1,188 @@
+{
+    "CryptoList": [
+        {
+            "Crypto": "Aerospace&Defense",
+            "icon": "mdi mdi-shield-airplane-outline"
+        },
+        {
+            "Crypto": "Airlines",
+            "icon": "mdi mdi-airplane-takeoff"
+        },
+        {
+            "Crypto": "AutoComponents",
+            "icon": "mdi mdi-engine"
+        },
+        {
+            "Crypto": "Automobiles",
+            "icon": "mdi mdi-car-estate"
+        },
+        {
+            "Crypto": "Banking",
+            "icon": "mdi mdi-bank-outline"
+        },
+        {
+            "Crypto": "Beverages",
+            "icon": "mdi mdi-coffee"
+        },
+        {
+            "Crypto": "Biotechnology",
+            "icon": "mdi mdi-biohazard"
+        },
+        {
+            "Crypto": "Building",
+            "icon": "uil-building"
+        },
+        {
+            "Crypto": "Chemicals",
+            "icon": "mdi mdi-beaker"
+        },
+        {
+            "Crypto": "CommercialServices&Supplies",
+            "icon": "dripicons-user"
+        },
+        {
+            "Crypto": "Communications",
+            "icon": "mdi mdi-cellphone-nfc"
+        },
+        {
+            "Crypto": "Construction",
+            "icon": "mdi mdi-worker"
+        },
+        {
+            "Crypto": "Consumerproducts",
+            "icon": "mdi mdi-shopping"
+        },
+        {
+            "Crypto": "Distributors",
+            "icon": "mdi mdi-truck-delivery"
+        },
+        {
+            "Crypto": "DiversifiedConsumerServices",
+            "icon": "mdi mdi-headset"
+        },
+        {
+            "Crypto": "ElectricalEquipment",
+            "icon": "mdi mdi-power-plug"
+        },
+        {
+            "Crypto": "Energy",
+            "icon": "mdi mdi-solar-power"
+        },
+        {
+            "Crypto": "FinancialServices",
+            "icon": "mdi mdi-finance"
+        },
+        {
+            "Crypto": "FoodProducts",
+            "icon": "mdi mdi-food-apple"
+        },
+        {
+            "Crypto": "HealthCare",
+            "icon": "mdi mdi-hospital-building"
+        },
+        {
+            "Crypto": "Hotels",
+            "icon": "mdi mdi-hotel"
+        },
+        {
+            "Crypto": "Restaurants&Leisure",
+            "icon": "mdi mdi-food-fork-drink"
+        },
+        {
+            "Crypto": "IndustrialConglomerates",
+            "icon": "mdi mdi-factory"
+        },
+        {
+            "Crypto": "Insurance",
+            "icon": "mdi mdi-home-flood"
+        },
+        {
+            "Crypto": "LeisureProducts",
+            "icon": "mdi mdi-grill"
+        },
+        {
+            "Crypto": "LifeSciencesTools&Services",
+            "icon": "mdi mdi-dna"
+        },
+        {
+            "Crypto": "Logistics&Transportation",
+            "icon": "mdi mdi-truck-fast"
+        },
+        {
+            "Crypto": "Machinery",
+            "icon": "mdi mdi-robot-industrial"
+        },
+        {
+            "Crypto": "Marine",
+            "icon": "mdi mdi-ship-wheel"
+        },
+        {
+            "Crypto": "Media",
+            "icon": "mdi mdi-newspaper"
+        },
+        {
+            "Crypto": "Metals&Mining",
+            "icon": "mdi mdi-pickaxe"
+        },
+        {
+            "Crypto": "Packaging",
+            "icon": "mdi mdi-package-variant"
+        },
+        {
+            "Crypto": "Pharmaceuticals",
+            "icon": "mdi mdi-pill"
+        },
+        {
+            "Crypto": "ProfessionalServices",
+            "icon": "mdi mdi-tie"
+        },
+        {
+            "Crypto": "RealEstate",
+            "icon": "mdi mdi-sign-real-estate"
+        },
+        {
+            "Crypto": "Retail",
+            "icon": "mdi mdi-cart-outline"
+        },
+        {
+            "Crypto": "Road&Rail",
+            "icon": "mdi mdi-railroad-light"
+        },
+        {
+            "Crypto": "Semiconductors",
+            "icon": "mdi mdi-chip"
+        },
+        {
+            "Crypto": "Technology",
+            "icon": "mdi mdi-rocket"
+        },
+        {
+            "Crypto": "Telecommunication",
+            "icon": "mdi mdi-phone-classic"
+        },
+        {
+            "Crypto": "Textiles",
+            "icon": " mdi mdi-tshirt-crew-outline"
+        },
+        {
+            "Crypto": "Apparel&LuxuryGoods",
+            "icon": "mdi mdi-ring"
+        },
+        {
+            "Crypto": "Tobacco",
+            "icon": "mdi mdi-cigar"
+        },
+        {
+            "Crypto": "TradingCompanies&Distributors",
+            "icon": "mdi mdi-account-cash"
+        },
+        {
+            "Crypto": "TransportationInfrastructure",
+            "icon": "mdi mdi-bus-stop-uncovered"
+        },
+        {
+            "Crypto": "Utilities",
+            "icon": "mdi mdi-water-well-outline"
+        }
+    ]
+}

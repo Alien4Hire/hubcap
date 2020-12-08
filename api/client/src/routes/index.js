@@ -110,6 +110,8 @@ const GoogleMaps = React.lazy(() => import('../pages/GoogleMaps'));
 
 const TestPage = React.lazy(() => import('../pages/TestPage/TestPage'));
 const IndustryCharts = React.lazy(() => import('../pages/IndustryCharts'));
+const ForexCharts = React.lazy(() => import('../pages/ForexBaskets'));
+const CryptoCharts = React.lazy(() => import('../pages/CryptoCharts'));
 // handle auth and authorization
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => (
@@ -145,51 +147,49 @@ const rootRoute = {
 // dashboards
 const dashboardRoutes = {
     path: '/dashboard',
-    name: 'Dashboards',
-    icon: 'uil-home-alt',
-    header: 'Navigation',
+    name: 'Charting',
+    icon: 'mdi mdi-chart-timeline-variant',
+    header: 'Dashboard',
     children: [
         {
-            path: '/dashboard/analytics',
-            name: 'Charting',
+            path: '/charts',
+            name: 'Charts',
+            component: ChartsDashboard,
+            route: PrivateRoute,
+        },
+        {
+            path: '/Industry',
+            name: 'Industry',
             component: IndustryCharts,
             route: PrivateRoute,
-            children: [
-                {
-                    path: '/charts',
-                    name: 'Charts',
-                    component: ChartsDashboard,
-                    route: PrivateRoute,
-                },
-                {
-                    path: '/Industry',
-                    name: 'Industry',
-                    component: IndustryCharts,
-                    route: PrivateRoute,
-                },
-            ],
         },
         {
-            path: '/dashboard/screener',
-            name: 'Screener',
-            component: ScreenerDashboard,
+            path: '/crypto',
+            name: 'Crypto',
+            component: CryptoCharts,
             route: PrivateRoute,
         },
         {
-            path: '/dashboard/TradingLab',
-            name: 'Trading Lab',
-            badge: {
-                variant: 'success',
-            },
-            component: EcommerceDashboard,
+            path: '/forex',
+            name: 'Forex',
+            component: ForexCharts,
             route: PrivateRoute,
         },
-        {
-            path: '/dashboard/project',
-            name: 'Education',
-            component: ProjectDashboard,
-            route: PrivateRoute,
-        },
+        // {
+        //     path: '/dashboard/TradingLab',
+        //     name: 'Trading Lab',
+        //     badge: {
+        //         variant: 'success',
+        //     },
+        //     component: EcommerceDashboard,
+        //     route: PrivateRoute,
+        // },
+        // {
+        //     path: '/dashboard/project',
+        //     name: 'Education',
+        //     component: ProjectDashboard,
+        //     route: PrivateRoute,
+        // },
     ],
 };
 
@@ -222,12 +222,29 @@ const Portfolio = {
 };
 
 const chatAppRoutes = {
-    path: '/apps/chat',
-    name: 'Chat',
+    path: '/dashboard/TradingLab',
+    name: 'Trading Lab',
     route: PrivateRoute,
     roles: ['Admin'],
-    icon: 'uil-comments-alt',
-    component: ChatApp,
+    icon: 'mdi mdi-trackpad',
+    component: EcommerceDashboard,
+};
+
+const screenerAppRoutes = {
+    path: '/dashboard/screener',
+    name: 'Screener',
+    route: PrivateRoute,
+    icon: 'mdi mdi-tune',
+    component: ScreenerDashboard,
+};
+
+const educationAppRoutes = {
+    path: '/dashboard/project',
+    name: 'Education',
+    component: ProjectDashboard,
+    route: PrivateRoute,
+    roles: ['Admin'],
+    icon: 'dripicons-graduation',
 };
 
 const ecommerceAppRoutes = {
@@ -325,7 +342,7 @@ const testRoutes = {
     route: PrivateRoute,
     roles: ['Admin'],
     icon: 'uil-rss',
-    header: 'Custom',
+    header: 'Upgrade',
     component: TestPage,
 };
 //const taskAppRoutes = {
@@ -354,8 +371,10 @@ const appRoutes = [
     use_Watchlist,
     Portfolio,
     chatAppRoutes,
-    ecommerceAppRoutes,
-    emailAppRoutes,
+    screenerAppRoutes,
+    educationAppRoutes,
+    // ecommerceAppRoutes,
+    //emailAppRoutes,
     socialAppRoutes,
 
     //taskAppRoutes,
@@ -373,12 +392,12 @@ const pageRoutes = {
             component: UserDashboard,
             route: PrivateRoute,
         },
-        {
-            path: '/pages/profile',
-            name: 'Learn More',
-            component: Profile,
-            route: PrivateRoute,
-        },
+        // {
+        //     path: '/pages/profile',
+        //     name: 'Learn More',
+        //     component: Profile,
+        //     route: PrivateRoute,
+        // },
         //        {
         //            path: '/pages/invoice',
         //            name: 'Invoice',

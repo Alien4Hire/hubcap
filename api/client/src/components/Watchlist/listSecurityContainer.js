@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Button } from 'reactstrap';
+import { Col } from 'reactstrap';
 //Components
 import Security from './security.js';
 

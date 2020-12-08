@@ -28,7 +28,6 @@ router.get('/v1/symbols/:symbol/ohlc', async (req, res, nxt) => {
     const { from, to } = req.query;
 
     const ohlc = await database.getOHLC(symbol, from, to);
-
     res.json(ohlc);
   } catch (err) {
     nxt(err);
@@ -56,15 +55,18 @@ router.get(
         if (value && value.i) {
           lastValue = value.i;
           lastIndex = index;
+          lastBar = value.i[index - 1];
         } else {
           if (lastValue) {
-            if (index < lastIndex + 10) value.i = lastValue;
+            if (index < lastIndex + 10) {
+              value.i = lastValue;
+            }
           }
         }
 
         index++;
       }
-
+      console.log(values);
       res.json(values);
     } catch (err) {
       nxt(err);
@@ -141,13 +143,14 @@ router.get('/v1/symbols/:symbol/esl', async (req, res, nxt) => {
         lastIndex = index;
       } else {
         if (lastValue) {
-          if (index < lastIndex + 10) value.i = lastValue;
+          if (index < lastIndex + 10) {
+            value.i = lastValue;
+          }
         }
       }
 
       index++;
     }
-
     res.json(values);
   } catch (err) {
     nxt(err);

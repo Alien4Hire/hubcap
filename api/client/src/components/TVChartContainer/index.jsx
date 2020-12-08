@@ -46,7 +46,7 @@ export function TVChartContainer(props) {
             autosize: true,
             width: '100%',
             timezone: 'America/New_York',
-            client_id: 'patternscanner',
+            client_id: 'Hubcap',
             user_id: 'public_user_id',
             auto_save_delay: 10,
             theme: 'Light',
@@ -92,13 +92,13 @@ export function TVChartContainer(props) {
                         // thisComponent.getPattern();
                     });
 
-                tvWidget.chart().createStudy('Strange Indicator', false, true);
-                tvWidget.chart().createStudy('ESS Indicator', false, true);
-                tvWidget.chart().createStudy('ESL Indicator', false, true);
-                tvWidget.chart().createStudy('EPS Indicator', false, true);
-                tvWidget.chart().createStudy('EPL Indicator', false, true);
-                tvWidget.chart().createStudy('ETS Indicator', false, true);
-                tvWidget.chart().createStudy('ETL Indicator', false, true);
+                // tvWidget.chart().createStudy('Strange Indicator', false, true);
+                // tvWidget.chart().createStudy('ESS Indicator', false, true);
+                // tvWidget.chart().createStudy('ESL Indicator', false, true);
+                // tvWidget.chart().createStudy('EPS Indicator', false, true);
+                // tvWidget.chart().createStudy('EPL Indicator', false, true);
+                // tvWidget.chart().createStudy('ETS Indicator', false, true);
+                // tvWidget.chart().createStudy('ETL Indicator', false, true);
             });
         });
     };
