@@ -27,7 +27,8 @@
     box-shadow: none !important;
 }
 
-.noUi-handle:before, .noUi-handle:after {
+.noUi-handle:before,
+.noUi-handle:after {
     height: 10px !important;
     width: 2px !important;
     background: $gray-400 !important;
