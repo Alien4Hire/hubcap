@@ -40,12 +40,7 @@ function RegisterPage() {
     ev.preventDefault();
     try {
       api.post('/auth/register', user).then((result) => {
-        if (result.data.token == undefined) {
-          return alert('User with this email already exists');
-        } else {
-          localStorage.setItem('token', result.data.token);
-          window.location.href = '/';
-        }
+        window.location.href = process.env.REACT_APP_REDIRECT_URI
       });
     } catch (e) {
       console.log(e);
