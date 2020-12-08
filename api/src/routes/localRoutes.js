@@ -53,6 +53,7 @@ localRouter.post('/register', (req, res) => {
       });
     }
   });
+
   localRouter.post(
     '/login',
     passport.authenticate('local', { session: false }),

@@ -143,6 +143,26 @@ passport.use(
   )
 );
 
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  function(username, password, done) {
+    User.findOne({ email: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user)  return done(null, false, {message: 'Incorrect email or password'});
+
+      user.comparePassword(password, (err) => {
+        if(err){
+          return done(null, false, {message: 'Incorrect email or password'});
+        } else {
+          return done(null, user);
+        }
+      })
+    });
+  }
+));
+
 // //user register
 // passport.use(
 //   new LocalStrategy(

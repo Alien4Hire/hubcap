@@ -1,33 +1,27 @@
 /** @format */
 
+const token = require('../services/jwt')
 const passport = require('passport');
 const user = require('../models/User');
-const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
-const { rest } = require('lodash');
-const cookieSession = require('cookie-session');
 const requireLogin = require('../middlewares/requireLogin');
+
 module.exports = (app) => {
   //test route
   app.get('/dashboard', async (req, res) => {
     console.log('go to dashboard');
   });
-
   //local
-  app.post('/auth/register', async (req, res) => {
-    // console.log(req.body.password);
-    // console.log(req.body.email);
-
-    const existingUser = await user.findOne({
+  app.post('/auth/register', async (req, res, next) => {
+      const existingUser = await user.findOne({
       email: req.body.email,
     });
-
     // console.log(existingUser);
-
     if (existingUser) {
       if (existingUser.googleId) {
         // console.log('Login with google');
         return res.json('Login with Google');
+        //return res.json('Login with Google');
       } else if (existingUser.facebookId) {
         // console.log('Login with facebook');
         return res.json('Login with Facebook');
@@ -44,17 +38,26 @@ module.exports = (app) => {
       // return done(null, existingUser);
     } else {
       try {
-        console.log(req);
         let newuser = await user.create(req.body);
-
-        let token = jwt.sign({ userid: newuser.id }, keys.cookieKey);
-        res.json({ token });
+        let t = token.signToken(newuser._id)
+        res.cookie('access_token', t, { httpOnly: true});
+        next()
       } catch (e) {
         console.log(e);
+        res.status(400).send('Bad request')
       }
       // console.log("not working");
     }
-  });
+  },
+    passport.authenticate('local', { failureRedirect: '/register' }),
+    (req, res) => {
+      if (req.isAuthenticated()) {
+        const { _id } = req.user;
+        const t = token.signToken(_id);
+        res.cookie('access_token', t, { httpOnly: true});
+        res.send('OK')
+      }
+    });
 
   // // //local
   // app.post(
@@ -82,7 +85,12 @@ module.exports = (app) => {
     '/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     function (req, res) {
-      res.redirect('/');
+      if (req.isAuthenticated()) {
+        const { _id } = req.user;
+        const t = token.signToken(_id);
+        res.cookie('access_token', t, { httpOnly: true});
+        res.redirect(keys.redirectDomain);
+      }
     }
   );
 
@@ -96,8 +104,12 @@ module.exports = (app) => {
     '/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function (req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/');
+      if (req.isAuthenticated()) {
+        const { _id } = req.user;
+        const t = token.signToken(_id);
+        res.cookie('access_token', t, { httpOnly: true});
+        res.redirect(keys.redirectDomain);
+      }
     }
   );
 
@@ -111,9 +123,12 @@ module.exports = (app) => {
     '/auth/twitter/callback',
     passport.authenticate('twitter', { failureRedirect: '/login' }),
     function (req, res) {
-      // Successful authentication, redirect home.
-      console.log(user);
-      res.redirect('/');
+      if (req.isAuthenticated()) {
+        const { _id } = req.user;
+        const t = token.signToken(_id);
+        res.cookie('access_token', t, { httpOnly: true});
+        res.redirect(keys.redirectDomain);
+      }
     }
   );
 
@@ -126,4 +141,5 @@ module.exports = (app) => {
   app.get('/api/current_user', requireLogin, (req, res) => {
     res.send(req.user);
   });
+
 };
