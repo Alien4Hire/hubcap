@@ -79,17 +79,17 @@ const ProfileMenus = [
     {
         label: 'My Account',
         icon: 'uil uil-user',
-        redirectTo: '/',
+        redirectTo: '/pages/user-dashboard',
     },
     {
         label: 'Settings',
         icon: 'uil uil-cog',
-        redirectTo: '/',
+        redirectTo: '/pages/settings',
     },
     {
         label: 'Support',
         icon: 'uil uil-life-ring',
-        redirectTo: '/',
+        redirectTo: '/pages/faq',
     },
     {
         label: 'Lock Screen',
@@ -99,7 +99,7 @@ const ProfileMenus = [
     {
         label: 'Logout',
         icon: 'uil uil-exit',
-        redirectTo: '/account/logout',
+        redirectTo: '/api/logout',
     },
 ];
 

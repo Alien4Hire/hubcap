@@ -193,6 +193,18 @@
     margin: 0 9vw;
 }
 
+.trial-reminder {
+    text-align: center;
+    padding-top: 2vh;
+    font-weight: 600;
+}
+
+.icon-one {
+    padding-top: 5vh;
+    // margin-right: -2vh;
+    z-index: -1;
+}
+
 .plan-title-one {
     font-weight: 500;
     color: black;
@@ -218,25 +230,34 @@
     font-weight: 550;
 }
 
-.plan-selector {
+.profile-box-onebox {
+    color: black;
+    font-weight: 950;
+    font-size: 1.4vh;
+    visibility: hidden;
+    margin-top: -1vh;
+}
+
+.profile-box-twobox {
     color: black;
     font-weight: 950;
     font-size: 1.4vh;
 }
+
 .plan-font {
     color: black;
     font-weight: 550;
 }
 
 .profile-box-one {
-    border: rgb(163, 163, 163) 3px solid;
+    border: rgb(163, 163, 163) 3.5px solid;
     border-radius: 0px;
     overflow: hidden;
     cursor: pointer;
 }
 
 .profile-box-two {
-    border: rgb(0, 60, 255) 3px solid;
+    border: rgb(0, 60, 255) 3.5px solid;
     border-radius: 0px;
     overflow: hidden;
     cursor: pointer;
@@ -254,5 +275,5 @@
 }
 
 .max-plan-width {
-    max-width: 55%;
+    max-width: 65%;
 }

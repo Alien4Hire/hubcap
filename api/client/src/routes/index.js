@@ -112,6 +112,10 @@ const TestPage = React.lazy(() => import('../pages/TestPage/TestPage'));
 const IndustryCharts = React.lazy(() => import('../pages/IndustryCharts'));
 const ForexCharts = React.lazy(() => import('../pages/ForexBaskets'));
 const CryptoCharts = React.lazy(() => import('../pages/CryptoCharts'));
+
+//API reload handling
+const APILogout = React.lazy(() => import('../pages/API_routes/logout'));
+
 // handle auth and authorization
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => (
@@ -125,10 +129,10 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
 
             const loggedInUser = getLoggedInUser();
             // check if route is restricted by role
-           // if (roles && roles.indexOf(loggedInUser.role) === -1) {
-                // role not authorised so redirect to home page
-           //     return <Redirect to={{ pathname: '/' }} />;
-         //   }
+            // if (roles && roles.indexOf(loggedInUser.role) === -1) {
+            // role not authorised so redirect to home page
+            //     return <Redirect to={{ pathname: '/' }} />;
+            //   }
 
             // authorised so return component
             return <Component {...props} />;
@@ -470,6 +474,12 @@ const authRoutes = {
             path: '/account/forget-password',
             name: 'Forget Password',
             component: ForgetPassword,
+            route: Route,
+        },
+        {
+            path: '/api/logout',
+            name: 'Logout',
+            component: APILogout,
             route: Route,
         },
     ],

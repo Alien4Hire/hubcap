@@ -51,4 +51,42 @@ module.exports = (app) => {
 
     res.send(user);
   });
+
+  //personal plan yearly
+  app.post('/api/stripe/4', requireLogin, async (req, res) => {
+    const products = await stripe.products.retrieve('prod_IXe50OqGcGNrnV');
+    console.log(products);
+    const charge = await stripe.charges.create({
+      amount: 500,
+      currency: 'usd',
+      description: products.description,
+      source: req.body.id,
+    });
+    req.user.plan = 2;
+    const user = await req.user.save();
+
+    res.send(user);
+  });
+
+  //business plan Yearly
+  app.post('/api/stripe/5', requireLogin, async (req, res) => {
+    const products = await stripe.products.retrieve('prod_IXe4RJOt9rzQLL');
+    const charge = await stripe.charges.create({
+      amount: 500,
+      currency: 'usd',
+      description: products.description,
+      source: req.body.id,
+    });
+    req.user.plan = 3;
+    const user = await req.user.save();
+
+    res.send(user);
+  });
+
+  //   app.get('/plans/personal', (req, res) => {
+  //     res.redirect(keys.redirectDomainPersonal);
+  //   });
+  //   app.get('/plans/business', (req, res) => {
+  //     res.redirect(keys.redirectDomainBusiness);
+  //   });
 };

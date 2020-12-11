@@ -1,6 +1,6 @@
 /** @format */
 
-const token = require('../services/jwt')
+const token = require('../services/jwt');
 const passport = require('passport');
 const user = require('../models/User');
 const keys = require('../config/keys');
@@ -12,52 +12,55 @@ module.exports = (app) => {
     console.log('go to dashboard');
   });
   //local
-  app.post('/auth/register', async (req, res, next) => {
+  app.post(
+    '/auth/register',
+    async (req, res, next) => {
       const existingUser = await user.findOne({
-      email: req.body.email,
-    });
-    // console.log(existingUser);
-    if (existingUser) {
-      if (existingUser.googleId) {
-        // console.log('Login with google');
-        return res.json('Login with Google');
-        //return res.json('Login with Google');
-      } else if (existingUser.facebookId) {
-        // console.log('Login with facebook');
-        return res.json('Login with Facebook');
-      } else if (existingUser.twitterId) {
-        // console.log('Login with twitter');
-        return res.json('Login with Twitter');
+        email: req.body.email,
+      });
+      // console.log(existingUser);
+      if (existingUser) {
+        if (existingUser.googleId) {
+          // console.log('Login with google');
+          return res.json('Login with Google');
+          //return res.json('Login with Google');
+        } else if (existingUser.facebookId) {
+          // console.log('Login with facebook');
+          return res.json('Login with Facebook');
+        } else if (existingUser.twitterId) {
+          // console.log('Login with twitter');
+          return res.json('Login with Twitter');
+        } else {
+          return res.json('User with this email already exists');
+          // console.log('User with this email already exists');
+        }
+        // console.log(existingUser.googleId);
+        // console.log(existingUser.facebookId);
+        // console.log("User with this email already exists");
+        // return done(null, existingUser);
       } else {
-        return res.json('User with this email already exists');
-        // console.log('User with this email already exists');
+        try {
+          let newuser = await user.create(req.body);
+          let t = token.signToken(newuser._id);
+          res.cookie('access_token', t, { httpOnly: true });
+          next();
+        } catch (e) {
+          console.log(e);
+          res.status(400).send('Bad request');
+        }
+        // console.log("not working");
       }
-      // console.log(existingUser.googleId);
-      // console.log(existingUser.facebookId);
-      // console.log("User with this email already exists");
-      // return done(null, existingUser);
-    } else {
-      try {
-        let newuser = await user.create(req.body);
-        let t = token.signToken(newuser._id)
-        res.cookie('access_token', t, { httpOnly: true});
-        next()
-      } catch (e) {
-        console.log(e);
-        res.status(400).send('Bad request')
-      }
-      // console.log("not working");
-    }
-  },
+    },
     passport.authenticate('local', { failureRedirect: '/register' }),
     (req, res) => {
       if (req.isAuthenticated()) {
         const { _id } = req.user;
         const t = token.signToken(_id);
-        res.cookie('access_token', t, { httpOnly: true});
-        res.send('OK')
+        res.cookie('access_token', t, { httpOnly: true });
+        res.send('OK');
       }
-    });
+    }
+  );
 
   // // //local
   // app.post(
@@ -88,8 +91,13 @@ module.exports = (app) => {
       if (req.isAuthenticated()) {
         const { _id } = req.user;
         const t = token.signToken(_id);
-        res.cookie('access_token', t, { httpOnly: true});
-        res.redirect(keys.redirectDomain);
+        // console.log(req.user.plan);
+        res.cookie('access_token', t, { httpOnly: true });
+        if (req.user.plan == 1) {
+          res.redirect(keys.redirectDomainTrial);
+        } else {
+          res.redirect(keys.redirectDomain);
+        }
       }
     }
   );
@@ -107,8 +115,12 @@ module.exports = (app) => {
       if (req.isAuthenticated()) {
         const { _id } = req.user;
         const t = token.signToken(_id);
-        res.cookie('access_token', t, { httpOnly: true});
-        res.redirect(keys.redirectDomain);
+        res.cookie('access_token', t, { httpOnly: true });
+        if (req.user.plan == 1) {
+          res.redirect(keys.redirectDomainTrial);
+        } else {
+          res.redirect(keys.redirectDomain);
+        }
       }
     }
   );
@@ -126,8 +138,12 @@ module.exports = (app) => {
       if (req.isAuthenticated()) {
         const { _id } = req.user;
         const t = token.signToken(_id);
-        res.cookie('access_token', t, { httpOnly: true});
-        res.redirect(keys.redirectDomain);
+        res.cookie('access_token', t, { httpOnly: true });
+        if (req.user.plan == 1) {
+          res.redirect(keys.redirectDomainTrial);
+        } else {
+          res.redirect(keys.redirectDomain);
+        }
       }
     }
   );
@@ -135,11 +151,10 @@ module.exports = (app) => {
   //other
   app.get('/api/logout', (req, res) => {
     req.logout();
-    res.redirect('/register');
+    res.redirect(keys.redirectDomainLogout);
   });
 
   app.get('/api/current_user', requireLogin, (req, res) => {
     res.send(req.user);
   });
-
 };

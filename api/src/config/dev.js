@@ -28,6 +28,10 @@ module.exports = {
     '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',
   //email domains
   redirectDomain: 'http://localhost:3000',
+  redirectDomainTrial: 'http://localhost:3000/pages/pricing',
+  redirectDomainLogout: 'http://localhost:3006/login-page',
+  redirectDomainPersonal: 'http://localhost:3006/plans/personal',
+  redirectDomainBusiness: 'http://localhost:3006/plans/business',
   //Mysql
   MysqlPassword: '1a3629d9ab9c9cde72d1a5b7af5e59c42341009264fdcfee',
 };

@@ -34,6 +34,9 @@ import SearchWithSidebar from 'views/examples/SearchWithSidebar.js';
 import Settings from 'views/examples/Settings.js';
 import TwitterRedesign from 'views/examples/TwitterRedesign.js';
 import Dashboard from '../views/Dashboard.js';
+/// Payment
+import PersonalPayment from '../views/paymentPortal/personalPayment';
+import BusinessPayment from '../views/paymentPortal/businessPayment';
 // others
 //vv Tutorial vv//
 import Header from './survey-tutorial/components-tutorial/Header.js';
@@ -68,6 +71,14 @@ class App extends Component {
             <Route
               path="/nucleo-icons"
               render={(props) => <NucleoIcons {...props} />}
+            />
+            <Route
+              path="/plans/personal"
+              render={(props) => <PersonalPayment {...props} />}
+            />
+            <Route
+              path="/plans/business"
+              render={(props) => <BusinessPayment {...props} />}
             />
             {/*vvv tutorial code(main.js + import redux + Provider wrap(store)) */}
             <Route

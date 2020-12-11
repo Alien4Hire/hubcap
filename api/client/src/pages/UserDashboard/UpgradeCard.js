@@ -17,7 +17,7 @@ const Cards = (plans) => {
         // console.log(plans.selectedPlan);
         plans.changeBorder(index);
 
-        console.log(plans.currentBorder);
+        // console.log(plans.currentBorder);
     };
 
     // const selectChange = () => {
@@ -30,10 +30,11 @@ const Cards = (plans) => {
 
     return (
         <React.Fragment>
+            {/* <i className="mdi mdi-check-circle float-left icon-one"></i> */}
             <Card className={border} onClick={cardSelector}>
                 <Row>
                     <Col className="float-left max-width-plan">
-                        <div className="plan-selector">Current Plan:</div>
+                        <div className={border + 'box'}>Current Plan:</div>
                         <div className="center-text plan-font">{plans.plan}</div>
                     </Col>
                     <Col className="float-right padding-plan-top">

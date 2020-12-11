@@ -66,7 +66,7 @@ router.get(
 
         index++;
       }
-      console.log(values);
+      // console.log(values);
       res.json(values);
     } catch (err) {
       nxt(err);

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cards from './UpgradeCard';
 import { Card, CardBody, Button, Form } from 'reactstrap';
 import AllPlans from './AllPlans';
+import { API } from '../../services/api';
+import moment from 'moment';
 
 const LemmeUpgradeYa = (props) => {
     const [pickedCard, setPickedCard] = useState(null);
+    const [user, setUser] = useState(null);
+    const [daysSince, setDaysSince] = useState('30');
     // const [path, setPath] = useState('/plans/basic');
     const [allPaths, setAllPaths] = useState(['/plans/basic', '/plans/personal', '/plans/business']);
     // const [border, setBorder] = useState('profile-box-one');
@@ -20,7 +24,20 @@ const LemmeUpgradeYa = (props) => {
         const holdSelectedPlan = AllPlans.AllPlans.map(() => 'profile-box-one');
         holdSelectedPlan[index] = 'profile-box-two';
         setSelectedPlan(holdSelectedPlan);
-        console.log('it worked', holdSelectedPlan);
+
+        // if (index === selectedPlan) {
+        //     setBorder('profile-box-two');
+        //     return 'profile-box-two';
+        // }
+        // setBorder('profile-box-one');
+        // return 'profile-box-one';
+    };
+
+    const cardSelected = (r) => {
+        const holdSelectedPlan = AllPlans.AllPlans.map(() => 'profile-box-one');
+        holdSelectedPlan[r.plan - 1] = 'profile-box-two';
+        setSelectedPlan(holdSelectedPlan);
+
         // if (index === selectedPlan) {
         //     setBorder('profile-box-two');
         //     return 'profile-box-two';
@@ -38,6 +55,20 @@ const LemmeUpgradeYa = (props) => {
         });
         props.history.push(allPaths[selectedIndex]);
     };
+
+    const roundToWhole = (value) => {
+        return Number(value.toFixed(0));
+    };
+
+    useEffect(() => {
+        API.getUser().then((r) => {
+            setUser(r);
+            setDaysSince(
+                roundToWhole(30 - (moment().unix() - roundToWhole(new Date(r.date).getTime() / 1000)) / (60 * 60 * 24))
+            );
+            cardSelected(r);
+        });
+    }, []);
     // useEffect(() => {
     //     cardNumber();
     // }, []);
@@ -52,6 +83,7 @@ const LemmeUpgradeYa = (props) => {
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300&display=swap');
                 </style>
+                <h3 className="trial-reminder">You have {daysSince} days remaining of your free trial!</h3>
                 <CardBody className="big-card-plan">
                     <h1 className="plan-title-one">Upgrade Plan</h1>
                     <Form>

@@ -1,4 +1,6 @@
-import React from "react";
+/** @format */
+
+import React from 'react';
 
 // reactstrap components
 import {
@@ -9,8 +11,8 @@ import {
   Container,
   Row,
   Col,
-} from "reactstrap";
-import StripeCheckout from "../../components/Payments/stripe-button.js";
+} from 'reactstrap';
+import StripeCheckout from '../../components/Payments/stripe-button.js';
 // core components
 
 function SectionPricingfour() {
@@ -37,7 +39,7 @@ function SectionPricingfour() {
                     <CardBody>
                       <h6 className="card-category text-success">Basic</h6>
                       <CardTitle tag="h1">$0</CardTitle>
-                      <p style={{ color: "white" }}>/Month</p>
+                      <p style={{ color: 'white' }}>/Month</p>
                       <ul className="text-white">
                         <li>
                           <i className="fa fa-check mr-1" />1 Month Trial
@@ -66,8 +68,8 @@ function SectionPricingfour() {
                       <Button
                         className="btn-outline-neutral btn-round"
                         color="default"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
+                        href="/register"
+                        // onClick={(e) => e.preventDefault()}
                       >
                         Downgrade plan
                       </Button>
@@ -78,7 +80,7 @@ function SectionPricingfour() {
                   <Card className="card-pricing">
                     <CardBody>
                       <h6 className="card-category text-success">Personal</h6>
-                      <CardTitle tag="h1">$89</CardTitle>
+                      <CardTitle tag="h1">$34.99</CardTitle>
                       <p>/Month</p>
                       <ul>
                         <li>
@@ -106,7 +108,15 @@ function SectionPricingfour() {
                           Open Source Elements
                         </li>
                       </ul>
-                      <StripeCheckout />
+                      <Button
+                        className="btn-round"
+                        color="success"
+                        href="/register"
+                        // onClick={(e) => e.preventDefault()}
+                        outline
+                      >
+                        Most Popular
+                      </Button>
                     </CardBody>
                   </Card>
                 </Col>
@@ -114,8 +124,8 @@ function SectionPricingfour() {
                   <Card className="card-pricing card-plain">
                     <CardBody>
                       <h6 className="card-category text-success">Business</h6>
-                      <CardTitle tag="h1">$199</CardTitle>
-                      <p style={{ color: "white" }}>/Month</p>
+                      <CardTitle tag="h1">$79.99</CardTitle>
+                      <p style={{ color: 'white' }}>/Month</p>
                       <ul className="text-white">
                         <li>
                           <i className="fa fa-check mr-1" />
@@ -145,7 +155,7 @@ function SectionPricingfour() {
                       <Button
                         className="btn-outline-neutral btn-round"
                         color="default"
-                        href="/api/stripe/3"
+                        href="/register"
                         // onClick={(e) => e.preventDefault()}
                       >
                         Upgrade plan
