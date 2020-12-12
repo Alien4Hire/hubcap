@@ -32,6 +32,7 @@ module.exports = {
   redirectDomainLogout: 'http://localhost:3006/login-page',
   redirectDomainPersonal: 'http://localhost:3006/plans/personal',
   redirectDomainBusiness: 'http://localhost:3006/plans/business',
+  redirectDomainPortal: 'http://localhost:3006/plans/payment-portal',
   //Mysql
   MysqlPassword: '1a3629d9ab9c9cde72d1a5b7af5e59c42341009264fdcfee',
 };

@@ -10,7 +10,7 @@ const LemmeUpgradeYa = (props) => {
     const [user, setUser] = useState(null);
     const [daysSince, setDaysSince] = useState('30');
     // const [path, setPath] = useState('/plans/basic');
-    const [allPaths, setAllPaths] = useState(['/plans/basic', '/plans/personal', '/plans/business']);
+    const [allPaths, setAllPaths] = useState(['#', '/plans/personal', '/plans/business']);
     // const [border, setBorder] = useState('profile-box-one');
     const [selectedPlan, setSelectedPlan] = useState(AllPlans.AllPlans.map(() => 'profile-box-one'));
 

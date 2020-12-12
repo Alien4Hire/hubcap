@@ -22,19 +22,35 @@ module.exports = (app) => {
   });
   ///monthly stripe pay
   //personal plan
-  app.post('/api/stripe/2', requireLogin, async (req, res) => {
-    const products = await stripe.products.retreive('prod_IFfv4smjhO66ub');
-    const charge = await stripe.charges.create({
-      amount: 500,
-      currency: 'usd',
-      description: products.description,
-      source: req.body.id,
-    });
-    console.log(charge);
+  app.get('/api/stripe/2', requireLogin, async (req, res) => {
+    const plan = await stripe.plans.retrieve('price_1HfAZGGFN31Q4RRjSrFXnGgD');
+    // console.log(req.user);
+    if (req.user.stripeId) {
+      const customer = await stripe.customers.retrieve(req.user.stripeId);
+    } else {
+      const customer = await stripe.customers.create({
+        email: req.user.email,
+        description: 'Subscribing to Personal Plan Monthly Subscription',
+      });
+      req.user.stripeId = customer.id;
+      const user = await req.user.save();
+    }
     req.user.plan = 2;
     const user = await req.user.save();
+    const subscription = await stripe.subscriptions.create({
+      customer: req.user.stripeId,
+      items: [{ price: 'price_1HfAZGGFN31Q4RRjSrFXnGgD' }],
+    });
 
-    res.send(user);
+    // const charge = await stripe.charges.create({
+    //   amount: 500,
+    //   currency: 'usd',
+    //   description: products.description,
+    //   source: req.body.id,
+    // });
+    // console.log(charge);
+
+    // res.send(user);
   });
 
   //business plan
@@ -83,10 +99,38 @@ module.exports = (app) => {
     res.send(user);
   });
 
-  //   app.get('/plans/personal', (req, res) => {
-  //     res.redirect(keys.redirectDomainPersonal);
-  //   });
-  //   app.get('/plans/business', (req, res) => {
-  //     res.redirect(keys.redirectDomainBusiness);
-  //   });
+  app.get('/plans/personal', (req, res) => {
+    res.redirect(keys.redirectDomainPersonal);
+  });
+  app.get('/plans/business', (req, res) => {
+    res.redirect(keys.redirectDomainBusiness);
+  });
+  app.get('/plans/payment', (req, res) => {
+    res.redirect(keys.redirectDomainPortal);
+  });
+
+  //update payment info
+  app.get('/plans/payment-portal', requireLogin, async (req, res) => {
+    res.redirect(keys.redirectDomainPersonal);
+    const plan = await stripe.plans.retrieve('price_1HfAZGGFN31Q4RRjSrFXnGgD');
+    // console.log(req.user);
+    if (req.user.stripeId) {
+      const customer = await stripe.customers.retrieve(req.user.stripeId);
+    } else {
+      const customer = await stripe.customers.create({
+        email: req.user.email,
+        description: 'Subscribing to Personal Plan Monthly Subscription',
+      });
+      req.user.stripeId = customer.id;
+      const user = await req.user.save();
+    }
+
+    const session = await stripe.billingPortal.sessions.create({
+      customer: req.user.stripeId,
+      return_url: 'https://www.google.com',
+    });
+    console.log('Continue to payment portal');
+
+    res.redirect(session.url);
+  });
 };

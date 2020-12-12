@@ -37,6 +37,7 @@ import Dashboard from '../views/Dashboard.js';
 /// Payment
 import PersonalPayment from '../views/paymentPortal/personalPayment';
 import BusinessPayment from '../views/paymentPortal/businessPayment';
+import UpdatePayment from '../views/paymentPortal/UpdateCreditStripe';
 // others
 //vv Tutorial vv//
 import Header from './survey-tutorial/components-tutorial/Header.js';
@@ -79,6 +80,10 @@ class App extends Component {
             <Route
               path="/plans/business"
               render={(props) => <BusinessPayment {...props} />}
+            />
+            <Route
+              path="/plans/update-card"
+              render={(props) => <UpdatePayment {...props} />}
             />
             {/*vvv tutorial code(main.js + import redux + Provider wrap(store)) */}
             <Route

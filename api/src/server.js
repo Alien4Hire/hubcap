@@ -63,8 +63,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.cookie);
+  // console.log(req.session);
+  // console.log(req.cookie);
   next();
 });
 //app.use(require('./middlewares/JWT'));

@@ -10,6 +10,7 @@ const userSchema = new Schema({
   facebookId: String,
   twitterID: String,
   localId: String,
+  stripeId: String,
   email: {
     type: String,
     require: true,

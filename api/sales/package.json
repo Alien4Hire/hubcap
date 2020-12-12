@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.2",
-    "@stripe/stripe-js": "^1.10.0",
+    "@stripe/stripe-js": "^1.11.0",
     "axios": "^0.20.0",
     "classnames": "2.2.6",
     "headroom.js": "0.11.0",

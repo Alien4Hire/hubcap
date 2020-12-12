@@ -56,7 +56,7 @@ function SectionSharing() {
                           className="btn-round"
                           target="_blank"
                           color="danger"
-                          href="https://www.creative-tim.com/product/paper-kit-pro-react?ref=pkpr-presentation-page"
+                          href="/plans/update-card"
                         >
                           Buy Now
                         </Button>
@@ -83,7 +83,7 @@ function SectionSharing() {
                           className="btn-round"
                           target="_blank"
                           color="danger"
-                          href="https://www.creative-tim.com/product/paper-kit-pro-react?ref=pkpr-presentation-page"
+                          href="/plans/update-card"
                         >
                           Buy Now
                         </Button>

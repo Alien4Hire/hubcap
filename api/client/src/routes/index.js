@@ -115,6 +115,8 @@ const CryptoCharts = React.lazy(() => import('../pages/CryptoCharts'));
 
 //API reload handling
 const APILogout = React.lazy(() => import('../pages/API_routes/logout'));
+const APIPricing = React.lazy(() => import('../pages/API_routes/pricing'));
+const APIPayment = React.lazy(() => import('../pages/API_routes/UpdatePayment'));
 
 // handle auth and authorization
 
@@ -480,6 +482,24 @@ const authRoutes = {
             path: '/api/logout',
             name: 'Logout',
             component: APILogout,
+            route: Route,
+        },
+        {
+            path: '/plans/personal',
+            name: 'plans-personal',
+            component: APIPricing,
+            route: Route,
+        },
+        {
+            path: '/plans/business',
+            name: 'plans-business',
+            component: APIPricing,
+            route: Route,
+        },
+        {
+            path: '/plans/payment',
+            name: 'update-payment',
+            component: APIPayment,
             route: Route,
         },
     ],

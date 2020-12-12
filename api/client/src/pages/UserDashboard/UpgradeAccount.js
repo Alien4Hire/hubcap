@@ -44,7 +44,7 @@ const ProfilePage = ({ news }) => {
                                     <div className="payment-info spacing left-text">Stripe</div>
                                 </Col>
                                 <Col className="right-text padding-top">
-                                    <a href="/" className="manage-payment spacing move-right">
+                                    <a href="/plans/payment" className="manage-payment spacing move-right">
                                         Manage payment info
                                     </a>
                                     <div></div>
@@ -80,7 +80,7 @@ const ProfilePage = ({ news }) => {
                                         Change Plan
                                     </a>
                                     <div></div>
-                                    <a href="/" className="billing-details spacing move-right">
+                                    <a href="/api/logout" className="billing-details spacing move-right">
                                         Sign Out
                                     </a>
                                 </Col>

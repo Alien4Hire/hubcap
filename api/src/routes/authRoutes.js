@@ -9,7 +9,7 @@ const requireLogin = require('../middlewares/requireLogin');
 module.exports = (app) => {
   //test route
   app.get('/dashboard', async (req, res) => {
-    console.log('go to dashboard');
+    // console.log('go to dashboard');
   });
   //local
   app.post(
