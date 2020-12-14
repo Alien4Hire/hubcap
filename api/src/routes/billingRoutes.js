@@ -6,25 +6,25 @@ const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
   //1 time stripe pay
-  app.post('/api/stripe', requireLogin, async (req, res) => {
-    const charge = await stripe.charges.create({
-      amount: 500,
-      currency: 'usd',
-      description: '$5 for 5 credits',
-      source: req.body.id,
-    });
+  // app.post('/api/stripe', requireLogin, async (req, res) => {
+  //   const charge = await stripe.charges.create({
+  //     amount: 500,
+  //     currency: 'usd',
+  //     description: '$5 for 5 credits',
+  //     source: req.body.id,
+  //   });
 
-    req.user.credits += 5;
-    req.user.plan = 1;
-    const user = await req.user.save();
+  //   req.user.credits += 5;
+  //   req.user.plan = 1;
+  //   const user = await req.user.save();
 
-    res.send(user);
-  });
+  //   res.send(user);
+  // });
   ///monthly stripe pay
   //personal plan
-  app.get('/api/stripe/2', requireLogin, async (req, res) => {
+  app.post('/api/stripe', requireLogin, async (req, res) => {
     const plan = await stripe.plans.retrieve('price_1HfAZGGFN31Q4RRjSrFXnGgD');
-    // console.log(req.user);
+    console.log(req);
     if (req.user.stripeId) {
       const customer = await stripe.customers.retrieve(req.user.stripeId);
     } else {

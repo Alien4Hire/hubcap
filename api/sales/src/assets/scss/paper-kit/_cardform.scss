@@ -1,0 +1,278 @@
+/** @format */
+
+.PaymentForm {
+  padding-top: 1vh;
+  margin-top: 1vh;
+  margin-left: -3vw;
+  display: grid;
+  grid-template-columns: 0.7 2 1;
+  grid-template-rows: 1 1;
+}
+
+.form-header {
+  grid-area: center;
+}
+
+.right-card {
+  grid-area: right;
+}
+
+.form-container {
+  grid-area: center;
+  margin-top: -25px;
+}
+
+.form-header {
+  font-weight: 700;
+  font-size: 23px;
+  padding-bottom: 15px;
+  text-align: left;
+}
+.link-card {
+  font-weight: 400;
+  margin-bottom: 25px;
+  cursor: pointer;
+  vertical-align: top;
+  color: #0071eb;
+  text-align: left;
+  font-size: 16px;
+}
+
+.creditForm {
+  grid-auto-rows: 6;
+  display: grid;
+  grid-template-rows: 1 1 1 1 1 1;
+  grid-template-columns: 250px;
+  padding-top: 25px;
+  width: 100%;
+}
+
+.forminput {
+  padding-top: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0;
+  margin-top: -4px;
+  font-size: 16px;
+  border: 0 solid white;
+  color: #000;
+  background-color: white;
+  margin-bottom: 0px;
+  outline: none;
+  width: 100%;
+}
+
+.fa-pay {
+  font-size: 22px;
+  padding-right: 30px;
+  padding-bottom: 5px;
+  float: left;
+}
+
+.float-container {
+  height: 60px;
+  border: solid 1px #8c8c8c;
+  margin-bottom: 10px;
+  width: 24vw;
+}
+
+.right-card {
+  margin-left: 7vw;
+  margin-top: 9vh;
+}
+
+.inputLabel {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.save-button {
+  margin-top: 16px;
+  background-color: red;
+  border: none;
+  width: 24vw;
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.hidden {
+  visibility: hidden;
+}
+.smaller-drop {
+  height: 42px;
+}
+.smaller-drop select {
+  height: 40px;
+  padding: 0 0;
+  margin-top: 0vh;
+}
+
+.forminputDropdown {
+  border: none;
+  outline: none;
+}
+
+@media (max-width: 1111px) {
+  .right-card {
+    display: none;
+  }
+  .float-container {
+    height: 60px;
+    border: solid 1px #8c8c8c;
+    margin-bottom: 10px;
+    width: 40vw;
+  }
+
+  .smaller-drop {
+    height: 42px;
+  }
+  .smaller-drop select {
+    height: 40px;
+    padding: 0 0;
+    margin-top: 0vh;
+  }
+  .save-button {
+    width: 40vw;
+  }
+}
+@media (max-width: 768px) {
+  .right-card {
+    display: none;
+  }
+  .float-container {
+    height: 60px;
+    border: solid 1px #8c8c8c;
+    margin-bottom: 10px;
+    width: 50vw;
+  }
+
+  .smaller-drop {
+    height: 42px;
+  }
+  .smaller-drop select {
+    height: 40px;
+    padding: 0 0;
+    margin-top: 0vh;
+  }
+  .save-button {
+    width: 50vw;
+  }
+}
+@media (max-width: 711px) {
+  .float-container {
+    height: 60px;
+    border: solid 1px #8c8c8c;
+    margin-bottom: 10px;
+    width: 55vw;
+  }
+  .smaller-drop {
+    height: 42px;
+  }
+  .smaller-drop select {
+    height: 40px;
+    padding: 0 0;
+    margin-top: 0vh;
+  }
+  .save-button {
+    width: 55vw;
+  }
+}
+
+@media (max-width: 621px) {
+  .float-container {
+    height: 60px;
+    border: solid 1px #8c8c8c;
+    margin-bottom: 10px;
+    width: 75vw;
+  }
+
+  .smaller-drop {
+    height: 42px;
+  }
+  .smaller-drop select {
+    height: 40px;
+    padding: 0 0;
+    margin-top: 0vh;
+  }
+  .save-button {
+    width: 75vw;
+  }
+}
+@media (max-width: 414px) {
+  .PaymentForm {
+    padding-top: 1vh;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    display: grid;
+    grid-template-columns: 0.7 2 1;
+    grid-template-rows: 1 1;
+  }
+  .float-container {
+    height: 60px;
+    border: solid 1px #8c8c8c;
+    margin-left: 8vw;
+    margin-bottom: 10px;
+    width: 75vw;
+  }
+
+  .text-center {
+    margin-left: 8vw;
+  }
+  .form-header,
+  .link-card {
+    margin-left: -1vw;
+  }
+  .smaller-drop {
+    height: 42px;
+  }
+  .smaller-drop select {
+    height: 40px;
+    padding: 0 0;
+    margin-top: 0vh;
+  }
+  .save-button {
+    margin-left: 8vw;
+    width: 75vw;
+  }
+}
+
+@media (max-width: 375px) {
+  .PaymentForm {
+    padding-top: 1vh;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    display: grid;
+    grid-template-columns: 0.7 2 1;
+    grid-template-rows: 1 1;
+  }
+  .float-container {
+    height: 60px;
+    border: solid 1px #8c8c8c;
+    margin-left: 10vw;
+    margin-bottom: 10px;
+    width: 75vw;
+  }
+  .smaller-drop {
+    height: 42px;
+  }
+  .smaller-drop select {
+    height: 40px;
+    padding: 0 0;
+    margin-top: 0vh;
+  }
+  .save-button {
+    margin-left: 10vw;
+    width: 75vw;
+  }
+  .text-center {
+    margin-left: 10vw;
+  }
+  .form-header,
+  .link-card {
+    margin-left: 2vw;
+  }
+}

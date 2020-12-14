@@ -1,6 +1,7 @@
 /** @format */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // reactstrap components
 import {
@@ -52,14 +53,20 @@ function SectionSharing() {
                         and Ebooks to improve your trading immediately.
                       </p>
                       <CardFooter>
-                        <Button
-                          className="btn-round"
-                          target="_blank"
-                          color="danger"
-                          href="/plans/update-card"
+                        <Link
+                          to={{
+                            pathname: '/plans/update-card',
+                            data: '1', // your data array of objects
+                          }}
                         >
-                          Buy Now
-                        </Button>
+                          <Button
+                            className="btn-round"
+                            target="_blank"
+                            color="danger"
+                          >
+                            Buy Now
+                          </Button>
+                        </Link>
                       </CardFooter>
                     </CardBody>
                   </Card>
@@ -79,14 +86,21 @@ function SectionSharing() {
                         subscription.
                       </p>
                       <CardFooter>
-                        <Button
-                          className="btn-round"
-                          target="_blank"
-                          color="danger"
-                          href="/plans/update-card"
+                        <Link
+                          to={{
+                            pathname: '/plans/update-card',
+                            data: '3', // your data array of objects
+                          }}
                         >
-                          Buy Now
-                        </Button>
+                          <Button
+                            className="btn-round"
+                            target="_blank"
+                            color="danger"
+                            href="/plans/update-card"
+                          >
+                            Buy Now
+                          </Button>
+                        </Link>
                       </CardFooter>
                     </CardBody>
                   </Card>
