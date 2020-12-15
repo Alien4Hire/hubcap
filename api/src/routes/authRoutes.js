@@ -43,17 +43,19 @@ module.exports = (app) => {
           let newuser = await user.create(req.body);
           let t = token.signToken(newuser._id);
           res.cookie('access_token', t, { httpOnly: true });
+          console.log(req.body);
           next();
         } catch (e) {
           console.log(e);
           res.status(400).send('Bad request');
         }
-        // console.log("not working");
+        console.log('not working');
       }
     },
     passport.authenticate('local', { failureRedirect: '/register' }),
     (req, res) => {
       if (req.isAuthenticated()) {
+        console.log(req.user);
         const { _id } = req.user;
         const t = token.signToken(_id);
         res.cookie('access_token', t, { httpOnly: true });
