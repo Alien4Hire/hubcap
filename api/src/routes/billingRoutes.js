@@ -3,6 +3,7 @@
 const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 const requireLogin = require('../middlewares/requireLogin');
+const passport = require('passport');
 
 module.exports = (app) => {
   //1 time stripe pay
@@ -25,6 +26,8 @@ module.exports = (app) => {
   app.post('/api/stripe', requireLogin, async (req, res) => {
     const plan = await stripe.plans.retrieve('price_1HfAZGGFN31Q4RRjSrFXnGgD');
     console.log(req);
+    // console.log(req.user);
+    // console.log(req.body);
     if (req.user.stripeId) {
       const customer = await stripe.customers.retrieve(req.user.stripeId);
     } else {

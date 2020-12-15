@@ -14,6 +14,7 @@ module.exports = function (app) {
       '/api/current_user',
       '/api/logout',
       '/plans/payment-portal',
+      '/api/stripe',
     ],
     createProxyMiddleware({
       target: 'http://localhost:3500',

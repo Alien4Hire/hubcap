@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'reactstrap';
 
 import HyperDatepicker from '../../components/Datepicker';
@@ -8,17 +8,16 @@ import RevenueChart from './RevenueChart';
 import SalesChart from './SalesChart';
 import Activity from './Activity';
 import Products from './Products';
-import {API} from '../../services/api'
+import { API } from '../../services/api';
 
 const AnalyticsDashboardPage = () => {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
     useEffect(() => {
-        API.getUser()
-          .then(r => {
-              console.log(r)
-              setUser(r)
-          })
-    }, [])
+        API.getUser().then((r) => {
+            console.log(r);
+            setUser(r);
+        });
+    }, []);
     return (
         <React.Fragment>
             <Row>
@@ -44,9 +43,7 @@ const AnalyticsDashboardPage = () => {
             <Row>
                 <Col>
                     <h4>User Data</h4>
-                    <pre>
-                        {user ? JSON.stringify(user, ' ', 2) : null}
-                    </pre>
+                    <pre>{user ? JSON.stringify(user, ' ', 2) : null}</pre>
                 </Col>
             </Row>
 
