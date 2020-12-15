@@ -23,12 +23,21 @@ module.exports = (app) => {
   // });
   ///monthly stripe pay
   //personal plan
+  //https://stripe.com/docs/api
   app.post('/api/stripe', requireLogin, async (req, res) => {
-    const plan = await stripe.plans.retrieve('price_1HfAZGGFN31Q4RRjSrFXnGgD');
     console.log(req);
     // console.log(req.user);
     // console.log(req.body);
+    ////list of possible plans for user to sign up for
+    const prices = [
+      'basic',
+      'price_1HfAZGGFN31Q4RRjSrFXnGgD',
+      'price_1HfAbzGFN31Q4RRjtjVDcLz0',
+      'price_1HxLmOGFN31Q4RRj03tu6KBo',
+      'price_1HxLtsGFN31Q4RRjUHmH0Hkg',
+    ];
     if (req.user.stripeId) {
+      ////create new stripe customer and save customer id to database
       const customer = await stripe.customers.retrieve(req.user.stripeId);
     } else {
       const customer = await stripe.customers.create({
@@ -40,68 +49,32 @@ module.exports = (app) => {
     }
     req.user.plan = 2;
     const user = await req.user.save();
+
+    ////create payment method from post data
+    const paymentMethod = await stripe.paymentMethods.create({
+      type: 'card',
+      card: {
+        number: req.body.number,
+        exp_month: req.body.expiryMonth,
+        exp_year: req.body.expiryYear,
+        cvc: req.body.cvc,
+      },
+    });
+
+    ////assign payment method to customer
+    const assignPaymentMethod = await stripe.paymentMethods.attach(
+      paymentMethod.id,
+      { customer: req.user.stripeId }
+    );
+
+    ////subscribe user to their selected plan
     const subscription = await stripe.subscriptions.create({
       customer: req.user.stripeId,
-      items: [{ price: 'price_1HfAZGGFN31Q4RRjSrFXnGgD' }],
+      items: [{ price: prices[req.body.plan] }],
     });
-
-    // const charge = await stripe.charges.create({
-    //   amount: 500,
-    //   currency: 'usd',
-    //   description: products.description,
-    //   source: req.body.id,
-    // });
-    // console.log(charge);
-
-    // res.send(user);
   });
 
-  //business plan
-  app.post('/api/stripe/3', requireLogin, async (req, res) => {
-    const products = await stripe.products.retrieve('prod_IFfxGujgp9e9Pd');
-    const charge = await stripe.charges.create({
-      amount: 500,
-      currency: 'usd',
-      description: products.description,
-      source: req.body.id,
-    });
-    req.user.plan = 3;
-    const user = await req.user.save();
-
-    res.send(user);
-  });
-
-  //personal plan yearly
-  app.post('/api/stripe/4', requireLogin, async (req, res) => {
-    const products = await stripe.products.retrieve('prod_IXe50OqGcGNrnV');
-    console.log(products);
-    const charge = await stripe.charges.create({
-      amount: 500,
-      currency: 'usd',
-      description: products.description,
-      source: req.body.id,
-    });
-    req.user.plan = 2;
-    const user = await req.user.save();
-
-    res.send(user);
-  });
-
-  //business plan Yearly
-  app.post('/api/stripe/5', requireLogin, async (req, res) => {
-    const products = await stripe.products.retrieve('prod_IXe4RJOt9rzQLL');
-    const charge = await stripe.charges.create({
-      amount: 500,
-      currency: 'usd',
-      description: products.description,
-      source: req.body.id,
-    });
-    req.user.plan = 3;
-    const user = await req.user.save();
-
-    res.send(user);
-  });
-
+  ////redirects for localhost:3000
   app.get('/plans/personal', (req, res) => {
     res.redirect(keys.redirectDomainPersonal);
   });
@@ -113,6 +86,7 @@ module.exports = (app) => {
   });
 
   //update payment info
+  ////will allow user to access their payment portal to update card information and change plans
   app.get('/plans/payment-portal', requireLogin, async (req, res) => {
     res.redirect(keys.redirectDomainPersonal);
     const plan = await stripe.plans.retrieve('price_1HfAZGGFN31Q4RRjSrFXnGgD');

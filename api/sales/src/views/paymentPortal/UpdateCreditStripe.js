@@ -11,11 +11,13 @@ import { set } from 'lodash';
 
 const SectionSharing = (data) => {
   // const { data } = this.props.location;
-  console.log(data.location.data);
+  // console.log(data.location.data);
   const [planSelector, setPlanSelector] = useState(data.location.data);
   //inputs
   const [cvc, setCvc] = useState('');
   const [expiry, setExpiry] = useState('');
+  const [expiryMonth, setExpiryMonth] = useState('');
+  const [expiryYear, setExpiryYear] = useState('');
   const [focus, setFocus] = useState('');
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -39,6 +41,7 @@ const SectionSharing = (data) => {
     { value: '3', label: 'Personal(Yearly)' },
     { value: '4', label: 'Business(Yearly)' },
   ];
+
   // console.log(options);
   //set selected
   const setSelected = () => {};
@@ -48,7 +51,9 @@ const SectionSharing = (data) => {
     firstName: firstName,
     lastName: lastName,
     cardNumber: number,
-    expDate: expiry,
+    expiry: expiry,
+    expMonth: expiryMonth,
+    expYear: expiryYear,
     cvc: cvc,
     zip: zip,
     plan: plan,
@@ -62,7 +67,9 @@ const SectionSharing = (data) => {
       firstName: firstName,
       lastName: lastName,
       cardNumber: number,
-      expDate: expiry,
+      expiry: expiry,
+      expMonth: expiryMonth,
+      expYear: expiryYear,
       cvc: cvc,
       zip: zip,
       plan: plan,
@@ -150,6 +157,12 @@ const SectionSharing = (data) => {
     }
   };
 
+  const spitDates = () => {
+    var v = expiry;
+    setExpiryMonth(v.substr(0, 2));
+    setExpiryYear('20' + v.charAt(v.length - 2) + v.charAt(v.length - 1));
+  };
+
   //update cvv date
   const handleCvvFocus = (e) => {
     setFocus(e.target.name);
@@ -195,9 +208,16 @@ const SectionSharing = (data) => {
     },
     [firstName, lastName]
   );
+  useEffect(
+    (e) => {
+      spitDates(e);
+    },
+    [expiry, cvc]
+  );
 
   useEffect(() => {
     paymentUpdated();
+    console.log(payment);
   }, [firstName, lastName, number, expiry, cvc, zip, plan]);
 
   ////styles

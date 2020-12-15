@@ -1,6 +1,7 @@
 /** @format */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // reactstrap components
 import {
@@ -19,10 +20,52 @@ import ColorNavbar from 'components/Navbars/ColorNavbar.js';
 import api from '../../utils/api';
 
 function RegisterPage() {
-  const [user, setUser] = React.useState({
+  const [focus, setFocus] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [user, setUser] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
   });
+
+  const updateUser = () => {
+    setUser({
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
+    console.log(user);
+  };
+
+  //update Email date
+  const handleEmailFocus = (e) => {
+    setFocus(e.target.name);
+  };
+
+  const handleEmailChange = (e) => {
+    const { name, value } = e.target;
+    setEmail(value);
+  };
+  //update Password date
+  const handlePasswordFocus = (e) => {
+    setFocus(e.target.name);
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPassword(value);
+  };
+  //update ConfirmPassword date
+  const handleConfirmPasswordFocus = (e) => {
+    setFocus(e.target.name);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const { name, value } = e.target;
+    setConfirmPassword(value);
+  };
 
   document.documentElement.classList.remove('nav-open');
   React.useEffect(() => {
@@ -37,15 +80,31 @@ function RegisterPage() {
   });
 
   const register = (ev) => {
-    ev.preventDefault();
-    try {
-      api.post('/auth/register', user).then((result) => {
-        window.location.href = process.env.REACT_APP_REDIRECT_URI
-      });
-    } catch (e) {
-      console.log(e);
+    console.log(user);
+    console.log(user.password);
+    console.log(user.confirmPassword);
+    if (user.password !== user.confirmPassword) {
+      alert('Passwords Entered Must Match');
+    } else {
+      ev.preventDefault();
+      try {
+        api.post('/auth/register', user).then((response) => {
+          if (response.data) {
+            console.log(response);
+            window.location.href = process.env.REACT_APP_REDIRECT_URI;
+          } else {
+            alert('Sign-up error. Please try again!');
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
+
+  useEffect(() => {
+    updateUser();
+  }, [email, password, confirmPassword]);
 
   // const google = (ev) => {
   //   ev.preventDefault();
@@ -153,20 +212,25 @@ function RegisterPage() {
                     <Input
                       placeholder="Email"
                       type="email"
+                      name="email"
                       value={user.email}
-                      onChange={(ev) =>
-                        setUser({ ...user, email: ev.target.value })
-                      }
+                      onChange={handleEmailChange}
+                      onFocus={handleEmailFocus}
                     />
                     <Input
                       placeholder="Password"
                       type="password"
+                      name="password"
                       value={user.password}
-                      onChange={(ev) =>
-                        setUser({ ...user, password: ev.target.value })
-                      }
+                      onChange={handlePasswordChange}
+                      onFocus={handlePasswordFocus}
                     />
-                    <Input placeholder="Confirm Password" type="password" />
+                    <Input
+                      placeholder="Confirm Password"
+                      type="password"
+                      onChange={handleConfirmPasswordChange}
+                      onFocus={handleConfirmPasswordFocus}
+                    />
                     <Button
                       block
                       className="btn-round"

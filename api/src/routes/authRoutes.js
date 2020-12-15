@@ -7,76 +7,104 @@ const keys = require('../config/keys');
 const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
-  //test route
-  app.get('/dashboard', async (req, res) => {
-    // console.log('go to dashboard');
-  });
   //local
   app.post(
     '/auth/register',
     async (req, res, next) => {
+      //find user by email, if exists tell user to login
       const existingUser = await user.findOne({
         email: req.body.email,
       });
-      // console.log(existingUser);
+      //If a user exists check which signup method they used
       if (existingUser) {
         if (existingUser.googleId) {
-          // console.log('Login with google');
           return res.json('Login with Google');
-          //return res.json('Login with Google');
         } else if (existingUser.facebookId) {
-          // console.log('Login with facebook');
           return res.json('Login with Facebook');
         } else if (existingUser.twitterId) {
-          // console.log('Login with twitter');
           return res.json('Login with Twitter');
         } else {
           return res.json('User with this email already exists');
-          // console.log('User with this email already exists');
         }
-        // console.log(existingUser.googleId);
-        // console.log(existingUser.facebookId);
-        // console.log("User with this email already exists");
-        // return done(null, existingUser);
       } else {
         try {
+          ///Create user and save to database
           let newuser = await user.create(req.body);
           let t = token.signToken(newuser._id);
           res.cookie('access_token', t, { httpOnly: true });
-          console.log(req.body);
           next();
         } catch (e) {
           console.log(e);
           res.status(400).send('Bad request');
         }
-        console.log('not working');
       }
     },
+    ////Log user into app and redirect to localhost:3000
     passport.authenticate('local', { failureRedirect: '/register' }),
     (req, res) => {
       if (req.isAuthenticated()) {
-        console.log(req.user);
         const { _id } = req.user;
         const t = token.signToken(_id);
         res.cookie('access_token', t, { httpOnly: true });
-        res.send('OK');
+        if (req.user.plan == 1) {
+          res.redirect(keys.redirectDomainTrial);
+        } else {
+          res.redirect(keys.redirectDomain);
+        }
       }
     }
   );
 
-  // // //local
-  // app.post(
-  //   '/auth/local',
-  //   passport.authenticate('local', {
-  //     successRedirect: '/',
-  //     failureRedirect: '/register',
-  //     failureFlash: true,
-  //   }),
-  //   (req, res) => {
-  //     console.log(req.body);
-  //     // res.redirect('/');
-  //   }
-  // );
+  //login
+  app.post(
+    '/auth/login',
+    async (req, res, next) => {
+      ///check if user exists
+      const existingUser = await user.findOne({
+        email: req.body.email,
+      });
+      ///user does not exist
+      if (!existingUser) {
+        return res.json('Please register before Login');
+      }
+      ///check if user signed in using oauth
+      if (existingUser) {
+        if (existingUser.googleId) {
+          return res.json('Login with Google');
+        } else if (existingUser.facebookId) {
+          return res.json('Login with Facebook');
+        } else if (existingUser.twitterId) {
+          return res.json('Login with Twitter');
+        } else {
+          return res.json('User with this email already exists');
+        }
+      } else {
+        try {
+          ///create token for user
+          let t = token.signToken(existingUser._id);
+          res.cookie('access_token', t, { httpOnly: true });
+          next();
+        } catch (e) {
+          console.log(e);
+          res.status(400).send('Bad request');
+        }
+      }
+    },
+    ////Login user and redirect to localhost:3000
+    passport.authenticate('local', { failureRedirect: '/register' }),
+    (req, res) => {
+      if (req.isAuthenticated()) {
+        const { _id } = req.user;
+        const t = token.signToken(_id);
+        res.cookie('access_token', t, { httpOnly: true });
+        if (req.user.plan == 1) {
+          res.redirect(keys.redirectDomainTrial);
+        } else {
+          res.redirect(keys.redirectDomain);
+        }
+      }
+    }
+  );
 
   //google
   app.get(
@@ -93,7 +121,6 @@ module.exports = (app) => {
       if (req.isAuthenticated()) {
         const { _id } = req.user;
         const t = token.signToken(_id);
-        // console.log(req.user.plan);
         res.cookie('access_token', t, { httpOnly: true });
         if (req.user.plan == 1) {
           res.redirect(keys.redirectDomainTrial);

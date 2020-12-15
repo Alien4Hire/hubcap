@@ -10,6 +10,7 @@ module.exports = function (app) {
       '/local/user',
       '/auth/twitter',
       '/auth/register',
+      '/auth/login',
       '/api/*',
       '/api/current_user',
       '/api/logout',
