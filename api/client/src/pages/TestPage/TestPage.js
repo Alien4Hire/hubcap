@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 
 import HyperDatepicker from '../../components/Datepicker';
-import Statistics from './Statistics';
-import PerformanceChart from './PerformanceChart';
-import RevenueChart from './RevenueChart';
-import SalesChart from './SalesChart';
-import Activity from './Activity';
-import Products from './Products';
+
 import { API } from '../../services/api';
+import { connect } from 'react-redux';
+import { stockSelector, fetchWatchlists, loginUser } from '../../redux/actions';
 
 const AnalyticsDashboardPage = () => {
     const [user, setUser] = useState(null);
     useEffect(() => {
         API.getUser().then((r) => {
-            console.log(r);
+            // console.log(r);
             setUser(r);
         });
     }, []);
@@ -44,38 +41,15 @@ const AnalyticsDashboardPage = () => {
                 <Col>
                     <h4>User Data</h4>
                     <pre>{user ? JSON.stringify(user, ' ', 2) : null}</pre>
+                    <Button>Login</Button>
                 </Col>
             </Row>
-
-            {/* <Row>
-                <Col xl={5}>
-                    <Statistics />
-                </Col>
-
-                <Col xl={7}>
-                    <PerformanceChart />
-                </Col>
-            </Row>
-
-            <Row>
-                <Col xl={9}>
-                    <RevenueChart />
-                </Col>
-                <Col xl={3}>
-                    <SalesChart />
-                </Col>
-            </Row>
-
-            <Row>
-                <Col xl={3}>
-                    <Activity />
-                </Col>
-                <Col>
-                    <Products />
-                </Col>
-            </Row> */}
         </React.Fragment>
     );
 };
 
-export default AnalyticsDashboardPage;
+const mapStateToProps = (state) => {
+    console.log(state);
+};
+
+export default connect(mapStateToProps, { loginUser, fetchWatchlists })(AnalyticsDashboardPage);

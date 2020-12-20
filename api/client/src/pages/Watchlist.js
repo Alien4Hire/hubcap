@@ -1,12 +1,14 @@
 import React from 'react';
 import { Row, Col, Button, Container } from 'reactstrap';
 import { render } from 'react-dom';
-
+import { connect } from 'react-redux';
+import { stockSelector, fetchWatchlists } from '../redux/actions';
 //components
 import ListSecurityContainer from '../components/Watchlist/listSecurityContainer';
 import AddWatchlistForm from '../components/Watchlist/addWatchlistForm';
+import Modal from './modals/watchlistModal';
 
-export default class watchlist extends React.Component {
+class watchlist extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,13 +29,16 @@ export default class watchlist extends React.Component {
             <React.Fragment>
                 <Col className="watchlist-master-col">
                     <Row className="watchlist-form-row">
-                        {/*Create Task Form */}
+                        <Col>
+                            <div className="current-watchlist">
+                                <i className="mdi mdi-chevron-down" />
+                            </div>
+                        </Col>
                         <Col>
                             <AddWatchlistForm newTask={this.handleAddTask} className="watchlist-form" />
                         </Col>
                     </Row>
                     <Row className="watchlist-list-row">
-                        {/* Show Task list */}
                         <ListSecurityContainer
                             list={this.state.taskList}
                             removeTask={this.handleRemoveTask}
@@ -41,6 +46,7 @@ export default class watchlist extends React.Component {
                         />
                     </Row>
                 </Col>
+                <Modal />
             </React.Fragment>
         );
     }
@@ -61,3 +67,9 @@ export default class watchlist extends React.Component {
         this.setState({ taskList: tmp });
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log(state);
+};
+
+export default connect(mapStateToProps)(watchlist);

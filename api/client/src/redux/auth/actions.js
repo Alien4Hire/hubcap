@@ -14,9 +14,9 @@ import {
 
 type AuthAction = { type: string, payload: {} | string };
 
-export const loginUser = (username: string, password: string): AuthAction => ({
+export const loginUser = (payload): AuthAction => ({
     type: LOGIN_USER,
-    payload: { username, password },
+    payload,
 });
 
 export const loginUserSuccess = (user: string): AuthAction => ({

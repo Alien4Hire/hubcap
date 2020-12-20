@@ -14,12 +14,13 @@ import {
     forgetPasswordSuccess,
     forgetPasswordFailed,
 } from './actions';
-
+import request from '../../utils/request';
+const API_URL = 'http://localhost:3500';
 /**
  * Sets the session
  * @param {*} user
  */
-const setSession = user => {
+const setSession = (user) => {
     let cookies = new Cookies();
     if (user) cookies.set('user', JSON.stringify(user), { path: '/' });
     else cookies.remove('user', { path: '/' });
@@ -28,17 +29,17 @@ const setSession = user => {
  * Login the user
  * @param {*} payload - username and password
  */
-function* login({ payload: { username, password } }) {
-    const options = {
-        body: JSON.stringify({ username, password }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-    };
-
+function* login() {
     try {
-        const response = yield call(fetchJSON, '/users/authenticate', options);
-        setSession(response);
-        yield put(loginUserSuccess(response));
+        const response = yield fetch(`${API_URL}/api/current_user`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        const responseBody = yield response.json();
+        // console.log(r, 'RESPONSE')
+
+        setSession(responseBody);
+        yield put(loginUserSuccess(responseBody));
     } catch (error) {
         let message;
         switch (error.status) {

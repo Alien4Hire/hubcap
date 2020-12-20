@@ -4,8 +4,9 @@ import authSaga from './auth/saga';
 import layoutSaga from './layout/saga';
 import appMenuSaga from './appMenu/saga';
 import screenerSaga from './screener/saga';
+import watchlistSaga from './watchlist/saga';
 
 export default function* rootSaga(getState: any): any {
-    yield all([authSaga(), layoutSaga(), appMenuSaga(), screenerSaga()]);
+    yield all([authSaga(), layoutSaga(), appMenuSaga(), screenerSaga(), watchlistSaga()]);
 }
 //
