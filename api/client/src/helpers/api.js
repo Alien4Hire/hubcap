@@ -6,7 +6,7 @@
 const fetchJSON = (url, options = {}) => {
     return fetch(url, options)
         .then(response => {
-            if (!response.status === 200) {
+            if (!response.ok) {
                 throw response.json();
             }
             return response.json();

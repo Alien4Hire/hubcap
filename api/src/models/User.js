@@ -42,11 +42,14 @@ userSchema.pre('save', function (next) {
 
 // Define schema methods
 userSchema.methods.comparePassword = function (password, cb) {
-  bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    else {
-      if (!isMatch) return cb(null, isMatch);
-      return cb(null, this);
+  bcrypt.compare(password, this.password, (err, result) => {
+    if(err){
+      return cb(err, null)
+    }
+    if(result){
+      return cb(null, this)
+    } else {
+      return cb('Wrong password', null)
     }
   });
 };

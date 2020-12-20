@@ -17,10 +17,17 @@ const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
   console.log('user serialized');
-  done(null, user.id);
+  if(user.id){
+    done(null, user.id);
+  }
+  if(user._id){
+    const id = user._id.toString()
+    done(null, id);
+  }
 });
 
 passport.deserializeUser((id, done) => {
+  console.log(id, 'DESERIALIZE')
   User.findById(id).then((user) => {
     console.log('user deserialized');
     done(null, user);
@@ -137,30 +144,23 @@ passport.use(
   )
 );
 
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password',
-    },
-    function (username, password, done) {
-      User.findOne({ email: username }, function (err, user) {
-        if (err) {
-          return done(err);
-        }
-        if (!user)
-          return done(null, false, { message: 'Incorrect email or password' });
+passport.use(new LocalStrategy(
+  {
+       usernameField: 'email',
+       passwordField: 'password',
+     },
+  function(username, password, cb) {
+    User.findOne({ email: username })
+      .then((user) => {
+        if (!user) { return cb(null, false) }
 
-        user.comparePassword(password, (err) => {
-          if (err) {
-            return done(null, false, {
-              message: 'Incorrect email or password',
-            });
-          } else {
-            return done(null, user);
-          }
-        });
+        return user.comparePassword(password, (err, u) => {
+          if(err) return cb(err, false)
+          if(u) return cb(null, user)
+        })
+      })
+      .catch((err) => {
+        console.warn(err)
+        cb(err);
       });
-    }
-  )
-);
+  }));

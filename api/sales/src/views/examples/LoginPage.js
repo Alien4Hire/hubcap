@@ -71,11 +71,33 @@ function LoginPage() {
       api.post('/auth/login', user).then((response) => {
         if (response.data) {
           console.log(response);
-          window.location.href = process.env.REACT_APP_REDIRECT_URI;
+          //window.location.href = process.env.REACT_APP_REDIRECT_URI;
+
         } else {
           alert('Sign-up error. Please try again!');
         }
-      });
+      })
+        .catch(e => {
+          if(e.response && e.response.status && e.response.status === 401){
+            alert('Wrong username or password');
+            return
+          }
+          api.get('/api/current_user')
+            .then(response => {
+              if (response.data) {
+                const user = response.data
+                if(user && user.plan && user.plan === 1){
+                  window.location.href = process.env.REACT_APP_REDIRECT_URI_PRICING;
+                }
+                if(user && user.plan && user.plan !== 1){
+                  window.location.href = process.env.REACT_APP_REDIRECT_URI;
+                }
+              }
+            })
+            .catch(e => {
+              console.dir(e)
+            })
+        })
     } catch (e) {
       console.log(e);
     }

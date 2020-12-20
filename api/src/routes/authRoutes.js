@@ -5,6 +5,7 @@ const passport = require('passport');
 const user = require('../models/User');
 const keys = require('../config/keys');
 const requireLogin = require('../middlewares/requireLogin');
+const cors = require('cors');
 
 module.exports = (app) => {
   //local
@@ -58,43 +59,18 @@ module.exports = (app) => {
   //login
   app.post(
     '/auth/login',
-    async (req, res, next) => {
-      ///check if user exists
-      const existingUser = await user.findOne({
-        email: req.body.email,
-      });
-      ///user does not exist
-      if (!existingUser) {
-        return res.json('Please register before Login');
-      }
-      ///check if user signed in using oauth
-      if (existingUser) {
-        if (existingUser.googleId) {
-          return res.json('Login with Google');
-        } else if (existingUser.facebookId) {
-          return res.json('Login with Facebook');
-        } else if (existingUser.twitterId) {
-          return res.json('Login with Twitter');
-        } else {
-          return res.json('User with this email already exists');
-        }
-      } else {
-        try {
-          ///create token for user
-          let t = token.signToken(existingUser._id);
-          res.cookie('access_token', t, { httpOnly: true });
-          next();
-        } catch (e) {
-          console.log(e);
-          res.status(400).send('Bad request');
-        }
-      }
-    },
-    ////Login user and redirect to localhost:3000
-    passport.authenticate('local', { failureRedirect: '/register' }),
+    passport.authenticate('local', { failureRedirect: '/login-fail' }),
     (req, res) => {
       if (req.isAuthenticated()) {
+        req.login(req.user, (err) => {
+          if(err){
+            console.warn(err)
+            res.status(403).send()
+          }
+        })
+
         const { _id } = req.user;
+        console.log(req.user._id, 'AUTHENTICATED')
         const t = token.signToken(_id);
         res.cookie('access_token', t, { httpOnly: true });
         if (req.user.plan == 1) {

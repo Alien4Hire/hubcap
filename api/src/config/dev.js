@@ -8,7 +8,7 @@ module.exports = {
   googleClientSecret: 'pInyy_Fjq00suTgSRsz1xv1h',
   //database stuff
   mongoURI:
-    'mongodb+srv://admin:Myfirst1@hubcap.v4hdg.mongodb.net/hubcap?retryWrites=true&w=majority',
+    'mongodb://localhost:27017',
   cookieKey: '1Xxp382GgnXxYz49528',
   //payment stuff
   stripePublishableKey:
