@@ -19,14 +19,14 @@ export const API = {
         };
         return result;
     },
-    async getUser() {
+    async getUser() {      
         try {
             const response = await fetch(`${API_URL}/api/current_user`, {
                 method: 'GET',
                 credentials: 'include'
             })
             const r =  await response.json()
-            console.log(r, 'RESPONSE')
+            // console.log(r, 'RESPONSE')
             return r
         } catch (e) {
             console.error(e, 'Get user error')

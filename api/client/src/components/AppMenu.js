@@ -36,7 +36,7 @@ const MenuItemWithChildren = ({ item, linkClassNames, subMenuClassNames, activat
                     if (child.name === 'watchlist') {
                         // console.log(child)
                         return (
-                            <React.Fragment key={i} className="in-bar-watchlist">
+                            <React.Fragment key={i} >
                                 <Watchlist />
                             </React.Fragment>
                         );
@@ -182,7 +182,7 @@ class AppMenu extends Component<Props> {
         }
 
         return (
-            <React.Fragment>
+            <>
                 <div className={classNames({ 'topbar-nav': isHorizontal })}>
                     {this.props.menu && menuItems && menuItems.length ? (
                         <ul className="metismenu side-nav" id="menu-bar">
@@ -219,7 +219,7 @@ class AppMenu extends Component<Props> {
                         </ul>
                     ) : null}
                 </div>
-            </React.Fragment>
+            </>
         );
     }
 }

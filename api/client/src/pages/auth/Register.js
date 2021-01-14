@@ -153,7 +153,9 @@ const mapStateToProps = state => {
     return { user, loading, error };
 };
 
-export default connect(
-    mapStateToProps,
-    { registerUser }
-)(Register);
+// export default connect(
+//     mapStateToProps,
+//     { registerUser }
+// )(Register);
+
+export default Register

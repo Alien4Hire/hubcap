@@ -16,8 +16,14 @@ import {
 // core components
 import ColorNavbar from 'components/Navbars/ColorNavbar.js';
 import api from '../../utils/api';
+import { useCookies } from "react-cookie";
+import {fetchUser} from '../../actions'
 
 function LoginPage() {
+  ///cookies
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token', "user", "express:sess", "express:sess.sig"]);
+  const [myCookie, setMyCookie] = useState('')
+  ///form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [focus, setFocus] = useState('');
@@ -65,20 +71,51 @@ function LoginPage() {
     };
   });
 
+  const handleCookie = (cookie) => {
+    setCookie("access_token", cookie, {
+      path: "/"
+    });
+  }
+  const deleteCookies = () => {
+    document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+  }
+
   const login = (ev) => {
+    deleteCookies()
+    localStorage.removeItem('access_token')
+    console.log(user);
+    console.log(user.password);
+    console.log(user.confirmPassword);
     ev.preventDefault();
     try {
       api.post('/auth/login', user).then((response) => {
+        // if (cookies) {
+        //   window.location.href = `${process.env.REACT_APP_REDIRECT_URI}?token=${cookies}`;
+        // }
         if (response.data) {
-          console.log(response);
-          window.location.href = process.env.REACT_APP_REDIRECT_URI;
+          if(response.data.cookie) {
+            console.log(response.data.cookie);
+            const cookie = response.data.cookie
+            const setCookie = handleCookie(cookie)
+            setMyCookie(cookie)
+            fetchUser(cookie)
+            window.location.href = `${process.env.REACT_APP_REDIRECT_URI}?access_token=${cookies}`;
         } else {
-          alert('Sign-up error. Please try again!');
+          alert('Password or Email entered does not match')
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+          
+          } else {
+            alert('Sign-up error. Please try again!');
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    
   };
 
   useEffect(() => {

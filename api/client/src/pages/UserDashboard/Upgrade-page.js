@@ -4,10 +4,11 @@ import { Card, CardBody, Button, Form } from 'reactstrap';
 import AllPlans from './AllPlans';
 import { API } from '../../services/api';
 import moment from 'moment';
+import {connect} from 'react-redux';
 
 const LemmeUpgradeYa = (props) => {
     const [pickedCard, setPickedCard] = useState(null);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(props.user);
     const [daysSince, setDaysSince] = useState('30');
     // const [path, setPath] = useState('/plans/basic');
     const [allPaths, setAllPaths] = useState(['#', '/plans/personal', '/plans/business']);
@@ -61,14 +62,12 @@ const LemmeUpgradeYa = (props) => {
     };
 
     useEffect(() => {
-        API.getUser().then((r) => {
-            setUser(r);
             setDaysSince(
-                roundToWhole(30 - (moment().unix() - roundToWhole(new Date(r.date).getTime() / 1000)) / (60 * 60 * 24))
+                roundToWhole(30 - (moment().unix() - roundToWhole(new Date(user.date).getTime() / 1000)) / (60 * 60 * 24))
             );
-            cardSelected(r);
-        });
-    }, []);
+            cardSelected(user);
+        }, []);
+
     // useEffect(() => {
     //     cardNumber();
     // }, []);
@@ -112,4 +111,9 @@ const LemmeUpgradeYa = (props) => {
     );
 };
 
-export default LemmeUpgradeYa;
+const mapStateToProps = (state) => {
+    // console.log(state.Auth.user)
+    return {user: state.Auth.user}
+}
+
+export default connect(mapStateToProps)(LemmeUpgradeYa);

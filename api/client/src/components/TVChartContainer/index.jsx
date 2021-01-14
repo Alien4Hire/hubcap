@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './index.css';
 import { widget } from './charting_library/charting_library.min';
 import Datafeed from './datafeed';
@@ -9,8 +9,6 @@ const rp = require('request-promise').defaults({ json: true });
 const api_key = 'bsh2dt7rh5r9j22quibg';
 
 const api_root = 'https://finnhub.io/api/v1/scan/pattern';
-
-var patternIds = [];
 
 function getLanguageFromURL() {
     const regex = new RegExp('[\\?&]lang=([^&#]*)');
@@ -27,9 +25,21 @@ function getUrlVars() {
 
 export function TVChartContainer(props) {
     const [symbol, setSymbol] = useState(props.symbol);
+    const [propState, setPropState] = useState(props.symbol);
     const tvWidget = null;
 
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+          ref.current = value;
+        });
+        return ref.current;
+      }
+    const prevCount = usePrevious(propState)
+    
+
     const componentDidMount = () => {
+        // setSymbol(props.symbol)
         const widgetOptions = {
             symbol: symbol,
             //symbol: 'BTC/USDT',
@@ -103,214 +113,7 @@ export function TVChartContainer(props) {
         });
     };
 
-    const getPattern = () => {
-        let thisComponent = this;
-        thisComponent.removeAllShape();
 
-        let symbol = thisComponent.tvWidget.chart().symbol().replace('/', '');
-        let resolution = thisComponent.tvWidget.chart().resolution();
-        console.log(
-            'Get pattern: ' + api_root + '?symbol=' + symbol + '&resolution=' + resolution + '&token=' + api_key
-        );
-        const qs = {
-            symbol: symbol,
-            resolution: resolution,
-            token: api_key,
-        };
-
-        rp({
-            uri: api_root,
-            qs: qs,
-        })
-            .then((data) => {
-                let i = 0;
-                for (let i in data.points) {
-                    let point = data.points[i];
-                    thisComponent.drawPattern(thisComponent.tvWidget, point);
-                }
-                console.log('Pattern', data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
-    const drawPattern = (widget, pattern) => {
-        let pname = pattern.patternname.toLowerCase();
-        var patternId = '';
-
-        if (pname == 'triangle' || pname == 'wedge') {
-            let points = [
-                {
-                    time: pattern.atime,
-                    price: pattern.aprice,
-                },
-                {
-                    time: pattern.btime,
-                    price: pattern.bprice,
-                },
-                {
-                    time: pattern.ctime,
-                    price: pattern.cprice,
-                },
-                {
-                    time: pattern.dtime,
-                    price: pattern.dprice,
-                },
-            ];
-            patternId = widget.chart().createMultipointShape(points, {
-                shape: 'triangle_pattern',
-                disableUndo: true,
-            });
-        } else if (pname == 'flag') {
-            // draw flag pole
-            let pole = [
-                {
-                    time: pattern.etime,
-                    price: pattern.eprice,
-                },
-                {
-                    time: pattern.atime,
-                    price: pattern.aprice,
-                },
-            ];
-            patternId = widget.chart().createMultipointShape(pole, {
-                shape: 'trend_line',
-            });
-
-            // draw flag
-            let flag = [
-                {
-                    time: pattern.atime,
-                    price: pattern.aprice,
-                },
-                {
-                    time: pattern.ctime,
-                    price: pattern.cprice,
-                },
-                {
-                    time: pattern.dtime,
-                    price: pattern.dprice,
-                },
-            ];
-            patternId = widget.chart().createMultipointShape(flag, {
-                shape: 'parallel_channel',
-                disableUndo: true,
-            });
-        } else if (pname.indexOf('double') > -1) {
-            // double bottom, double top
-            let points = [
-                {
-                    time: pattern.start_time,
-                    price: pattern.start_price,
-                },
-                {
-                    time: pattern.atime,
-                    price: pattern.aprice,
-                },
-                {
-                    time: pattern.btime,
-                    price: pattern.bprice,
-                },
-                {
-                    time: pattern.ctime,
-                    price: pattern.cprice,
-                },
-                {
-                    time: pattern.end_time,
-                    price: pattern.end_price,
-                },
-            ];
-            patternId = widget.chart().createMultipointShape(points, {
-                shape: 'polyline',
-                disableUndo: true,
-                overrides: { fillBackground: false, linecolor: '#9528CC', linewidth: 4 },
-            });
-            patternIds.push(patternId);
-        } else if (pname.indexOf('triple') > -1) {
-            // triple top, triple bottom
-            let points = [
-                {
-                    time: pattern.start_time,
-                    price: pattern.start_price,
-                },
-                {
-                    time: pattern.atime,
-                    price: pattern.aprice,
-                },
-                {
-                    time: pattern.btime,
-                    price: pattern.bprice,
-                },
-                {
-                    time: pattern.ctime,
-                    price: pattern.cprice,
-                },
-                {
-                    time: pattern.dtime,
-                    price: pattern.dprice,
-                },
-                {
-                    time: pattern.etime,
-                    price: pattern.eprice,
-                },
-                {
-                    time: pattern.end_time,
-                    price: pattern.end_price,
-                },
-            ];
-            patternId = widget.chart().createMultipointShape(points, {
-                shape: 'polyline',
-                disableUndo: true,
-                overrides: { fillBackground: false, linecolor: '#9528CC', linewidth: 4 },
-            });
-        } else if (pname === 'head and shoulders') {
-            // head and shoulder pattern
-            let points = [
-                {
-                    time: pattern.start_time,
-                    price: pattern.start_price,
-                },
-                {
-                    time: pattern.atime,
-                    price: pattern.aprice,
-                },
-                {
-                    time: pattern.btime,
-                    price: pattern.bprice,
-                },
-                {
-                    time: pattern.ctime,
-                    price: pattern.cprice,
-                },
-                {
-                    time: pattern.dtime,
-                    price: pattern.dprice,
-                },
-                {
-                    time: pattern.etime,
-                    price: pattern.eprice,
-                },
-                {
-                    time: pattern.end_time,
-                    price: pattern.end_price,
-                },
-            ];
-            patternId = widget.chart().createMultipointShape(points, {
-                shape: 'head_and_shoulders',
-                disableUndo: true,
-            });
-        } else {
-            console.log(pname, pattern);
-        }
-    };
-
-    const removeAllShape = () => {
-        for (let i in patternIds) {
-            tvWidget.chart().removeEntity(patternIds[i].id);
-        }
-        patternIds = [];
-    };
 
     const componentWillUnmount = () => {
         if (tvWidget !== null) {
@@ -320,11 +123,31 @@ export function TVChartContainer(props) {
     };
 
     useEffect(() => {
+        // setSymbol(props.symbol)
+        // tvWidget.chart().setSymbol(props.symbol)
+        
+        console.log(prevCount)
+    })
+
+    // useEffect(() => {
+    //     componentDidMount();
+    //     // getPattern();
+    //     // drawPattern();
+    //     // // removeAllShape();
+    //     return () => {
+    //     componentWillUnmount();
+    //     }
+    // }, [symbol])
+
+    useEffect(() => {
+        setSymbol(props.symbol)
         componentDidMount();
         // getPattern();
         // drawPattern();
         // // removeAllShape();
+        return () => {
         componentWillUnmount();
+        }
     }, []);
 
     return <div id="tv_chart_container" className={'TVChartContainer'} />;

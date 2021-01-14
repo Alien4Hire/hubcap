@@ -3,7 +3,7 @@ import { FETCH_STOCK_DATA, FETCH_STOCK_DATA_RECEIVE, FETCH_STOCK_DATA_ERROR } fr
 const initState = {
     loading: {},
     error: {},
-    pagination: { pageSize: 20, page: 1, total: 0 },
+    pagination: { pageSize: 50, page: 1, total: 0 },
     data: [],
 };
 

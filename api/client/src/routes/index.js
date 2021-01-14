@@ -126,7 +126,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
         render={(props) => {
             if (!isUserAuthenticated()) {
                 // not logged in so redirect to login page with the return url
-                return <Redirect to={{ pathname: '/account/login', state: { from: props.location } }} />;
+                return <Redirect to={{ pathname: '/api/logout', state: { from: props.location } }} />;
             }
 
             const loggedInUser = getLoggedInUser();
@@ -442,6 +442,19 @@ const pageRoutes = {
         //        },
     ],
 };
+
+const hiddenRoutes = {
+    path: '/watchlists',
+    name: 'Watchlists',
+    children: [
+        {
+            path: '/watchlists/view',
+            name: 'Watchlist',
+            component: Watchlist,
+            route: PrivateRoute
+        }
+    ]
+}
 
 // auth
 const authRoutes = {
@@ -789,9 +802,9 @@ const flattenRoutes = (routes) => {
 };
 
 // All routes
-const allRoutes = [rootRoute, dashboardRoutes, ...appRoutes, testRoutes, authRoutes, pageRoutes, uiRoutes];
+const allRoutes = [rootRoute, dashboardRoutes, ...appRoutes, testRoutes, authRoutes, hiddenRoutes, pageRoutes, uiRoutes, ecommerceAppRoutes];
 
-const authProtectedRoutes = [dashboardRoutes, ...appRoutes, testRoutes, pageRoutes, uiRoutes];
+const authProtectedRoutes = [dashboardRoutes, ...appRoutes, testRoutes, pageRoutes, uiRoutes, ecommerceAppRoutes];
 
 const allFlattenRoutes = flattenRoutes(allRoutes);
 

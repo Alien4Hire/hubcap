@@ -17,16 +17,16 @@ const isUserAuthenticated = async () => {
  * Returns the logged in user
  */
 const getLoggedInUser = async () => {
-    const cookies = new Cookies();
-    const user = cookies.get('user');
+    // const cookies = new Cookies();
+    // const user = cookies.get('user');
 
-    if(!user){
-        const r = await API.getUser()
-        if(r) cookies.set('user', JSON.stringify(r))
-        return r
-    } else {
-        return user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
-    }
+    // if(!user){
+    //     const r = await API.getUser()
+    //     if(r) cookies.set('user', JSON.stringify(r))
+    //     return r
+    // } else {
+    //     return user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
+    // }
 };
 
 export { isUserAuthenticated, getLoggedInUser };

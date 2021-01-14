@@ -1,75 +1,75 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Row, Col, Button, Container } from 'reactstrap';
 import { render } from 'react-dom';
-import { connect } from 'react-redux';
-import { stockSelector, fetchWatchlists } from '../redux/actions';
+import { connect, useDispatch } from 'react-redux';
+import { fetchStockList, setSelected, changeNumber } from '../redux/actions';
+
+///Modals
+import Modal from './modals/watchlistModal'
+
 //components
 import ListSecurityContainer from '../components/Watchlist/listSecurityContainer';
 import AddWatchlistForm from '../components/Watchlist/addWatchlistForm';
-import Modal from './modals/watchlistModal';
+// import watchlist from '../components/Watchlist/watchlist';
 
-class watchlist extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            taskList: [],
-        };
-        this.handleRemoveTask = this.handleRemoveTask.bind(this);
-        this.handleAddTask = this.handleAddTask.bind(this);
+const Watchlist = ({selected, watchlists, number, AuthNumber}) => {
+    const dispatch = useDispatch();
+    const [taskList, setTaskList] = useState(['AAPL', 'MSFT', 'AMZN'])
+    const [list, setList] = useState(selected)
+    const [allList, setAllList] = useState(watchlists)
+    const [selectNumber, setSelectNumber] = useState(number)
+
+    const selectWatchlist = async () => {
+        setList(selected);
+        setSelectNumber(number);
     }
 
-    componentDidMount() {
-        this.setState({
-            taskList: ['AAPL', 'MSFT', 'AMZN'],
-        });
-    }
+    useEffect(() => {
+        dispatch(changeNumber(AuthNumber));
+        selectWatchlist()
+            .then(dispatch(fetchStockList(number)))
+    }, []);
 
-    render() {
-        return (
-            <React.Fragment>
+    useEffect(() => {
+        selectWatchlist()
+            .then(dispatch(fetchStockList(number)))
+    }, [number]);
+
+    return (
+        <React.Fragment>
+            <Container>
                 <Col className="watchlist-master-col">
                     <Row className="watchlist-form-row">
                         <Col>
-                            <div className="current-watchlist">
-                                <i className="mdi mdi-chevron-down" />
-                            </div>
+                            <AddWatchlistForm className="watchlist-form" />
                         </Col>
-                        <Col>
-                            <AddWatchlistForm newTask={this.handleAddTask} className="watchlist-form" />
-                        </Col>
+                    </Row>
+                    <Row className="watchlist-title-row">
+                        <div>Symbol</div>
                     </Row>
                     <Row className="watchlist-list-row">
                         <ListSecurityContainer
-                            list={this.state.taskList}
-                            removeTask={this.handleRemoveTask}
+                            list={taskList}
                             className="watchlist-list"
+                            number={number}
+                            selected={selected}
                         />
                     </Row>
                 </Col>
-                <Modal />
-            </React.Fragment>
-        );
-    }
-
-    handleRemoveTask(id) {
-        let array = this.state.taskList;
-
-        /* Remove selected value from array */
-        array = array.filter(function (el, index) {
-            return index !== id;
-        });
-
-        this.setState({ taskList: array });
-    }
-    handleAddTask(name) {
-        let tmp = this.state.taskList;
-        tmp.push(name);
-        this.setState({ taskList: tmp });
-    }
+            </Container>
+    </React.Fragment>
+    )
+    
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
-};
+    return {
+        selected: state.Watchlist.stock.title,
+        watchlists: state.Watchlist.watchlist.watchlist,
+        watchlist: state.Watchlist.stock.watchlist,
+        number: state.Watchlist.watchlist.number,
+        AuthNumber: state.Auth.watchlist,
+    }
+}
 
-export default connect(mapStateToProps)(watchlist);
+export default connect(mapStateToProps, {fetchStockList, setSelected, changeNumber})(Watchlist);

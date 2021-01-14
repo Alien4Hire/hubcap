@@ -18,11 +18,12 @@ const api = require('./api');
 //models & services
 require('./models/User');
 require('./models/Survey');
+require('./models/Watchlist');
 require('./services/passport');
 //database stuff
 mongoose.Promise = global.Promise;
 mongoose
-  .connect(keys.mongoURI, { useUnifiedTopology: true, useNewUrlParser: true })
+  .connect(keys.mongoURI, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
   .then(
     () => {
       console.log('Connected to Mongo');
@@ -72,6 +73,10 @@ app.use((req, res, next) => {
 require('./routes/authRoutes')(app);
 
 require('./routes/billingRoutes')(app);
+
+require('./routes/watchlistRoutes')(app);
+
+require('./routes/tradingLabRoutes')(app);
 //deletevvvv
 // require('./routes/surveyRoutes')(app);
 //switch dev + prod

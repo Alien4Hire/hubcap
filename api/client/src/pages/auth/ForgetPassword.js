@@ -129,12 +129,14 @@ class ForgetPassword extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    const { passwordResetStatus, loading, error } = state.Auth;
-    return { passwordResetStatus, loading, error };
-};
+// const mapStateToProps = state => {
+//     const { passwordResetStatus, loading, error } = state.Auth;
+//     return { passwordResetStatus, loading, error };
+// };
 
-export default connect(
-    mapStateToProps,
-    { forgetPassword }
-)(ForgetPassword);
+// export default connect(
+//     mapStateToProps,
+//     { forgetPassword }
+// )(ForgetPassword);
+
+export default ForgetPassword

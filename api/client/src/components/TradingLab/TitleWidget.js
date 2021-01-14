@@ -27,7 +27,7 @@ const TitleWidget = ({ ticker, close, name, dailyChange, changePrice, logo, arro
         <React.Fragment>
             <Card className="Title-card">
                 <CardBody>
-                    <table className="ticker-info">
+                    <div className="ticker-info">
                         <div className="top-left">
                             <Col>
                                 <div className="company-title-section">
@@ -62,7 +62,7 @@ const TitleWidget = ({ ticker, close, name, dailyChange, changePrice, logo, arro
                         {/* <Button color="link" className="card-action p-0" onClick={reloadContent}>
                             <i className="mdi mdi-refresh"></i>
                         </Button> */}
-                    </table>
+                    </div>
                 </CardBody>
             </Card>
         </React.Fragment>

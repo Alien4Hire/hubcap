@@ -195,14 +195,14 @@ router.get('/v1/symbols/:finnhubIndustry/ind', async (req, res, nxt) => {
 router.get('/v1/stock-data', async (req, res, nxt) => {
   try {
     const payload = req.query ? req.query : {};
-
+    console.log(payload)
     // // add pagination limit and offset
-    let pageSize = 20;
+    let pageSize = 50;
     let page = 1;
     if (payload && payload.limit) {
       pageSize = Number(payload.limit) || pageSize;
     }
-
+    console.log(payload)
     if (payload && payload.page) {
       page = Number(payload.page) || page;
     }

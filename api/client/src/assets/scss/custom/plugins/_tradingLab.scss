@@ -75,7 +75,7 @@
 }
 // related table
 .Related-card {
-    max-width: 55vh;
+    max-width: 45vh;
 }
 
 .big-table tr td {
@@ -87,6 +87,7 @@
 
 .table-header {
     position: sticky;
+    margin-left: -14px
 }
 
 .first-column {
@@ -94,13 +95,28 @@
 }
 
 .table-logo {
-    max-width: 90%;
+    width: 15px;
+    max-height: auto;
     text-align: start;
     padding: 0 0;
+    padding-right: 2px;
+    margin-left: -15px;
+    margin-right: 10px;
+    float: left;
+}
+
+.secondary-column {
+    padding: 0 0;
+    margin-right: 0;
+    overflow: hidden;
 }
 
 .ticker-text {
     text-align: right;
+}
+
+.market-cap-col {
+    margin-left: -20px;
 }
 
 .mobile-position {
@@ -145,6 +161,7 @@
 @media (max-width: 1350px) {
     .second-col {
         display: flexbox;
+
     }
 
     .secondary-column {
@@ -168,8 +185,8 @@
     }
 
     .mobile-logo {
-        max-width: 40%;
-        min-width: 40%;
+        max-height: 20px;
+        max-width: auto;
         text-align: start;
         padding: 0 0;
     }

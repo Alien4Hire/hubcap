@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 // reactstrap components
 import {
@@ -18,8 +17,15 @@ import {
 // core components
 import ColorNavbar from 'components/Navbars/ColorNavbar.js';
 import api from '../../utils/api';
+import { useCookies } from "react-cookie";
+import {connect} from 'react-redux'
+import {fetchUser} from '../../actions'
 
 function RegisterPage() {
+  ///cookies
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token', "user", "express:sess", "express:sess.sig"]);
+  const [myCookie, setMyCookie] = useState('')
+  ///form state
   const [focus, setFocus] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -78,8 +84,24 @@ function RegisterPage() {
       document.body.classList.remove('full-screen');
     };
   });
+  //cookies
 
+  const handleCookie = (cookie) => {
+    setCookie("access_token", cookie, {
+      path: "/"
+    });
+  }
+  const deleteCookies = () => {
+    document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+  }
+  ///register
   const register = (ev) => {
+    deleteCookies()
+    localStorage.removeItem('access_token')
     console.log(user);
     console.log(user.password);
     console.log(user.confirmPassword);
@@ -89,9 +111,21 @@ function RegisterPage() {
       ev.preventDefault();
       try {
         api.post('/auth/register', user).then((response) => {
+          // if (cookies) {
+          //   window.location.href = `${process.env.REACT_APP_REDIRECT_URI}?token=${cookies}`;
+          // }
           if (response.data) {
-            console.log(response);
-            window.location.href = process.env.REACT_APP_REDIRECT_URI;
+            if(response.data.cookie) {
+              console.log(response.data.cookie);
+              const cookie = response.data.cookie
+              const setCookie = handleCookie(cookie)
+              setMyCookie(cookie)
+              fetchUser(cookie)
+              window.location.href = `${process.env.REACT_APP_REDIRECT_URI}?access_token=${cookies}`;
+          } else {
+            alert('User with that email already exists')
+          }
+          
           } else {
             alert('Sign-up error. Please try again!');
           }
@@ -102,9 +136,14 @@ function RegisterPage() {
     }
   };
 
+
   useEffect(() => {
     updateUser();
   }, [email, password, confirmPassword]);
+
+  useEffect(()=> {
+    console.log(cookies)
+  }, [])
 
   // const google = (ev) => {
   //   ev.preventDefault();
@@ -222,6 +261,7 @@ function RegisterPage() {
                       type="password"
                       name="password"
                       value={user.password}
+                      minLength={10}
                       onChange={handlePasswordChange}
                       onFocus={handlePasswordFocus}
                     />
@@ -244,7 +284,7 @@ function RegisterPage() {
                   <div className="login">
                     <p>
                       Already have an account?{' '}
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                      <a href='/login-page' >
                         Log in
                       </a>
                       .
@@ -266,4 +306,9 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+const mapStateToProps = (state, ownProps) => {
+    console.log(ownProps)
+    return {cookie: ownProps.myCookie}
+}
+
+export default connect(mapStateToProps, {fetchUser})(RegisterPage);

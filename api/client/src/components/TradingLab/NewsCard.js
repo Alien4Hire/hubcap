@@ -1,5 +1,6 @@
 import React from 'react';
 import SimpleBar from 'simplebar-react';
+import { connect } from 'react-redux';
 
 import { Container, Row, Col, Card, CardBody } from 'reactstrap';
 //  datetime, headline, image, source, summary, url
@@ -19,7 +20,7 @@ const NewsCard = ({ news }) => {
                                 // const update = new Date(records.datetime * 1000).toLocaleDateString('en-US');
                                 // console.log(update);
                                 return (
-                                    <Card className="News-card">
+                                    <Card className="News-card" key={record}>
                                         <CardBody className="News-body">
                                             <div className="news-head">
                                                 <img className="News-Image" src={record.urlToImage}></img>
@@ -45,4 +46,10 @@ const NewsCard = ({ news }) => {
     );
 };
 
-export default NewsCard;
+const mapStateToProps = (state) => {
+    return {
+        news: state.TradingLab.news,
+    }
+}
+
+export default connect(mapStateToProps)(NewsCard);

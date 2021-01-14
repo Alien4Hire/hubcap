@@ -10,14 +10,21 @@ import TitleWidget from '../../../components/TradingLab/TitleWidget';
 import SplineAreaChart from '../../charts/Apex/SplineAreaChart';
 import IndustryTable from '../../../components/TradingLab/industryTable';
 import RelatedStock from '../../../components/TradingLab/RelatedStock';
-
+import { connect, useDispatch } from 'react-redux';
 import NewsCard from '../../../components/TradingLab/NewsCard';
+import TabData from '../../../components/TradingLab/TabData';
+import HeatMap from '../../../components/TradingLab/heatmap';
+
+import {loadStockNews, fetchStockData, fetchChartData} from '../../../redux/actions'
 // import * as google from 'google-parser'
 
-const EcommerceDashboardPage = () => {
+const EcommerceDashboardPage = ({symbol, allClose, stockData, allTime, close, change, changeAMT, industry}) => {
+    const dispatch = useDispatch();
+    const [newSymbol, setNewSymbol] = useState('AAPL');
+    const [newType, setNewType] = useState('stock');
+    const [adjChange, setAdjChange] = useState(change);
+    const [adjClose, setAdjClose] = useState(close);
     //Ticker Data
-    const [close, setClose] = useState(10);
-    const [allClose, setAllClose] = useState([0]);
     const [name, setName] = useState('Stock');
     const [ticker, setTicker] = useState('STK');
     const [previousClose, setPreviousClose] = useState(9);
@@ -32,7 +39,7 @@ const EcommerceDashboardPage = () => {
     const [prevClose, setPrevClose] = useState(0);
     const [time, setTime] = useState(0);
     //Industry Data
-    const [industry, setIndustry] = useState(0);
+
     const [relatedTicker, setRelatedTicker] = useState(0);
     //Employee Data
     const [CEOage, setCEOage] = useState(0);
@@ -56,14 +63,12 @@ const EcommerceDashboardPage = () => {
     };
 
     const GetStockData = async () => {
-        var data = await StockData();
-        setShift(data.data.c.length - 1);
-        setPrevClose(data.data.c.length - 2);
-        setClose(roundToHundredth(data.data.c[closeShift]));
-        setPreviousClose(roundToHundredth(data.data.c[prevClose]));
-        setDailyChange(roundToHundredth(100 * (1 - close / previousClose)));
-        setDailyPrice(roundToHundredth(close - previousClose));
-        if (changePrice < 0) {
+        // setAdjClose(roundToHundredth(close));
+        // setAdjChange(roundToHundredth(change))
+        // setPreviousClose(roundToHundredth(closes[prevClose]));
+        // setDailyChange(roundToHundredth(100 * (1 - close / previousClose)));
+        // setDailyPrice(roundToHundredth(close - previousClose));
+        if (changeAMT < 0) {
             setArrow('mdi mdi-arrow-down-bold');
             setColor('price-change-red');
         } else {
@@ -71,46 +76,61 @@ const EcommerceDashboardPage = () => {
             setColor('price-change-green');
         }
         setDate(new Date().toLocaleString());
-        setAllClose(data.data.c);
-        setTime(data.data.t);
-        return [];
+        // setTime(allTime);
+        // return [];
     };
 
-    const GetCompanyData = async () => {
-        var data = await CompanyData();
-        setName(data.data.name);
-        setTicker(data.data.ticker);
-        setLogo(data.data.logo);
-        setIndustry(data.data.finnhubIndustry);
-        var Related = await RelatedStock(industry);
-        setRelatedTicker(Related.data);
-        // console.log(relatedTicker);
-        return [];
-    };
+    // const GetCompanyData = async () => {
+    //     var data = await CompanyData();
+    //     setName(data.data.name);
+    //     setTicker(data.data.ticker);
+    //     setLogo(data.data.logo);
+    //     setIndustry(data.data.finnhubIndustry);
+    //     var Related = await RelatedStock(industry);
+    //     setRelatedTicker(Related.data);
+    //     console.log(data);
+    //     return [];
+    // };
 
-    const GetCompanyNews = async () => {
-        var data = await NewsData();
+    const GetCompanyNews = () => {
+
+        
         // setDatetime(data.data.datetime);
         // setHeadline(data.data.headline);
         // setNewsImage(data.data.image);
         // setSource(data.data.source);
         // setNewsSummary(data.data.summary);
         // setNewsUrl(data.data.url);
-        setNews(data.data.articles);
-        console.log(data.data.articles);
+
     };
+
+    useEffect(() => {
+        // dispatch(loadStockData(newSymbol));
+        dispatch(fetchStockData(newSymbol));
+        dispatch(fetchChartData(newSymbol));
+        dispatch(loadStockNews(newSymbol));
+        GetStockData();
+    }, [])
+
+    useEffect(() => {
+        GetStockData()
+    }, [changeAMT])
+
+    // useEffect(() => {
+    //     GetCompanyNews(symbol)
+    // }, [symbol])
 
     // const GetRelatedStock = async (industry) => {
     //     var data = await RelatedStock(industry);
     //     return [];
     // };
 
-    useEffect(() => {
-        GetStockData();
-        GetCompanyData();
-        // GetRelatedStock();
-        GetCompanyNews();
-    }, [dailyChange]);
+    // useEffect(() => {
+    //     // GetStockData();
+    //     GetCompanyData();
+    //     // GetRelatedStock();
+    //     GetCompanyNews();
+    // }, [dailyChange]);
 
     // {close}
     // {name}
@@ -119,12 +139,12 @@ const EcommerceDashboardPage = () => {
             <Row>
                 <TitleWidget
                     close={close}
-                    name={name}
+                    name={stockData.name}
                     previousClose={previousClose}
-                    dailyChange={dailyChange}
-                    changePrice={changePrice}
-                    logo={logo}
-                    ticker={ticker}
+                    dailyChange={change}
+                    changePrice={changeAMT}
+                    logo={stockData.logo}
+                    ticker={stockData.ticker}
                     arrow={arrow}
                     color={color}
                     date={date}
@@ -132,7 +152,7 @@ const EcommerceDashboardPage = () => {
             </Row>
             <Row className="second-col">
                 <Col>
-                    <SplineAreaChart allClose={allClose} ticker={ticker} time={time} />
+                    <SplineAreaChart allClose={allClose} ticker={ticker} time={allTime} />
                 </Col>
                 <Col>
                     <IndustryTable ticker={ticker} relatedTicker={relatedTicker} />
@@ -141,13 +161,6 @@ const EcommerceDashboardPage = () => {
             <Row>
                 <Col>
                     <NewsCard
-                        news={news}
-                        // datetime={datetime}
-                        // headline={headline}
-                        // image={newsImage}
-                        // source={source}
-                        // summary={newsSummary}
-                        // url={newsUrl}
                     />
                 </Col>
             </Row>
@@ -155,4 +168,18 @@ const EcommerceDashboardPage = () => {
     );
 };
 
-export default EcommerceDashboardPage;
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        symbol: state.Watchlist.stock.selected,
+        allClose: state.TradingLab.chart.c,
+        allTime: state.TradingLab.chart.t,
+        stockData: state.TradingLab.stock,
+        close: state.TradingLab.close,
+        change: state.TradingLab.change,
+        changeAMT: state.TradingLab.changeAMT,
+        industry: state.TradingLab.finnhubIndustry,
+    }
+}
+
+export default connect(mapStateToProps, {loadStockNews, fetchStockData, fetchChartData})(EcommerceDashboardPage);

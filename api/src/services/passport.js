@@ -59,7 +59,10 @@ passport.use(
           email: profile.emails[0].value,
           profilePic: profile.photos[0].value,
           password: generator.generate({ length: 10, numbers: true }),
+          watchlist: 0,
+          stock: 'AAPL',
         }).save();
+        let newWatchlist = await watchlist.create({title: 'My Watchlist', body: ["AAPL", "TSLA", "MSFT"], _user: user._id}).save();
         done(null, user);
       }
     }
@@ -95,7 +98,10 @@ passport.use(
           email: profile.emails[0].value,
           // profilePic: profile.photos[0].value,
           password: generator.generate({ length: 10, numbers: true }),
+          watchlist: 0,
+          stock: 'AAPL',
         }).save();
+        let newWatchlist = await watchlist.create({title: 'My Watchlist', body: ["AAPL", "TSLA", "MSFT"], _user: user._id}).save();
         done(null, user);
       }
     }
@@ -130,7 +136,10 @@ passport.use(
           email: profile.emails[0].value,
           // profilePic: profile.photos[0].value,
           password: generator.generate({ length: 10, numbers: true }),
+          watchlist: 0,
+          stock: 'AAPL',
         }).save();
+        let newWatchlist = await watchlist.create({title: 'My Watchlist', body: ["AAPL", "TSLA", "MSFT"], _user: user._id}).save();
         done(null, user);
       }
     }
@@ -151,15 +160,15 @@ passport.use(
         if (!user)
           return done(null, false, { message: 'Incorrect email or password' });
 
-        user.comparePassword(password, (err) => {
-          if (err) {
-            return done(null, false, {
-              message: 'Incorrect email or password',
-            });
-          } else {
-            return done(null, user);
-          }
-        });
+        // user.comparePassword(password, (err) => {
+        //   if (err) {
+        //     return done(null, false, {
+        //       message: 'Incorrect email or password',
+        //     });
+        //   } else {
+        //     return done(null, user);
+        //   }
+        // });
       });
     }
   )

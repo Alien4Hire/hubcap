@@ -118,7 +118,7 @@ export default {
                 });
             } else {
                 const prices = await api.getOHLC(symbolInfo.name, from, to);
-
+                console.log({from, to})
                 bars = prices.map((price) => {
                     return {
                         time: price.t * 1000, // trading view need time in milisecond

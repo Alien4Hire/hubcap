@@ -1,30 +1,60 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { preventDefault } from '@fullcalendar/core';
+import React, { useEffect, useState } from 'react';
+import {connect, useDispatch} from 'react-redux';
+import { removeStock, stockSelected, updateUserWatchlist } from '../../redux/actions';
+import {Row} from 'reactstrap'
 
-export default class Security extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleCloseTask = this.handleCloseTask.bind(this);
-    }
 
-    static propTypes = {
-        id: PropTypes.number.isRequired, //Define that id of type int is needed when you use this component
-        name: PropTypes.string.isRequired, //Define that name of type string is needed when you use this component
-        onClose: PropTypes.func.isRequired, //Define that onClose function is needed when you use this component
-    };
+const Security = ({index, name, stocks, selected, types, number}) => {
+    const dispatch = useDispatch();
+    const [taskName, setTaskName] =useState(name);
+    const [prevState, setPrevState] = useState(stocks);
+    const [delStock, setDelStock] = useState(undefined);
+    const [delIcon, setDelIcon] = useState('mdi mdi-close-box-outline icon-watchlists')
 
-    render() {
-        return (
-            <a href="" className="list-group-item">
-                {this.props.name}
-                <button onClick={this.handleCloseTask} style={{ float: 'right' }}>
-                    <i className="glyphicon glyphicon-remove"></i>
-                </button>
-            </a>
-        );
-    }
 
-    handleCloseTask() {
-        this.props.onClose(this.props.id);
+    const removeTask = (e) => {
+        e.stopPropagation()
+        setPrevState(stocks)
+        dispatch(removeStock(index))
+    }    
+
+    useEffect(() => {
+        setPrevState(stocks)
+    }, [])
+
+    return (
+        <Row 
+            className="list-group-item"
+            onMouseEnter={() => setDelStock(name)} 
+            onMouseLeave={() => setDelStock(current => current === name ? undefined : current)}
+            >
+            <div className="item-titles" >
+                {name}
+            </div>
+            
+            <span 
+            onClick={(e) => removeTask(e)} 
+            className="remove-item"
+            onMouseEnter={() => setDelIcon('mdi mdi-close-box icon-watchlists')} 
+            onMouseLeave={() => setDelIcon('mdi mdi-close-box-outline icon-watchlists')}
+            >
+                {delStock === name && (
+                <i className={delIcon}></i>
+                )}
+            </span>
+           
+        </Row>
+    );
+
+}
+
+const mapStateToProps = (state) => {
+    return {
+        stocks: state.Watchlist.stock.watchlist,
+        types: state.Watchlist.stock.type,
+        number: state.Watchlist.watchlist.number
     }
 }
+
+export default connect(mapStateToProps, {removeStock, stockSelected, updateUserWatchlist})(Security);

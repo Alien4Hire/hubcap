@@ -5,14 +5,53 @@
 }
 
 .watchlist-form-row {
-    border-right: black 5px solid;
     flex-direction: row;
 }
 
 .watchlist-list-row {
     flex-direction: row;
+    padding-top: 0px;
+}
+
+.watchlist-dropdown {
+    background-color: none;
+    color: black;
+
+}
+
+.watchlist-title-row {
+    color: #6c757d;
+    padding-left: 20px;
+    font-weight: 600;
+    font-size: 90%;
+    padding-top: 5px;
 }
 
 .watchlist-component {
     justify-content: right;
+}
+
+.list-group-item {
+    color: #6c757d;
+    border-bottom: .1389em solid rgb(190, 190, 190);
+    font-weight: 500;
+    height: 40px;
+}
+
+.item-titles {
+    padding: 0;
+    padding-bottom: 1vh;
+}
+
+.remove-item {
+    float: right;
+    margin-top: -35px;
+    height: 25px;
+    width: auto;
+}
+
+.icon-watchlists {
+    float: right;
+    margin-right: -15px;
+    opacity: 60%;
 }

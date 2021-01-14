@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardBody, Label, FormGroup, Button, Alert } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
 
-import { loginUser } from '../../redux/actions';
+// import { loginUser } from '../../redux/actions';
 import { isUserAuthenticated } from '../../helpers/authUtils';
 import LoaderWidget from '../../components/Loader';
 import logo from '../../assets/images/logo.png';
@@ -34,9 +34,9 @@ class Login extends Component {
     /**
      * Handles the submit
      */
-    handleValidSubmit = (event, values) => {
-        this.props.loginUser(values.username, values.password, this.props.history);
-    };
+    // handleValidSubmit = (event, values) => {
+    //     this.props.loginUser(values.username, values.password, this.props.history);
+    // };
 
     /**
      * Redirect to root
@@ -146,12 +146,14 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    const { user, loading, error } = state.Auth;
-    return { user, loading, error };
-};
+// const mapStateToProps = state => {
+//     const { user, loading, error } = state.Auth;
+//     return { user, loading, error };
+// };
 
-export default connect(
-    mapStateToProps,
-    { loginUser }
-)(Login);
+// export default connect(
+//     mapStateToProps,
+//     { loginUser }
+// )(Login);
+
+export default Login

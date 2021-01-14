@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { CookiesProvider } from "react-cookie";
 
 // styles
 import 'assets/css/bootstrap.min.css';
@@ -51,13 +52,14 @@ import SurveyNew from './survey-tutorial/components-tutorial/SurveyNew';
 
 //is user logged in?
 class App extends Component {
-  componentDidMount() {
-    this.props.fetchUser();
-  }
+  // componentDidMount() {
+  //   this.props.fetchUser();
+  // }
 
   render() {
     return (
       <div>
+        <CookiesProvider>
         <BrowserRouter>
           <Switch>
             <Route path="/index" render={(props) => <Index {...props} />} />
@@ -195,6 +197,7 @@ class App extends Component {
             <Redirect to="/" />
           </Switch>
         </BrowserRouter>
+        </CookiesProvider>
         ,
       </div>
     );

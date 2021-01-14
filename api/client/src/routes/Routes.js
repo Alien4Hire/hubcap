@@ -14,9 +14,13 @@ import DetachedLayout from '../layouts/Detached';
 
 
 class Routes extends Component {
+    
     // returns the layout
     getLayout = () => {
-        if (!isUserAuthenticated()) return AuthLayout;
+        if (!localStorage.getItem('access_token')) {
+            // console.log(this.props.cookie)
+            return AuthLayout;
+        }
 
         let layoutCls = VerticalLayout;
 
